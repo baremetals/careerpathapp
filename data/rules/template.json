@@ -1,0 +1,354 @@
+[
+  {
+    "industry": "",
+    "questionId": "649b3db2d50f2c4652f63bc0",
+    "response": "working with people",
+    "careerPaths": [""],
+    "jobRoles": [],
+    "weight": 0.8
+  },
+  {
+    "industry": "",
+    "questionId": "649b3db2d50f2c4652f63bc0",
+    "response": "working with data",
+    "careerPaths": [],
+    "jobRoles": [],
+    "weight": 0
+  },
+  {
+    "industry": "",
+    "questionId": "649b3db2d50f2c4652f63bc0",
+    "response": "all",
+    "careerPaths": [""],
+    "jobRoles": [],
+    "weight": 0.2
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b117190e",
+    "response": "yes",
+    "careerPaths": [""],
+    "jobRoles": [],
+    "weight": 0.8
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b117190e",
+    "response": "no",
+    "careerPaths": [],
+    "jobRoles": [],
+    "weight": 0
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b117190f",
+    "response": "creative",
+    "careerPaths": [""],
+    "jobRoles": [],
+    "weight": 0.2
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b117190f",
+    "response": "analytical",
+    "careerPaths": [""],
+    "jobRoles": [],
+    "weight": 0.8
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b117190f",
+    "response": "both",
+    "careerPaths": [],
+    "jobRoles": [],
+    "weight": 0
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b1171910",
+    "response": "independently",
+    "careerPaths": [""],
+    "jobRoles": [],
+    "weight": 0.2
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b1171910",
+    "response": "team",
+    "careerPaths": [""],
+    "jobRoles": [],
+    "weight": 0.8
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b1171910",
+    "response": "both",
+    "careerPaths": [],
+    "jobRoles": [],
+    "weight": 0
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b1171911",
+    "response": "yes",
+    "careerPaths": [""],
+    "jobRoles": [],
+    "weight": 0.2
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b1171911",
+    "response": "no",
+    "careerPaths": [""],
+    "jobRoles": [],
+    "weight": 0.8
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b1171912",
+    "response": "yes",
+    "careerPaths": [],
+    "jobRoles": [],
+    "weight": 0
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b1171912",
+    "response": "no",
+    "careerPaths": [""],
+    "jobRoles": [],
+    "weight": 0.2
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b1171913",
+    "response": "yes",
+    "careerPaths": [""],
+    "jobRoles": [],
+    "weight": 0.8
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b1171913",
+    "response": "no",
+    "careerPaths": [],
+    "jobRoles": [],
+    "weight": 0
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b1171914",
+    "response": "fast paced",
+    "careerPaths": [""],
+    "jobRoles": [],
+    "weight": 0.2
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b1171914",
+    "response": "dynamic",
+    "careerPaths": [""],
+    "jobRoles": [],
+    "weight": 0.8
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b1171914",
+    "response": "both",
+    "careerPaths": [],
+    "jobRoles": [],
+    "weight": 0
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b1171915",
+    "response": "yes",
+    "careerPaths": [""],
+    "jobRoles": [],
+    "weight": 0.2
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b1171915",
+    "response": "no",
+    "careerPaths": [""],
+    "jobRoles": [],
+    "weight": 0.8
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b1171916",
+    "response": "yes",
+    "careerPaths": [],
+    "jobRoles": [],
+    "weight": 0
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b1171916",
+    "response": "no",
+    "careerPaths": [""],
+    "jobRoles": [],
+    "weight": 0.2
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b1171917",
+    "response": "yes",
+    "careerPaths": [""],
+    "jobRoles": [],
+    "weight": 0.8
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b1171917",
+    "response": "no",
+    "careerPaths": [],
+    "jobRoles": [],
+    "weight": 0
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b1171918",
+    "response": "yes",
+    "careerPaths": [""],
+    "jobRoles": [],
+    "weight": 0.2
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b1171918",
+    "response": "no",
+    "careerPaths": [""],
+    "jobRoles": [],
+    "weight": 0.8
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b1171919",
+    "response": "yes",
+    "careerPaths": [],
+    "jobRoles": [],
+    "weight": 0
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b1171919",
+    "response": "no",
+    "careerPaths": [""],
+    "jobRoles": [],
+    "weight": 0.2
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b117191a",
+    "response": "yes",
+    "careerPaths": [""],
+    "jobRoles": [],
+    "weight": 0.8
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b117191a",
+    "response": "no",
+    "careerPaths": [],
+    "jobRoles": [],
+    "weight": 0
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b117191b",
+    "response": "yes",
+    "careerPaths": [""],
+    "jobRoles": [],
+    "weight": 0.2
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b117191b",
+    "response": "no",
+    "careerPaths": [""],
+    "jobRoles": [],
+    "weight": 0.8
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b117191c",
+    "response": "yes",
+    "careerPaths": [],
+    "jobRoles": [],
+    "weight": 0
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b117191c",
+    "response": "no",
+    "careerPaths": [""],
+    "jobRoles": [],
+    "weight": 0.2
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b117191d",
+    "response": "yes",
+    "careerPaths": [""],
+    "jobRoles": [],
+    "weight": 0.8
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b117191d",
+    "response": "no",
+    "careerPaths": [],
+    "jobRoles": [],
+    "weight": 0
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b117191e",
+    "response": "important",
+    "careerPaths": [""],
+    "jobRoles": [],
+    "weight": 0.2
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b117191e",
+    "response": "not important",
+    "careerPaths": [""],
+    "jobRoles": [],
+    "weight": 0.8
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b117191f",
+    "response": "office",
+    "careerPaths": [],
+    "jobRoles": [],
+    "weight": 0
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b117191f",
+    "response": "remote",
+    "careerPaths": [""],
+    "jobRoles": [],
+    "weight": 0.2
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b117191f",
+    "response": "field",
+    "careerPaths": [""],
+    "jobRoles": [],
+    "weight": 0.8
+  },
+  {
+    "industry": "",
+    "questionId": "649b4aa063832f79b117191f",
+    "response": "hybrid",
+    "careerPaths": [],
+    "jobRoles": [],
+    "weight": 0
+  }
+]

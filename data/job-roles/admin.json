@@ -1,0 +1,100 @@
+[
+    {
+      "title": "Admin assistant",
+      "description": "Admin assistants give support to businesses by organising meetings, typing documents and updating computer records.",
+      "averageStartingSalary": 14000,
+      "averageExperiencedSalary": 28000,
+      "educationRequirements": ["a college course", "an apprenticeship", "working towards this role", "applying directly"],
+      "skills": ["administration skills",
+                "to be thorough and pay attention to detail",
+                "the ability to work well with others",
+                "the ability to work on your own",
+                "sensitivity and understanding",
+                "to be flexible and open to change",
+                "excellent verbal communication skills",
+                "customer service skills",
+                "to be able to use a computer and the main software packages competently"],
+      "careerPath": "649c1cc39554d5172d45cefa",
+      "progressPaths": ["With experience, you could progress from admin assistant to supervisor or office manager. You could also move into other departments, like IT, payroll or accounting., With further training, you could specialise in an area like legal, financial or medical administration, become a personal assistant or executive officer."],
+      "relatedCareers": ["Local Government administrative assistant", "Civil Service administrative officer", "Data entry clerk, personal assistant", "Health records clerk"],
+      "aliasTitles": ["Office administrator", "clerical assistant", "administrative assistant"],
+      "requiredResponses": [
+        {
+          "question": "649b3db2d50f2c4652f63bc0",
+          "response": "working with people"
+        },
+        {
+          "question": "649b4aa063832f79b117190e",
+          "response": "irrelevant"
+        },
+        {
+          "question": "649b4aa063832f79b117190f",
+          "response": "irrelevant"
+        },
+        {
+          "question": "649b4aa063832f79b1171910",
+          "response": "independently"
+        },
+        {
+          "question": "649b4aa063832f79b1171911",
+          "response": "irrelevant"
+        },
+        {
+          "question": "649b4aa063832f79b1171912",
+          "response": "irrelevant"
+        },
+        {
+          "question": "649b4aa063832f79b1171913",
+          "response": "no"
+        },
+        {
+          "question": "649b4aa063832f79b1171914",
+          "response": "irrelevant"
+        },
+        {
+          "question": "649b4aa063832f79b1171915",
+          "response": "irrelevant"
+        },
+        {
+          "question": "649b4aa063832f79b1171916",
+          "response": "yes"
+        },
+        {
+          "question": "649b4aa063832f79b1171917",
+          "response": "no"
+        },
+        {
+          "question": "649b4aa063832f79b1171918",
+          "response": "yes"
+        },
+        {
+          "question": "649b4aa063832f79b1171919",
+          "response": "no"
+        },
+        {
+          "question": "649b4aa063832f79b117191a",
+          "response": "irrelevant"
+        },
+        {
+          "question": "649b4aa063832f79b117191b",
+          "response": "yes"
+        },
+        {
+          "question": "649b4aa063832f79b117191c",
+          "response": "no"
+        },
+        {
+          "question": "649b4aa063832f79b117191d",
+          "response": "irrelevant"
+        },
+        {
+          "question": "649b4aa063832f79b117191e",
+          "response": "irrelevant"
+        },
+        {
+          "question": "649b4aa063832f79b117191f",
+          "response": "office"
+        }
+      ]
+    }
+]

@@ -1,0 +1,191 @@
+[
+    {
+        "text": "What industries or sectors are you particularly drawn to?",
+        "answers": [],
+        "type": "list",
+        "focus": "career-path",
+        "level": "advance",
+        "description": "",
+        "order": 1
+    },
+    {
+        "text": "What level of interaction do you prefer in your work?",
+        "answers": ["working with people", "working with data", "working with machines"],
+        "type": "closed-ended",
+        "focus": "career-path",
+        "level": "advance",
+        "description": "",
+        "order": 2
+    },
+    {
+        "text": "Are you interested in working on projects that have a social impact or contribute to the greater good?",
+        "answers": ["yes", "no"],
+        "type": "boolean",
+        "focus": "career-path",
+        "level": "advance",
+        "description": "",
+        "order": 3
+    },
+    {
+        "text": "What level of interaction do you prefer in your work?",
+        "answers": ["creative", "analytical", "both"],
+        "type": "closed-ended",
+        "focus": "career-path",
+        "level": "advance",
+        "description": "",
+        "order": 4
+    },
+    {
+        "text": "Do you prefer working independently or as part of a team?",
+        "answers": ["independently", "team", "both"],
+        "type": "closed-ended",
+        "focus": "career-path",
+        "level": "advance",
+        "description": "",
+        "order": 5
+    },
+    {
+        "text": "Do you enjoy problem-solving and finding innovative solutions?",
+        "answers": ["yes", "no"],
+        "type": "boolean",
+        "focus": "career-path",
+        "level": "advance",
+        "description": "",
+        "order": 6
+    },
+    {
+        "text": "Are you comfortable with frequent learning and adapting to new technologies or methodologies?",
+        "answers": ["yes", "no"],
+        "type": "boolean",
+        "focus": "career-path",
+        "level": "advance",
+        "description": "",
+        "order": 7
+    },
+    {
+        "text": "Are you interested in continuous professional development and learning opportunities?",
+        "answers": ["yes", "no"],
+        "type": "boolean",
+        "focus": "career-path",
+        "level": "advance",
+        "description": "",
+        "order": 8
+    },
+    {
+        "text": "Are you interested in working in a fast-paced or dynamic environment?",
+        "answers": ["fast paced", "dynamic", "both"],
+        "type": "closed-ended",
+        "focus": "job-role",
+        "level": "advance",
+        "description": "",
+        "order": 9
+    },
+    {
+        "text": "Do you enjoy research and analysis?",
+        "answers": ["yes", "no"],
+        "type": "boolean",
+        "focus": "job-role",
+        "level": "advance",
+        "description": "",
+        "order": 10
+    },
+    {
+        "text": "Are you able to control your emotions in difficult situations?",
+        "answers": ["yes", "no"],
+        "type": "boolean",
+        "focus": "job-role",
+        "level": "advance",
+        "description": "",
+        "order": 11
+    },
+    {
+        "text": "Are you interested in leadership or management roles in your career?",
+        "answers": ["yes", "no"],
+        "type": "boolean",
+        "focus": "job-role",
+        "level": "advance",
+        "description": "",
+        "order": 12
+    },
+    {
+        "text": "I like to focus on details",
+        "answers": ["yes", "no"],
+        "type": "boolean",
+        "focus": "job-role",
+        "level": "advance",
+        "description": "",
+        "order": 13
+    },
+    {
+        "text": "I like to see the results of the work I do",
+        "answers": ["yes", "no"],
+        "type": "boolean",
+        "focus": "job-role",
+        "level": "advance",
+        "description": "",
+        "order": 14
+    },
+    {
+        "text": "Are you comfortable with public speaking or presenting ideas?",
+        "answers": ["yes", "no"],
+        "type": "closed-ended",
+        "focus": "job-role",
+        "level": "advance",
+        "description": "",
+        "order": 15
+    },
+    {
+        "text": "I plan my day so I can use my time best.",
+        "answers": ["yes", "no"],
+        "type": "boolean",
+        "focus": "job-role",
+        "level": "advance",
+        "description": "",
+        "order": 16
+    },
+    {
+        "text": "I feel restricted when I have to follow a routine.",
+        "answers": ["yes", "no"],
+        "type": "boolean",
+        "focus": "job-role",
+        "level": "advance",
+        "description": "",
+        "order": 17
+    },
+    {
+        "text": "Are you open to frequent travel for work?",
+        "answers": ["yes", "no"],
+        "type": "boolean",
+        "focus": "job-role",
+        "level": "advance",
+        "description": "",
+        "order": 18
+    },
+    {
+        "text": "How important is work-life balance to you?",
+        "answers": ["important", "not important"],
+        "type": "open-ended",
+        "focus": "job-role",
+        "level": "advance",
+        "description": "",
+        "order": 19
+    },
+    {
+        "text": "What is your preferred work settings?",
+        "answers": ["office", "remote", "field", "hybrid"],
+        "type": "open-ended",
+        "focus": "job-role",
+        "level": "advance",
+        "description": "",
+        "order": 20
+    },
+    {
+        "text": "What are your primary areas of interest or passion? ",
+        "answers": [],
+        "type": "closed-ended",
+        "focus": "job-role",
+        "level": "advance",
+        "description": "",
+        "order": 21
+    }
+]

@@ -1,0 +1,132 @@
+[
+  {
+    "title": "Accountancy",
+    "description": "This sector involves managing and analysing financial records, preparing financial statements, providing tax advice, and ensuring compliance with accounting regulations.",
+    "industries": ["649b600bfe840a75193787e7"]
+  },
+  {
+    "title": "Administration",
+    "description": "This sector focuses on organising and coordinating office operations, managing data and records, handling correspondence, and providing administrative support to individuals or teams.",
+    "industries": ["649b600bfe840a75193787e5", "649b600bfe840a75193787e2", "649b600bfe840a75193787df", "649b600bfe840a75193787de"]
+  },
+  {
+    "title": "Animal Care",
+    "description": "This sector involves providing care, medical treatment, grooming, training, and welfare services for animals in various settings such as veterinary clinics, shelters, zoos, or pet care facilities.",
+    "industries": ["649b600bfe840a75193787d2"]
+  },
+  {
+    "title": "Beauty and Wellbeing",
+    "description": "This sector includes roles in the beauty and wellness industry, such as hair stylists, makeup artists, estheticians, spa therapists, and fitness instructors, who provide services to enhance individuals' physical appearance and well-being.",
+    "industries": ["649b600bfe840a75193787ef"]
+  },
+  {
+    "title": "Business and Finance",
+    "description": "This sector encompasses various roles related to business operations, financial analysis, investment, sales, marketing, and strategic planning within organisations.",
+    "industries": ["649b600bfe840a75193787e2", "649b600bfe840a75193787d4"]
+  },
+  {
+    "title": "Technology, Computing and Digital",
+    "description": "This sector focuses on roles related to technology, software development, computer programming, cybersecurity, data analysis, IT support, and digital marketing.",
+    "industries": ["649b600bfe840a75193787e1", "649b600bfe840a75193787eb", "649b600bfe840a75193787dd"]
+  },
+  {
+    "title": "Construction and Trades",
+    "description": "This sector involves roles related to building and construction projects, including carpentry, plumbing, electrical work, welding, painting, and general contracting.",
+    "industries": ["649b600bfe840a75193787d7", "649b600bfe840a75193787e8"]
+  },
+  {
+    "title": "Creative and Media services",
+    "description": "This sector encompasses roles in creative industries such as graphic design, advertising, marketing, photography, film production, journalism, and content creation.",
+    "industries": ["649b600bfe840a75193787dd", "649b5f09fe840a75193787cb", "649b600bfe840a75193787db"]
+  },
+  {
+    "title": "Delivery and Storage",
+    "description": "This sector involves roles related to delivering goods or services, managing logistics, operating warehouses, and ensuring efficient storage and distribution of products.",
+    "industries": ["649b600bfe840a75193787ec"]
+  },
+  {
+    "title": "Emergency and Uniform services",
+    "description": "This sector includes roles in emergency response, public safety, law enforcement, firefighting, paramedics, and other uniformed services focused on protecting public welfare and responding to emergencies.",
+    "industries": ["649b600bfe840a75193787de"]
+  },
+  {
+    "title": "Engineering and maintenance",
+    "description": "This sector involves roles in various engineering disciplines, such as civil, mechanical, electrical, or chemical engineering, as well as maintenance technicians who ensure the upkeep and functionality of machinery, equipment, and infrastructure.",
+    "industries": ["649b600bfe840a75193787d7", "649b600bfe840a75193787e3"]
+  },
+  {
+    "title": "Environmental and Land",
+    "description": "This sector focuses on roles related to environmental conservation, land management, sustainability, ecology, environmental engineering, and addressing climate change concerns.",
+    "industries": ["649b600bfe840a75193787ee", "649b600bfe840a75193787e9", "649b600bfe840a75193787e4"]
+  },
+  {
+    "title": "Government Services",
+    "description": "This sector includes roles within government organisations and agencies, spanning a wide range of functions such as policy-making, public administration, social services, regulatory compliance, and public safety.",
+    "industries": ["649b600bfe840a75193787de"]
+  },
+  {
+    "title": "Healthcare",
+    "description": "This sector encompasses a range of roles involved in providing medical care, including doctors, nurses, therapists, pharmacists, medical technicians, and healthcare administrators working in hospitals, clinics, and other healthcare settings.",
+    "industries": ["649b600bfe840a75193787df"]
+  },
+  {
+    "title": "Home Services",
+    "description": "This sector includes roles related to home maintenance, repairs, cleaning services, personal assistance, caregiving, and other domestic services provided within residential settings.",
+    "industries": ["649b600bfe840a75193787e8"]
+  },
+  {
+    "title": "Hospitality and food",
+    "description": "This sector involves roles in the hospitality industry, such as hotel management, restaurant services, event planning, catering, food preparation, and customer service in establishments that provide accommodation, dining, or entertainment.",
+    "industries": ["649b600bfe840a75193787e0", "649b600bfe840a75193787d5"]
+  },
+  {
+    "title": "Law and Legal",
+    "description": "This sector includes roles in the legal field, such as lawyers, paralegals, legal assistants, judges, and legal advisors, involved in legal counsel, advocacy, litigation, and legal compliance.",
+    "industries": ["649b600bfe840a75193787e7"]
+  },
+  {
+    "title": "Managerial",
+    "description": "This sector encompasses roles in management across various industries, involving leadership, strategic planning, decision-making, resource allocation, and team supervision.",
+    "industries": ["649b600bfe840a75193787e7", "649b600bfe840a75193787d4", "649b600bfe840a75193787e2", "649b600bfe840a75193787d7"]
+  },
+  {
+    "title": "Manufacturing",
+    "description": "This sector involves roles in the production and assembly of goods and products across industries, including manufacturing processes, quality control, machine operation, and production management.",
+    "industries": ["649b600bfe840a75193787e3", "649b600bfe840a75193787e6", "649b600bfe840a75193787e9"]
+  },
+  {
+    "title": "Retail and Sales",
+    "description": "This sector includes roles in retail stores, online platforms, and sales organisations, involving customer service, product knowledge, merchandising, sales techniques, and meeting sales targets.",
+    "industries": ["649b600bfe840a75193787d8"]
+  },
+  {
+    "title": "Science and Research",
+    "description": "This sector involves roles in scientific research, laboratory work, data analysis, experimentation, innovation, and development within fields such as biology, chemistry, physics, and other scientific disciplines.",
+    "industries": ["649b600bfe840a75193787e9", "649b5f0afe840a75193787cc", "649b600bfe840a75193787d1", "649b600bfe840a75193787d6"]
+  },
+  {
+    "title": "Social Care",
+    "description": "This sector encompasses roles in social work, counseling, community support, eldercare, childcare, and other services focused on helping individuals and communities improve their well-being and quality of life.",
+    "industries": ["649b600bfe840a75193787df"]
+  },
+  {
+    "title": "Sports and Leisure",
+    "description": "This sector includes roles in sports coaching, fitness instruction, sports facility management, event organisation, and recreation services aimed at promoting physical activity and leisure pursuits.",
+    "industries": ["649b600bfe840a75193787ea"]
+  },
+  {
+    "title": "Teaching and Education",
+    "description": "This sector involves roles in education and teaching, including teachers, professors, instructors, tutors, and educational administrators across various subjects, grade levels, and educational settings.",
+    "industries": ["649b600bfe840a75193787d9"]
+  },
+  {
+    "title": "Transport",
+    "description": "This sector encompasses roles in transportation services, such as truck driving, delivery services, logistics management, transportation planning, and operation of public transportation systems.",
+    "industries": ["649b600bfe840a75193787ec"]
+  },
+  {
+    "title": "Travel and Tourism",
+    "description": "This sector includes roles in the travel and tourism industry, such as travel agents, tour operators, hospitality services, destination management, and tourism promotion, facilitating travel experiences and managing visitor services.",
+    "industries": ["649b600bfe840a75193787e0", "649b600bfe840a75193787ed"]
+  }
+]

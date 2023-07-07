@@ -8,5 +8,5 @@
     "source.fixAll.format": true,
     "source.organizeImports": true
   },
-  "cSpell.words": ["asynciterable", "careerpathapp"]
+  "cSpell.words": ["asynciterable", "careerpathapp", "resave"]
 }
