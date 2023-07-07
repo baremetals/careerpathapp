@@ -1,8 +1,8 @@
-const fs = require('fs').promises;
+import { promises as fsPromises } from 'fs';
 
 export default async function deleteFile(filePath: string) {
   try {
-    await fs.unlink(filePath);
+    await fsPromises.unlink(filePath);
     console.log('File deleted successfully');
   } catch (err) {
     console.error('Error deleting file:', err);

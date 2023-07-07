@@ -44,7 +44,7 @@ const updateResponses = (Model: Model<any>) =>
       return next(new AppError('No data to store', 401));
     }
 
-    responses.forEach(async (doc: { objectId: string; }) => {
+    responses.forEach(async (doc: { objectId: string }) => {
       const query = Model.findByIdAndUpdate(
         doc.objectId,
         { ...req.body, lastModifiedAt: Date.now() },
@@ -58,6 +58,5 @@ const updateResponses = (Model: Model<any>) =>
 
     next();
   });
-
 
 export { createResponses, updateResponses };

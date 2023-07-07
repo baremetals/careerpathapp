@@ -47,7 +47,7 @@ const userSchema = new Schema<IUserDocument>({
   avatar: { type: String, default: defaultAvatar },
   isDisabled: { type: Boolean, default: false, select: false },
   isActive: { type: Boolean, default: false },
-  profile: {type: Schema.Types.ObjectId, ref: 'UserProfile'},
+  profile: { type: Schema.Types.ObjectId, ref: 'UserProfile' },
 
   createdAt: {
     type: Date,
@@ -84,7 +84,6 @@ userSchema.methods.correctPassword = async function (
 ) {
   return await argon2.verify(userPassword, candidatePassword);
 };
-
 
 const UserModel = model<IUserDocument>('User', userSchema);
 

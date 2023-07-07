@@ -19,9 +19,6 @@ const skillSchema = new Schema<ISkillDocument>({
   lastModifiedBy: { type: String, default: 'admin', select: false },
 });
 
-const SkillModel = model<ISkillDocument>(
-  'Skill',
-  skillSchema,
-);
+const SkillModel = model<ISkillDocument>('Skill', skillSchema);
 
 export { SkillModel };

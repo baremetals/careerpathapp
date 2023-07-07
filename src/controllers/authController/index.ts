@@ -46,7 +46,10 @@ export const registerHandler = catchAsync(
     if (!profile) {
       // TODO:
       // this will be a good use case for sentry.
-      console.log('======>: something happened the profile failed to create', profile)
+      console.log(
+        '======>: something happened the profile failed to create',
+        profile,
+      );
       // return next(
       //   new AppError(
       //     'Your account has been created',
@@ -63,7 +66,7 @@ export const registerHandler = catchAsync(
     //     1000 * 60 * 60 * 24 * 2,
     //   ); // 48 hours
 
-    req.session!.userId = newUser._id;
+    req.session.userId = newUser._id;
     const createdUser = await UserModel.findById(newUser._id).select(
       '-password -createdAt -lastModifiedAt -createdBy -lastModifiedBy',
     );
@@ -93,7 +96,7 @@ export const loginHandler = catchAsync(
     //   return next(new AppError('Incorrect email or password', 401));
     // }
 
-    if (!user || !user.correctPassword((user.password as string), password)) {
+    if (!user || !user.correctPassword(user.password as string, password)) {
       return next(new AppError('Incorrect email or password', 401));
     }
 
@@ -114,8 +117,8 @@ export const loginHandler = catchAsync(
 
     user.password = '';
 
-    req.session!.userId = user._id;
-    req.session!.role = user.role? user.role : 'user';
+    req.session.userId = user._id;
+    req.session.role = user.role ? user.role : 'user';
 
     res.status(201).json({
       status: 'success',

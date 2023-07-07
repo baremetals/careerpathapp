@@ -16,6 +16,5 @@ export const MIME_TYPES = [
   'application/msword',
 ];
 
-
 export const defaultAvatar =
   'https://firebasestorage.googleapis.com/v0/b/tutorial-app-hosting-server.appspot.com/o/default.jpg?alt=media&token=14d2cfe9-ebd3-49dd-9e6e-9ffe443a79ab';

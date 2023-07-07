@@ -7,10 +7,11 @@ const userProfileSchema = new Schema<IUserProfileDocument>({
   experience: [{ type: Schema.Types.ObjectId, ref: 'Experience' }],
   careerGoals: [{ type: Schema.Types.ObjectId, ref: 'CareerGoal' }],
   certifications: [{ type: Schema.Types.ObjectId, ref: 'Certification' }],
-  preferredWorkEnvironments: {
-    type: Schema.Types.ObjectId,
-    ref: 'PreferredWorkEnvironment',
-  } || undefined,
+  preferredWorkEnvironments:
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'PreferredWorkEnvironment',
+    } || undefined,
   selectedIndustries: { type: [Schema.Types.ObjectId], ref: 'Industry' },
   interests: { type: [Schema.Types.ObjectId], ref: 'Interest' },
 

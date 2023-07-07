@@ -17,6 +17,9 @@ const careerGoalSchema = new Schema<ICareerGoalDocument>({
   lastModifiedBy: { type: String, default: 'admin', select: false },
 });
 
-const CareerGoalModel = model<ICareerGoalDocument>('CareerGoal', careerGoalSchema);
+const CareerGoalModel = model<ICareerGoalDocument>(
+  'CareerGoal',
+  careerGoalSchema,
+);
 
 export { CareerGoalModel };

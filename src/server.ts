@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
-
 process.on('uncaughtException', (err) => {
   console.log('UNCAUGHT EXCEPTION! 💥 Shutting down...');
   console.log(err.name, err.message);
@@ -13,7 +12,6 @@ import { main, app } from './index';
 const port = process.env.PORT ? process.env.PORT : 9500;
 
 dotenv.config();
-
 
 const DB = process?.env?.DATABASE?.replace(
   '<password>',
@@ -27,10 +25,10 @@ mongoose
   })
   .then(() => console.log('DB connection successful!'));
 
-  main();
-const server =  app.listen(port, () => {
-    console.log(`listening on port: ${port}`);
-  });
+main();
+const server = app.listen(port, () => {
+  console.log(`listening on port: ${port}`);
+});
 
 process.on('unhandledRejection', (err: any) => {
   console.log('UNHANDLED REJECTION! 💥 Shutting down...');

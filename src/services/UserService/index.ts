@@ -34,7 +34,7 @@ const updateUserProfile = async (
 };
 
 const createSkillOrInterest = (Model: Model<any>) =>
-  catchAsync(async (req: Request, next: NextFunction) => {
+  catchAsync(async (req: Request, _res: Response, next: NextFunction) => {
     const response = await Model.create(req.body);
     next(response);
   });

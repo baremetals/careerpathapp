@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 // import AppError from '../utils/appError';
 
-
 // const handleCastErrorDB = (err: any) => {
 //   const message = `Invalid ${err.path}: ${err.value}.`;
 //   return new AppError(message, 400);
@@ -22,7 +21,7 @@ import { NextFunction, Request, Response } from 'express';
 // };
 const sendErrorDev = (err: any, res: Response) => {
   // console.error('ERROR 💥', err);
-  const errorStatusCode = err.statusCode? err.statusCode : 401 
+  const errorStatusCode = err.statusCode ? err.statusCode : 401;
   res.status(errorStatusCode).json({
     status: err.status,
     error: err,
@@ -32,18 +31,17 @@ const sendErrorDev = (err: any, res: Response) => {
 };
 
 const sendErrorProd = (err: any, _req: Request, res: Response) => {
-
-    if (err.isOperational) {
-      return res.status(err.statusCode).json({
-        status: err.status,
-        message: err.message,
-      });
-    }
-    console.error('ERROR============> 💥', err);
-    return res.status(500).json({
-      status: 'error',
-      message: 'Something is wrong!',
+  if (err.isOperational) {
+    return res.status(err.statusCode).json({
+      status: err.status,
+      message: err.message,
     });
+  }
+  console.error('ERROR============> 💥', err);
+  return res.status(500).json({
+    status: 'error',
+    message: 'Something is wrong!',
+  });
 };
 
 export default function globalErrorHandler(
@@ -55,7 +53,7 @@ export default function globalErrorHandler(
   if (process.env.NODE_ENV === 'development') {
     sendErrorDev(err, res);
   } else if (process.env.NODE_ENV === 'production') {
-    let error = { ...err };
+    const error = { ...err };
     error.message = err.message;
 
     //   if (error.name === 'CastError') error = handleCastErrorDB(error);

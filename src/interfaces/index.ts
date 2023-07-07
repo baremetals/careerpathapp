@@ -30,8 +30,8 @@ interface IQuestionDocument extends IShared {
   // category: Schema.Types.ObjectId;
   type?: QuestionType;
   focus: string;
-  level: string
-  order: number
+  level: string;
+  order: number;
   description?: string;
 }
 

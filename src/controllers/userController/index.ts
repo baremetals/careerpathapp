@@ -2,7 +2,10 @@ import { NextFunction, Request, Response } from 'express';
 // import multer from 'multer';
 import { InterestModel } from '../../models/Interest';
 import { SkillModel } from '../../models/Skill';
-import { createSkillOrInterest, updateUserSkillOrInterest } from '../../services/UserService';
+import {
+  createSkillOrInterest,
+  updateUserSkillOrInterest,
+} from '../../services/UserService';
 import { getSignedFileUrl, uploadFile } from '../../lib/fileUpload';
 import { CertificationModel } from '../../models/Certification';
 import { EducationModel } from '../../models/Education';
@@ -144,7 +147,7 @@ const generateCareerPath = catchAsync(
 
       res.status(201).json({
         status: 'success',
-        data: careerPaths
+        data: careerPaths,
       });
     } catch (err) {
       throw next(

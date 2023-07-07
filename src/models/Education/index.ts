@@ -7,7 +7,7 @@ const educationSchema = new Schema<IEducationDocument>({
   fieldOfStudy: { type: String, required: true },
   startDate: Date,
   endDate: Date,
-  
+
   createdAt: {
     type: Date,
     default: Date.now(),
@@ -22,9 +22,6 @@ const educationSchema = new Schema<IEducationDocument>({
   lastModifiedBy: { type: String, default: 'admin', select: false },
 });
 
-const EducationModel = model<IEducationDocument>(
-  'Education',
-  educationSchema,
-);
+const EducationModel = model<IEducationDocument>('Education', educationSchema);
 
 export { EducationModel };

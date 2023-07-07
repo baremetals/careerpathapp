@@ -17,7 +17,11 @@ const multerUpload = multer({
   storage: multerStorage,
 });
 
-async function uploadFile(originalname: string, body: Buffer, mimetype: string) {
+async function uploadFile(
+  originalname: string,
+  body: Buffer,
+  mimetype: string,
+) {
   const contentExtension =
     originalname.split('.')[originalname.split('.').length - 1];
   const fileName = `${Math.round(

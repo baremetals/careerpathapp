@@ -16,7 +16,7 @@ import adminRouter from './routes/admin';
 // dotenv.config();
 
 // This is required to extend the  express-session type.
-declare module "express-session" {
+declare module 'express-session' {
   interface Session {
     userId: string;
     role: string;
@@ -26,7 +26,6 @@ declare module "express-session" {
 
 const app = express();
 const main = async () => {
-
   const options = {
     definition: {
       openapi: '3.0.0',
@@ -57,7 +56,6 @@ const main = async () => {
     client: redis,
   });
 
-
   app.use(
     cors({
       origin: process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN : '*',
@@ -85,7 +83,7 @@ const main = async () => {
     } as any),
   );
 
-  app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs))
+  app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));
   app.use('/api/auth', authRouter);
   app.use('/api/users', userRouter);
   app.use('/api/careers', careerPathRouter);
@@ -97,4 +95,4 @@ const main = async () => {
   app.use(globalErrorHandler);
 };
 
-export  {main, app};
+export { main, app };

@@ -27,11 +27,11 @@ import { multerUpload } from '../../lib/fileUpload';
  */
 
 /**
-  * @swagger
-  * tags:
-  *   name: Users
-  *   description: Users API
-  */
+ * @swagger
+ * tags:
+ *   name: Users
+ *   description: Users API
+ */
 
 /**
  * @swagger
@@ -51,7 +51,6 @@ import { multerUpload } from '../../lib/fileUpload';
  */
 
 const userRouter = Router();
-
 
 // Protect all routes after this middleware
 userRouter.use(protect);

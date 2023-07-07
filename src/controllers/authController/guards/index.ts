@@ -5,7 +5,6 @@ import { UserModel } from '../../../models/User';
 
 export const protect = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-
     // console.log('=======>', req.session.userId)
 
     if (!req.session.userId) {
@@ -22,12 +21,7 @@ export const protect = catchAsync(
     if (!currentUser) {
       req.session?.destroy;
       res.clearCookie('connect.sid');
-      return next(
-        new AppError(
-          'The user not found.',
-          401,
-        ),
-      );
+      return next(new AppError('The user not found.', 401));
     }
     // GRANT ACCESS TO PROTECTED ROUTE
     next();

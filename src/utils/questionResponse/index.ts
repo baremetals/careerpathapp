@@ -10,7 +10,6 @@ import { CareerPathModel } from '../../models/CareerPath';
 import { JobRoleModel } from '../../models/JobRole';
 import { IJobRoleDocument } from 'interfaces/careerPath';
 
-
 async function getRulesForQuestion(industryId: Types.ObjectId) {
   return DecisionTreeRuleModel.find({
     industry: industryId,
@@ -109,7 +108,6 @@ async function getNextQuestionId(
   return nextQuestion._id;
 }
 
-
 // async function fetchCareerPathRoles(
 //   industryScores: { industry: string; score: number }[],
 //   next: NextFunction,
@@ -138,7 +136,7 @@ async function getNextQuestionId(
 //             const jobRoles = await JobRoleModel.find({
 //               careerPath: path._id,
 //             }).exec();
-            
+
 //             roles.push({ myPaths: path?.title as string, jobs: jobRoles });
 //           }
 //         }
@@ -169,7 +167,7 @@ async function fetchCareerPathRoles(
         const industryDoc = await IndustryModel.findById(
           industry.industry,
         ).exec();
-        console.log('====the industryDoc', industryDoc)
+        console.log('====the industryDoc', industryDoc);
         if (industryDoc) {
           const paths = await CareerPathModel.find({
             industries: { $in: [industry.industry] },
@@ -181,7 +179,10 @@ async function fetchCareerPathRoles(
               const jobRoles = await JobRoleModel.find({
                 careerPath: path._id,
               }).exec();
-              const matchedRoles = await filterJobRoles(jobRoles, userResponses);
+              const matchedRoles = await filterJobRoles(
+                jobRoles,
+                userResponses,
+              );
               console.log(matchedRoles);
               roles.push({ myPaths: path.title as string, jobs: matchedRoles });
             }
@@ -223,14 +224,14 @@ async function filterJobRoles(
       if (matchingResponse?.response === 'irrelevant') {
         totalScore++;
       }
-        if (
-          matchingResponse &&
-          matchingResponse.response ===
-            requiredResponses.find((r) => r.question === question)?.response
-        ) {
-          console.log('the responses required========>:', requiredResponses);
-          totalScore++;
-        }
+      if (
+        matchingResponse &&
+        matchingResponse.response ===
+          requiredResponses.find((r) => r.question === question)?.response
+      ) {
+        console.log('the responses required========>:', requiredResponses);
+        totalScore++;
+      }
     }
     if (totalScore >= 5) {
       selectedRoles.push(role);
@@ -238,7 +239,6 @@ async function filterJobRoles(
   }
   return selectedRoles;
 }
-
 
 export {
   fetchCareerPathRoles,

@@ -1,7 +1,6 @@
 import { IShared } from 'interfaces';
 import { Schema } from 'mongoose';
 
-
 interface IEducationDocument extends IShared {
   user: Schema.Types.ObjectId;
   school: string;
