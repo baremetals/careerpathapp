@@ -13,8 +13,8 @@ import {
 
 export interface IUserDocument extends IShared {
   email: string;
-  password?: string;
-  passwordConfirm?: string;
+  password: string;
+  confirmPassword?: string;
   firstName: string;
   lastName: string;
   fullName: string;
@@ -24,9 +24,7 @@ export interface IUserDocument extends IShared {
   isActive: boolean;
   role: string;
   profile: IUserProfileDocument;
-  passwordChangedAt: Date;
-  passwordResetToken: string;
-  passwordResetExpires: Date;
+  passwordChangedAt: number;
   correctPassword: (enteredPassword: string, hashedPassword: string) => boolean;
 }
 

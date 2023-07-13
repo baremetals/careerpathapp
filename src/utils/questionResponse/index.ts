@@ -154,7 +154,7 @@ async function getNextQuestionId(
 
 async function fetchCareerPathRoles(
   industryScores: { industry: string; score: number }[],
-  userResponses: IQuestionResponseDocument[],
+  _userResponses: IQuestionResponseDocument[],
   // _next: NextFunction,
 ) {
   try {
@@ -179,12 +179,12 @@ async function fetchCareerPathRoles(
               const jobRoles = await JobRoleModel.find({
                 careerPath: path._id,
               }).exec();
-              const matchedRoles = await filterJobRoles(
-                jobRoles,
-                userResponses,
-              );
-              console.log(matchedRoles);
-              roles.push({ myPaths: path.title as string, jobs: matchedRoles });
+              // const matchedRoles = await filterJobRoles(
+              //   jobRoles,
+              //   userResponses,
+              // );
+              // console.log(matchedRoles);
+              roles.push({ myPaths: path.title as string, jobs: jobRoles });
             }
           }
         }
@@ -200,45 +200,45 @@ async function fetchCareerPathRoles(
   }
 }
 
-async function filterJobRoles(
-  roles: IJobRoleDocument[],
-  userResponses: IQuestionResponseDocument[],
-): Promise<IJobRoleDocument[]> {
-  //requiredResponses
-  console.log('========the roles length========>:', roles.length);
-  const selectedRoles: IJobRoleDocument[] = [];
-  const userResponsesMap = new Map<string, IQuestionResponseDocument>();
+// async function filterJobRoles(
+//   roles: IJobRoleDocument[],
+//   userResponses: IQuestionResponseDocument[],
+// ): Promise<IJobRoleDocument[]> {
+//   //requiredResponses
+//   console.log('========the roles length========>:', roles.length);
+//   const selectedRoles: IJobRoleDocument[] = [];
+//   const userResponsesMap = new Map<string, IQuestionResponseDocument>();
 
-  for (const response of userResponses) {
-    userResponsesMap.set(response.question.toString(), response);
-  }
+//   for (const response of userResponses) {
+//     userResponsesMap.set(response.question.toString(), response);
+//   }
 
-  for (const role of roles) {
-    const { requiredResponses } = role;
-    const requiredQuestions = new Set(requiredResponses.map((r) => r.question));
-    let totalScore = 0;
-    console.log('========the roles========>:', role);
+//   for (const role of roles) {
+//     const { requiredWeight } = role;
+//     const requiredQuestions = new Set(requiredResponses.map((r) => r.question));
+//     let totalScore = 0;
+//     console.log('========the roles========>:', role);
 
-    for (const question of requiredQuestions) {
-      const matchingResponse = userResponsesMap.get(question.toString());
-      if (matchingResponse?.response === 'irrelevant') {
-        totalScore++;
-      }
-      if (
-        matchingResponse &&
-        matchingResponse.response ===
-          requiredResponses.find((r) => r.question === question)?.response
-      ) {
-        console.log('the responses required========>:', requiredResponses);
-        totalScore++;
-      }
-    }
-    if (totalScore >= 5) {
-      selectedRoles.push(role);
-    }
-  }
-  return selectedRoles;
-}
+//     for (const question of requiredQuestions) {
+//       const matchingResponse = userResponsesMap.get(question.toString());
+//       if (matchingResponse?.response === 'irrelevant') {
+//         totalScore++;
+//       }
+//       if (
+//         matchingResponse &&
+//         matchingResponse.response ===
+//           requiredResponses.find((r) => r.question === question)?.response
+//       ) {
+//         console.log('the responses required========>:', requiredResponses);
+//         totalScore++;
+//       }
+//     }
+//     if (totalScore >= 5) {
+//       selectedRoles.push(role);
+//     }
+//   }
+//   return selectedRoles;
+// }
 
 export {
   fetchCareerPathRoles,

@@ -17,6 +17,7 @@ adminRouter.route('/industries').post(handler.createManyIndustries);
 
 // Career Paths
 adminRouter.route('/career-path').post(handler.createCareerPath);
+adminRouter.route('/career-path/:id').patch(handler.updateCareerPath);
 adminRouter.route('/career-paths').post(handler.createManyCareerPaths);
 
 // Decision Tree Rules
@@ -27,5 +28,6 @@ adminRouter
 
 // Job roles
 adminRouter.route('/job-role').post(handler.createJobRole);
+adminRouter.route('/job-roles').post(handler.createManyJobRoles);
 
 export default adminRouter;

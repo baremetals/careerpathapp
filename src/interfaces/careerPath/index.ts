@@ -10,26 +10,27 @@ interface IIndustryDocument extends IShared {
 interface ICareerPathDocument extends IShared {
   title: string;
   description: string;
+  requiredWeight: number;
   industries: Array<Schema.Types.ObjectId>;
 }
 
-type requiredResponses = {
-  question: Schema.Types.ObjectId;
-  response: string;
-};
+// type requiredResponses = {
+//   question: Schema.Types.ObjectId;
+//   response: string | string[];
+// };
 
 interface IJobRoleDocument extends IShared {
   title: string;
   description: string;
-  averageStartingSalary: number;
-  averageExperiencedSalary: number;
+  averageStartingSalary: number | string;
+  averageExperiencedSalary: number | string;
   educationRequirements: string[];
   skills: string[];
   careerPath: Schema.Types.ObjectId;
   progressPaths: string[];
   relatedCareers: string[];
   aliasTitles: string[];
-  requiredResponses: requiredResponses[];
+  // requiredWeight: number;
 }
 
 export { IIndustryDocument, ICareerPathDocument, IJobRoleDocument };

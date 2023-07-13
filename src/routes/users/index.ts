@@ -62,6 +62,7 @@ userRouter.post(
   multerUpload.single('avatar'),
   handler.updateAvatar,
 );
+userRouter.post('/me/change-password', handler.changePassword)
 
 userRouter.post(
   '/me/question-responses',

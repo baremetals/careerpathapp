@@ -5,6 +5,7 @@ import RedisStore from 'connect-redis';
 import cors from 'cors';
 import swaggerUI from 'swagger-ui-express';
 import swaggerJsDoc from 'swagger-jsdoc';
+// import hbs from 'hbs';
 
 import AppError from './utils/appError';
 import globalErrorHandler from './errors/errorHandler';
@@ -40,8 +41,9 @@ const main = async () => {
         },
       ],
     },
-    apis: ['./routes/*/*.ts'],
+    apis: ['src/routes/*/*.ts'],
   };
+  app.set('view engine', 'hbs');
 
   const specs = swaggerJsDoc(options);
 

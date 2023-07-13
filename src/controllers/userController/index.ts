@@ -26,6 +26,7 @@ import {
   getUserResponse,
   traverseDecisionTree,
 } from '../../utils/questionResponse';
+import { EmailService } from '../../services/EmailService';
 
 const updateAvatar = async (
   req: Request,
@@ -72,18 +73,28 @@ const getMe = (req: Request, _res: Response, next: NextFunction) => {
   next();
 };
 
-// const updateMe = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction,
-// ) => {
-//   const update = await updateUserProfile(req.body, req.body.objectId, next);
-//   // console.log(update);
-//   res.status(200).json({
-//     status: 'success',
-//     data: update,
-//   });
-// };
+export const changePassword = catchAsync(async (req, res, next) => {
+  const user = await UserModel.findById(req.session.userId).select('+password');
+
+  if (
+    !user?.correctPassword(req.body.currentPassword, user.password as string)
+  ) {
+    return next(new AppError('Your current password is incorrect.', 401));
+  }
+
+  user.password = req.body.newPassword;
+  user.confirmPassword = req.body.confirmPassword;
+  user.lastModifiedBy = user.fullName;
+  user.lastModifiedAt = new Date();
+  await user.save({ validateBeforeSave: false });
+
+  await new EmailService(user).sendPasswordChangeEmail();
+
+  res.status(201).json({
+    status: 'success',
+    message: 'Your password has been changed',
+  });
+});
 
 const updateMe = Factory.updateOne(UserModel);
 

@@ -7,6 +7,7 @@ const careerPathSchema = new Schema<ICareerPathDocument>({
     required: true,
   },
   description: { type: String, required: true },
+  requiredWeight:{ type: Number, required: true },
   industries: { type: [Schema.Types.ObjectId], ref: 'Industry' },
   createdAt: {
     type: Date,

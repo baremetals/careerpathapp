@@ -71,9 +71,6 @@ const createMany = (Model: Model<any>) =>
       return next(new AppError('No data to store', 401));
     }
     await Model.insertMany(docs);
-    // docs.forEach(async (doc: typeof Model) => {
-    //   await Model.create(doc);
-    // })
 
     res.status(201).json({
       status: 'success',

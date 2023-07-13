@@ -26,6 +26,7 @@ export const createCareerPath = Factory.createOne(CareerPathModel);
 export const createManyCareerPaths = Factory.createMany(CareerPathModel);
 export const getOneCareerPath = Factory.getOne(CareerPathModel);
 export const getAllCareerPaths = Factory.getMany(CareerPathModel);
+export const updateCareerPath = Factory.updateOne(CareerPathModel);
 
 // Question Response Rules
 export const createDecisionTreeRule = Factory.createOne(DecisionTreeRuleModel);
