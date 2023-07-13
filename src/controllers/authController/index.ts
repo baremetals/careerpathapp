@@ -10,8 +10,11 @@ import { v4 } from 'uuid';
 import { ACCOUNT_ACTIVATED } from '../../lib/constants';
 import { IUserDocument } from '../../interfaces/user';
 
-
-const createActivationToken = async (user: IUserDocument, req: Request, res: Response) => {
+const createActivationToken = async (
+  user: IUserDocument,
+  req: Request,
+  res: Response,
+) => {
   const redis = new Redis();
   try {
     const token = v4();
@@ -21,9 +24,7 @@ const createActivationToken = async (user: IUserDocument, req: Request, res: Res
       'EX',
       1000 * 60 * 60 * 24,
     ); // 24 hours
-    const url = `${req.protocol}://${req.get(
-      'host',
-    )}/activate/${token}`;
+    const url = `${req.protocol}://${req.get('host')}/activate/${token}`;
     await new EmailService(user, url).sendWelcomeEmail();
     res.status(201).json({
       status: 'success',
@@ -35,7 +36,6 @@ const createActivationToken = async (user: IUserDocument, req: Request, res: Res
 
 export const registerHandler = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    
     // console.log('===============>', req.body)
     const user = await UserModel.findOne({
       email: req.body.email,
@@ -97,7 +97,9 @@ export const activateUserHandler = catchAsync(
     const userId = await redis.get(key);
 
     if (!userId) {
-      return next(new AppError('this token has expired. Please request a new token', 401));
+      return next(
+        new AppError('this token has expired. Please request a new token', 401),
+      );
     }
 
     const user = await UserModel.findById(userId);
@@ -117,8 +119,7 @@ export const activateUserHandler = catchAsync(
 
     res.status(201).json({
       status: 'success',
-      message:
-        'Your user account has been activated you may now log in.',
+      message: 'Your user account has been activated you may now log in.',
     });
   },
 );
@@ -157,7 +158,10 @@ export const loginHandler = catchAsync(
     //   return next(new AppError('Incorrect email or password', 401));
     // }
 
-    if (!user || !user.correctPassword(password as string, user.password as string)) {
+    if (
+      !user ||
+      !user.correctPassword(password as string, user.password as string)
+    ) {
       return next(new AppError('Incorrect email or password', 401));
     }
 
@@ -228,9 +232,11 @@ export const forgotPasswordHandler = catchAsync(async (req, res, next) => {
       message: 'Please check your email for the reset password link',
     });
   } catch (err) {
-
     return next(
-      new AppError('There was an error sending the email. Try again later!', 500),
+      new AppError(
+        'There was an error sending the email. Try again later!',
+        500,
+      ),
     );
   }
 });
@@ -244,7 +250,9 @@ export const resetPasswordHandler = catchAsync(async (req, res, next) => {
 
   // 2) If token has not expired, and there is user, set the new password
   if (!user) {
-    return next(new AppError('Token has expired, please request new token', 400));
+    return next(
+      new AppError('Token has expired, please request new token', 400),
+    );
   }
 
   user.password = req.body.newPassword;
@@ -260,6 +268,4 @@ export const resetPasswordHandler = catchAsync(async (req, res, next) => {
     status: 'success',
     message: 'Your password has been changed, you may now log in',
   });
-
 });
-
