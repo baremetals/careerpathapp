@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { protect } from '../../controllers/authController/guards';
+import authMiddleware from '../../middleware/authMiddleware';
 // import * as handler from '../../controllers/userController';
 import * as handler from '../../controllers/userController';
 
@@ -53,7 +53,7 @@ import { multerUpload } from '../../lib/fileUpload';
 const userRouter = Router();
 
 // Protect all routes after this middleware
-userRouter.use(protect);
+userRouter.use(authMiddleware);
 
 userRouter.get('/me', handler.getMe, handler.getUser);
 userRouter.patch('/me/update', handler.updateMe);

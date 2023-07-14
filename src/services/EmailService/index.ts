@@ -1,5 +1,4 @@
 import sgMail, { MailDataRequired } from '@sendgrid/mail';
-sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
 
 export class EmailService {
   to: string;
@@ -13,9 +12,10 @@ export class EmailService {
     this.from = `Careers App <${process.env.EMAIL_FROM}>`;
   }
 
-  // TODO: Create SendGrid templates
+  // TODO: Create SendGrid templates, catch errors with sentry
 
   async send(subject: string, msg: string) {
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
     const html = `
       <p>Hi ${this.firstName},</p><br>
       <br>
@@ -33,8 +33,8 @@ export class EmailService {
     };
     try {
       await sgMail.send(mailOptions);
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      console.error(error.response.body);
     }
   }
 

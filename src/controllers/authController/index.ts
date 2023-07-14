@@ -24,7 +24,9 @@ const createActivationToken = async (
       'EX',
       1000 * 60 * 60 * 24,
     ); // 24 hours
-    const url = `${req.protocol}://${req.get('host')}/activate/${token}`;
+    const url = `${req.protocol}://${req.get(
+      'host',
+    )}/api/auth/activate/${token}`;
     await new EmailService(user, url).sendWelcomeEmail();
     res.status(201).json({
       status: 'success',
@@ -61,7 +63,7 @@ export const registerHandler = catchAsync(
       fullName,
       email: req.body.email.trim().toLowerCase(),
       password: req.body.password,
-      passwordConfirm: req.body.passwordConfirm,
+      confirmPassword: req.body.confirmPassword,
       createdBy: fullName,
       lastModifiedBy: fullName,
     });
@@ -85,6 +87,8 @@ export const registerHandler = catchAsync(
     // const createdUser = await UserModel.findById(newUser._id).select(
     //   '-password -createdAt -lastModifiedAt -createdBy -lastModifiedBy',
     // );
+    newUser.profile = profile._id;
+    newUser.save({ validateBeforeSave: false });
     newUser.password = '';
     createActivationToken(newUser, req, res);
   },
@@ -113,7 +117,9 @@ export const activateUserHandler = catchAsync(
     }
 
     user.isActive = true;
-    user.save();
+    user.lastModifiedBy = user.fullName;
+    user.lastModifiedAt = new Date();
+    user.save({ validateBeforeSave: false });
 
     await redis.del(key);
 

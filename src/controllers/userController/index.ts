@@ -73,7 +73,7 @@ const getMe = (req: Request, _res: Response, next: NextFunction) => {
   next();
 };
 
-export const changePassword = catchAsync(async (req, res, next) => {
+const changePassword = catchAsync(async (req, res, next) => {
   const user = await UserModel.findById(req.session.userId).select('+password');
 
   if (
@@ -152,7 +152,7 @@ const generateCareerPath = catchAsync(
 
       // console.log('==============>: we cooking my data!!!!', data);
 
-      const careerPaths = await fetchCareerPathRoles(data, userResponses);
+      const careerPaths = await fetchCareerPathRoles(data);
 
       console.log('==============>: career paths my dude', careerPaths);
 
@@ -263,6 +263,7 @@ export {
   getUser,
   getUserWithProfile,
   updateAvatar,
+  changePassword,
   updateCertification,
   updateEducation,
   updateExperience,

@@ -1,11 +1,12 @@
 import { Router } from 'express';
-import { protect, restrictTo } from '../../controllers/authController/guards';
+import authMiddleware from '../../middleware/authMiddleware';
+import adminMiddleware from '../../middleware/adminMiddleware';
 import * as handler from '../../controllers/adminController';
 
 const adminRouter = Router();
 
 // Protect all routes
-adminRouter.use(protect, restrictTo('admin', 'dev'));
+adminRouter.use(authMiddleware, adminMiddleware('admin', 'dev'));
 
 // Questions
 adminRouter.route('/question').post(handler.createQuestion);

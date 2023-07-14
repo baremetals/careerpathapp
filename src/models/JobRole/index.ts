@@ -19,7 +19,7 @@ const jobRoleSchema = new Schema<IJobRoleDocument>({
   //   type: [{ question: Schema.Types.ObjectId, response: String || [String] }],
   //   required: true,
   // },
-  // requiredWeight:{ type: Number, required: true },
+  requiredWeight: { type: Number || String, required: true },
   createdAt: {
     type: Date,
     default: Date.now(),
