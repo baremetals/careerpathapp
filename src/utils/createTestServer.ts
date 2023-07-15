@@ -1,19 +1,19 @@
 import express from 'express';
+import mongoose from 'mongoose';
 import session from 'express-session';
-import Redis from 'ioredis';
+// import Redis from 'ioredis';
+import { MongoMemoryServer } from 'mongodb-memory-server';
+import redis from 'redis-mock';
 import RedisStore from 'connect-redis';
 import cors from 'cors';
-import swaggerUI from 'swagger-ui-express';
-import swaggerJsDoc from 'swagger-jsdoc';
-// import hbs from 'hbs';
 
-import AppError from './utils/appError';
-import globalErrorHandler from './errors/errorHandler';
-import careerPathRouter from './routes/careerPaths';
-import authRouter from './routes/auth';
-import userRouter from './routes/users';
-import adminRouter from './routes/admin';
-import uiRouter from './routes/ui';
+import AppError from './appError';
+import globalErrorHandler from '../errors/errorHandler';
+import careerPathRouter from '../routes/careerPaths';
+import authRouter from '../routes/auth';
+import userRouter from '../routes/users';
+import adminRouter from '../routes/admin';
+import uiRouter from '../routes/ui';
 import path from 'path';
 // import dotenv from 'dotenv';
 // dotenv.config();
@@ -28,31 +28,17 @@ declare module 'express-session' {
 }
 
 // const app = express();
-function createServer() {
+async function createTestServer() {
   const app = express();
-  const options = {
-    definition: {
-      openapi: '3.0.0',
-      info: {
-        title: 'Welcome to career paths docs',
-        version: '1.0.0',
-        description: 'career path application',
-      },
-      servers: [
-        {
-          url: 'http://localhost:9500',
-        },
-      ],
-    },
-    apis: ['src/routes/*/*.ts'],
-  };
+
   app.set('view engine', 'hbs');
   app.set('views', path.join(__dirname, 'views'));
   app.use(express.static('public'));
 
-  const specs = swaggerJsDoc(options);
+  const mongoServer = await MongoMemoryServer.create();
+  await mongoose.connect(mongoServer.getUri());
 
-  const redis = new Redis({
+  const client = redis.createClient({
     port: Number(process.env.REDIS_PORT),
     host: process.env.REDIS_HOST,
     password: process.env.REDIS_PASSWORD,
@@ -60,7 +46,7 @@ function createServer() {
 
   // const RedisStore = connectRedis(session);
   const redisStore = new RedisStore({
-    client: redis,
+    client: client,
   });
 
   app.use(
@@ -91,7 +77,6 @@ function createServer() {
   );
 
   app.use('/', uiRouter);
-  app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));
   app.use('/api/auth', authRouter);
   app.use('/api/users', userRouter);
   app.use('/api/careers', careerPathRouter);
@@ -105,4 +90,4 @@ function createServer() {
   return app;
 }
 
-export default createServer;
+export default createTestServer;

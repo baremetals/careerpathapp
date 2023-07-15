@@ -25,5 +25,5 @@
     "baseUrl": "src"
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["node_modules", "Errors.md", "dist"]
+  "exclude": ["tailwind.config.js", "jest.config.js", "jest.setup.redis-mock.js", "node_modules", "Errors.md", "dist"]
 }
