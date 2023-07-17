@@ -18,6 +18,10 @@ module.exports = {
       '2xl': '1536px',
       // => @media (min-width: 1536px) { ... }
     },
+    colors: {
+      mainOrange: '#ea580c',
+      mainBG: '#0E2954'
+    },
     extend: {},
   },
   plugins: [],

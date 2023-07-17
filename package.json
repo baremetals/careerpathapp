@@ -14,7 +14,8 @@
   },
   "scripts": {
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "watch": "tsc -w && npx tailwindcss -i ./src/public/input.css -o ./dist/main.css  --watch",
+    "watch": "tsc -w",
+    "tail": "npx tailwindcss -i ./src/public/input.css -o ./src/public/css/main.css  --watch",
     "build": "tsc && npx tailwindcss -i ./src/public/input.css -o ./dist/main.css",
     "prepare": "husky install",
     "dev": "nodemon dist/server.js",

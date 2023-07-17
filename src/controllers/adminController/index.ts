@@ -1,13 +1,13 @@
 // import { NextFunction, Request, Response } from 'express';
 // import catchAsync from '../../utils/catchAsync';
-import { InterestModel } from '../../models/Interest';
 import { CareerPathModel } from '../../models/CareerPath';
-import { DecisionTreeRuleModel } from '../../models/DecisionTreeRule';
+import { CareerPathResponseAndWeightModel } from '../../models/CareerPathResponseAndWeight';
 import { IndustryModel } from '../../models/Industry';
-import { QuestionModel } from '../../models/Question';
-import * as Factory from '../../services/SharedService';
-import { SkillModel } from '../../models/Skill';
+import { InterestModel } from '../../models/Interest';
 import { JobRoleModel } from '../../models/JobRole';
+import { QuestionModel } from '../../models/Question';
+import { SkillModel } from '../../models/Skill';
+import * as Factory from '../../services/SharedService';
 
 // Questions
 export const createQuestion = Factory.createOne(QuestionModel);
@@ -29,12 +29,18 @@ export const getAllCareerPaths = Factory.getMany(CareerPathModel);
 export const updateCareerPath = Factory.updateOne(CareerPathModel);
 
 // Question Response Rules
-export const createDecisionTreeRule = Factory.createOne(DecisionTreeRuleModel);
-export const createManyDecisionTreeRules = Factory.createMany(
-  DecisionTreeRuleModel,
+export const createCareerPathResponseAndWeight = Factory.createOne(
+  CareerPathResponseAndWeightModel,
 );
-export const getOneDecisionTreeRule = Factory.getOne(DecisionTreeRuleModel);
-export const getAllDecisionTreeRules = Factory.getMany(DecisionTreeRuleModel);
+export const createManyCareerPathResponseAndWeight = Factory.createMany(
+  CareerPathResponseAndWeightModel,
+);
+export const getOneCareerPathResponseAndWeight = Factory.getOne(
+  CareerPathResponseAndWeightModel,
+);
+export const getAllCareerPathResponseAndWeights = Factory.getMany(
+  CareerPathResponseAndWeightModel,
+);
 
 // Interests
 export const createInterest = Factory.createOne(InterestModel);

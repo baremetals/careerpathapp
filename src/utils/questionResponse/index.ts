@@ -1,17 +1,18 @@
 import { NextFunction } from 'express';
 import { Types } from 'mongoose';
-import { IQuestionDocument, IQuestionResponseDocument } from '../../interfaces';
-import { DecisionTreeRuleModel } from '../../models/DecisionTreeRule';
+import { IQuestionDocument } from '../../interfaces/question';
+import { CareerPathResponseAndWeightModel } from '../../models/CareerPathResponseAndWeight';
 import { IndustryModel } from '../../models/Industry';
-import { QuestionResponseModel } from '../../models/QuestionResponse';
+import { UserQuestionResponseModel } from '../../models/UserQuestionResponse';
 import AppError from '../../utils/appError';
 // import { ICareerPathDocument } from '../../interfaces/careerPath';
 import { CareerPathModel } from '../../models/CareerPath';
 import { JobRoleModel } from '../../models/JobRole';
+import { IUserQuestionResponseDocument } from '../../interfaces/user';
 // import { IJobRoleDocument } from 'interfaces/careerPath';
 
 async function getRulesForQuestion(industryId: Types.ObjectId) {
-  return DecisionTreeRuleModel.find({
+  return CareerPathResponseAndWeightModel.find({
     industry: industryId,
   }).exec();
 }
@@ -21,7 +22,7 @@ async function traverseDecisionTree(
   selectedIndustries: Types.ObjectId[],
   questions: IQuestionDocument[],
   next: NextFunction,
-  userResponses: IQuestionResponseDocument[],
+  userResponses: IUserQuestionResponseDocument[],
 ): Promise<{ industry: string; score: number }[]> {
   try {
     // const userResponses = await getUserResponse(userId);
@@ -88,7 +89,7 @@ async function traverseDecisionTree(
 }
 
 async function getUserResponse(userId: string) {
-  return QuestionResponseModel.find({ user: userId }).exec();
+  return UserQuestionResponseModel.find({ user: userId }).exec();
 }
 
 async function getNextQuestionId(

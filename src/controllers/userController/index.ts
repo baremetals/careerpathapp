@@ -1,24 +1,25 @@
 import { NextFunction, Request, Response } from 'express';
 // import multer from 'multer';
-import { InterestModel } from '../../models/Interest';
-import { SkillModel } from '../../models/Skill';
-import {
-  createSkillOrInterest,
-  updateUserSkillOrInterest,
-} from '../../services/UserService';
 import { getSignedFileUrl, uploadFile } from '../../lib/fileUpload';
 import { CertificationModel } from '../../models/Certification';
 import { EducationModel } from '../../models/Education';
 import { ExperienceModel } from '../../models/Experience';
+import { InterestModel } from '../../models/Interest';
 import { QuestionModel } from '../../models/Question';
-import { QuestionResponseModel } from '../../models/QuestionResponse';
+import { SkillModel } from '../../models/Skill';
 import { UserModel } from '../../models/User';
 import { UserProfileModel } from '../../models/UserProfile';
+import { UserQuestionResponseModel } from '../../models/UserQuestionResponse';
+import { EmailService } from '../../services/EmailService';
 import {
   createResponses,
   updateResponses,
 } from '../../services/QuestionResponse';
 import * as Factory from '../../services/SharedService';
+import {
+  createSkillOrInterest,
+  updateUserSkillOrInterest,
+} from '../../services/UserService';
 import AppError from '../../utils/appError';
 import catchAsync from '../../utils/catchAsync';
 import {
@@ -26,7 +27,6 @@ import {
   getUserResponse,
   traverseDecisionTree,
 } from '../../utils/questionResponse';
-import { EmailService } from '../../services/EmailService';
 
 const updateAvatar = async (
   req: Request,
@@ -219,8 +219,8 @@ const getUserWithProfile = async (
   }
 };
 
-const createQuestionResponse = createResponses(QuestionResponseModel);
-const updateQuestionResponse = updateResponses(QuestionResponseModel);
+const createQuestionResponse = createResponses(UserQuestionResponseModel);
+const updateQuestionResponse = updateResponses(UserQuestionResponseModel);
 
 const getUser = Factory.getOne(UserModel);
 
@@ -246,6 +246,7 @@ const createInterest = createSkillOrInterest(InterestModel);
 const updateMySkillOrInterest = updateUserSkillOrInterest(UserProfileModel);
 
 export {
+  changePassword,
   createCertification,
   createEducation,
   createExperience,
@@ -263,12 +264,11 @@ export {
   getUser,
   getUserWithProfile,
   updateAvatar,
-  changePassword,
   updateCertification,
   updateEducation,
   updateExperience,
   updateMe,
+  updateMySkillOrInterest,
   updateProfile,
   updateQuestionResponse,
-  updateMySkillOrInterest,
 };
