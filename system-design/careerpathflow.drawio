@@ -1,0 +1,125 @@
+<mxfile host="Electron" modified="2023-07-19T13:00:40.271Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.6.1 Chrome/112.0.5615.204 Electron/24.6.1 Safari/537.36" version="21.6.1" etag="zyyqJMC-N0CRBAV-fG_9" type="device">
+  <diagram id="w0grMucNAaFN3ffCnhxD" name="Page-1">
+    <mxGraphModel dx="1410" dy="974" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="0WCMNTBBKTN_myFraTjn-79" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="2" target="3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="2" value="LoggedIn User" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
+          <mxGeometry x="414" y="10" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="0WCMNTBBKTN_myFraTjn-80" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="21" target="0WCMNTBBKTN_myFraTjn-51">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="21" value="API Call" style="sketch=0;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;fillColor=#DF8C42;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;shape=mxgraph.veeam2.restful_api;fontSize=8;" parent="1" vertex="1">
+          <mxGeometry x="389" y="620" width="50" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="0WCMNTBBKTN_myFraTjn-73" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="214" y="720" width="400" height="430" as="geometry" />
+        </mxCell>
+        <mxCell id="0WCMNTBBKTN_myFraTjn-51" value="Rest Endpoint" style="swimlane;whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="0WCMNTBBKTN_myFraTjn-73">
+          <mxGeometry width="400" height="430" as="geometry" />
+        </mxCell>
+        <mxCell id="0WCMNTBBKTN_myFraTjn-72" value="" style="group" vertex="1" connectable="0" parent="0WCMNTBBKTN_myFraTjn-73">
+          <mxGeometry x="59" y="60" width="301.5" height="360" as="geometry" />
+        </mxCell>
+        <mxCell id="0WCMNTBBKTN_myFraTjn-33" value="&lt;font style=&quot;font-size: 8px;&quot;&gt;Error Response&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#a20025;fontColor=#ffffff;strokeColor=#6F0000;" vertex="1" parent="0WCMNTBBKTN_myFraTjn-72">
+          <mxGeometry x="190" y="140" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="0WCMNTBBKTN_myFraTjn-32" value="Make career path decision" style="rounded=1;whiteSpace=wrap;html=1;fontSize=8;fillColor=none;" vertex="1" parent="0WCMNTBBKTN_myFraTjn-72">
+          <mxGeometry y="140" width="95" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="0WCMNTBBKTN_myFraTjn-34" value="user validation" style="rounded=1;whiteSpace=wrap;html=1;fontSize=8;fillColor=none;" vertex="1" parent="0WCMNTBBKTN_myFraTjn-72">
+          <mxGeometry width="95" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="0WCMNTBBKTN_myFraTjn-43" value="Structure data" style="rounded=1;whiteSpace=wrap;html=1;fontSize=8;fillColor=none;" vertex="1" parent="0WCMNTBBKTN_myFraTjn-72">
+          <mxGeometry y="210" width="95" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="0WCMNTBBKTN_myFraTjn-56" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="0WCMNTBBKTN_myFraTjn-72" source="0WCMNTBBKTN_myFraTjn-32" target="0WCMNTBBKTN_myFraTjn-43">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="0WCMNTBBKTN_myFraTjn-44" value="store/update user profile" style="rounded=1;whiteSpace=wrap;html=1;fontSize=8;fillColor=none;" vertex="1" parent="0WCMNTBBKTN_myFraTjn-72">
+          <mxGeometry y="280" width="95" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="0WCMNTBBKTN_myFraTjn-57" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="0WCMNTBBKTN_myFraTjn-72" source="0WCMNTBBKTN_myFraTjn-43" target="0WCMNTBBKTN_myFraTjn-44">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="0WCMNTBBKTN_myFraTjn-54" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="0WCMNTBBKTN_myFraTjn-72" source="0WCMNTBBKTN_myFraTjn-48" target="0WCMNTBBKTN_myFraTjn-32">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="0WCMNTBBKTN_myFraTjn-48" value="data validation&lt;br&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=8;fillColor=none;" vertex="1" parent="0WCMNTBBKTN_myFraTjn-72">
+          <mxGeometry y="70" width="95" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="0WCMNTBBKTN_myFraTjn-53" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="0WCMNTBBKTN_myFraTjn-72" source="0WCMNTBBKTN_myFraTjn-34" target="0WCMNTBBKTN_myFraTjn-48">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="0WCMNTBBKTN_myFraTjn-81" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="0WCMNTBBKTN_myFraTjn-72" source="0WCMNTBBKTN_myFraTjn-52">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="407" y="-190" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0WCMNTBBKTN_myFraTjn-52" value="&lt;font style=&quot;font-size: 8px;&quot;&gt;Send response with career path data back to the client&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" vertex="1" parent="0WCMNTBBKTN_myFraTjn-72">
+          <mxGeometry x="171.5" y="320" width="130" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="0WCMNTBBKTN_myFraTjn-71" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="0WCMNTBBKTN_myFraTjn-72" source="0WCMNTBBKTN_myFraTjn-44" target="0WCMNTBBKTN_myFraTjn-52">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="0WCMNTBBKTN_myFraTjn-68" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="0WCMNTBBKTN_myFraTjn-72" source="0WCMNTBBKTN_myFraTjn-67" target="0WCMNTBBKTN_myFraTjn-33">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="0WCMNTBBKTN_myFraTjn-67" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;flipH=1;labelPosition=right;verticalLabelPosition=middle;align=left;verticalAlign=middle;" vertex="1" parent="0WCMNTBBKTN_myFraTjn-72">
+          <mxGeometry x="120" width="20" height="310" as="geometry" />
+        </mxCell>
+        <mxCell id="0WCMNTBBKTN_myFraTjn-76" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="260" y="210" width="434" height="370" as="geometry" />
+        </mxCell>
+        <mxCell id="15" value="Select 5 industries from a given list" style="rounded=1;whiteSpace=wrap;html=1;fontSize=8;fillColor=none;" parent="0WCMNTBBKTN_myFraTjn-76" vertex="1">
+          <mxGeometry x="106.5" y="30" width="95" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="22" value="Career path dialogue&lt;br&gt;" style="swimlane;horizontal=0;whiteSpace=wrap;html=1;fontSize=8;fillColor=none;container=0;" parent="0WCMNTBBKTN_myFraTjn-76" vertex="1">
+          <mxGeometry width="300" height="320" as="geometry" />
+        </mxCell>
+        <mxCell id="25" value="" style="edgeStyle=none;html=1;fontSize=8;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="0WCMNTBBKTN_myFraTjn-76" source="15" target="16" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="27" value="" style="edgeStyle=none;html=1;fontSize=8;" parent="0WCMNTBBKTN_myFraTjn-76" source="19" target="24" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="19" value="Career path questionaire" style="rounded=1;whiteSpace=wrap;html=1;fontSize=8;fillColor=none;" parent="0WCMNTBBKTN_myFraTjn-76" vertex="1">
+          <mxGeometry x="106.5" y="160" width="95" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="24" value="&lt;font style=&quot;font-size: 8px;&quot;&gt;Submit&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" parent="0WCMNTBBKTN_myFraTjn-76" vertex="1">
+          <mxGeometry x="114" y="230" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="16" value="Select 5 key skills" style="rounded=1;whiteSpace=wrap;html=1;fontSize=8;fillColor=none;" parent="0WCMNTBBKTN_myFraTjn-76" vertex="1">
+          <mxGeometry x="106.5" y="90" width="95" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="26" value="" style="edgeStyle=none;html=1;fontSize=8;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="0WCMNTBBKTN_myFraTjn-76" source="16" target="19" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="0WCMNTBBKTN_myFraTjn-49" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="0WCMNTBBKTN_myFraTjn-76" source="24" target="24">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="3" value="Profile page" style="whiteSpace=wrap;html=1;verticalAlign=top;fillColor=none;" parent="0WCMNTBBKTN_myFraTjn-76" vertex="1">
+          <mxGeometry x="-126" y="-70" width="560" height="440" as="geometry" />
+        </mxCell>
+        <mxCell id="0WCMNTBBKTN_myFraTjn-77" value="" style="group;fillColor=#0050ef;strokeColor=#001DBC;fontColor=#ffffff;" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="180" y="160" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="11" value="&lt;font style=&quot;font-size: 8px;&quot;&gt;Questionaire Button&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" parent="0WCMNTBBKTN_myFraTjn-77" vertex="1">
+          <mxGeometry width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="23" value="" style="edgeStyle=none;html=1;fontSize=8;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" parent="1" source="11" target="22" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="180" y="40" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0WCMNTBBKTN_myFraTjn-50" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="24" target="21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

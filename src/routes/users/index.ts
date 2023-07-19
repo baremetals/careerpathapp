@@ -4,6 +4,7 @@ import authMiddleware from '../../middleware/authMiddleware';
 import * as handler from '../../controllers/userController';
 
 import { multerUpload } from '../../lib/fileUpload';
+import questionResponseMiddleware from '../../middleware/questionResponseMiddleware';
 
 /**
  * @swagger
@@ -66,7 +67,7 @@ userRouter.post('/me/change-password', handler.changePassword);
 
 userRouter.post(
   '/me/question-responses',
-  handler.createQuestionResponse,
+  questionResponseMiddleware,
   handler.generateCareerPath,
 );
 userRouter.post(

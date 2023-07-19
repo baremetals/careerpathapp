@@ -17,6 +17,7 @@ import {
 } from '../../services/QuestionResponse';
 import * as Factory from '../../services/SharedService';
 import {
+  createCareerPathService,
   createSkillOrInterest,
   updateUserSkillOrInterest,
 } from '../../services/UserService';
@@ -24,7 +25,7 @@ import AppError from '../../utils/appError';
 import catchAsync from '../../utils/catchAsync';
 import {
   fetchCareerPathRoles,
-  getUserResponse,
+  // getUserResponse,
   traverseDecisionTree,
 } from '../../utils/questionResponse';
 
@@ -98,68 +99,38 @@ const changePassword = catchAsync(async (req, res, next) => {
 
 const updateMe = Factory.updateOne(UserModel);
 
-const generateCareerPaths = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  try {
-    const userResponses = await getUserResponse(req.session.userId);
-    const questions = await QuestionModel.find({})
-      .sort({ order: 'asc' })
-      .exec();
-    // const slicedQuestions = questions.slice(1, questions.length - 2)
-    const data = await traverseDecisionTree(
-      // req.session.userId,
-      req.body.selectedIndustries,
-      questions,
-      next,
-      userResponses,
-    );
-
-    console.log('==============>: we cooking my data!!!!', data);
-
-    res.status(201).json({
-      status: 'success',
-    });
-  } catch (err) {
-    throw next(
-      new AppError(
-        'Your account has been deactivated. Please reactivate your account',
-        400,
-      ),
-    );
-  }
-};
-
 const generateCareerPath = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, _res: Response, next: NextFunction) => {
     try {
       // console.log('==============>: the user id', req.session.userId);
-      const userResponses = await getUserResponse(req.session.userId);
-      // console.log('==============>: the user responses', userResponses);
+
       const questions = await QuestionModel.find({})
         .sort({ order: 'asc' })
         .exec();
-      // const slicedQuestions = questions.slice(1, questions.length - 2)
+
+      if (req.body.responses.length !== questions.length) {
+        throw next(
+          new AppError('Please provide a response for all questions', 400),
+        );
+      }
       const data = await traverseDecisionTree(
         // req.session.userId,
         req.body.selectedIndustries,
         questions,
         next,
-        userResponses,
+        req.body.responses,
       );
-
-      // console.log('==============>: we cooking my data!!!!', data);
 
       const careerPaths = await fetchCareerPathRoles(data);
 
       console.log('==============>: career paths my dude', careerPaths);
 
-      res.status(201).json({
-        status: 'success',
-        data: careerPaths,
-      });
+      return createCareerPathService(careerPaths);
+
+      // res.status(201).json({
+      //   status: 'success',
+      //   data: careerPaths,
+      // });
     } catch (err) {
       throw next(
         new AppError(
@@ -259,7 +230,6 @@ export {
   deleteExperience,
   deleteProfile,
   generateCareerPath,
-  generateCareerPaths,
   getMe,
   getUser,
   getUserWithProfile,

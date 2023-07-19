@@ -9,6 +9,7 @@ import {
   IInterestDocument,
   IWorkEnvironmentDocument,
   ISkillDocument,
+  IUserCareerPathDocument,
 } from '../userProfile';
 
 export interface IUserDocument extends IShared {
@@ -44,6 +45,7 @@ export interface IUserProfileDocument extends IShared {
   certifications?: ICertificationDocument[];
   interests?: IInterestDocument[];
   preferredWorkEnvironments?: IWorkEnvironmentDocument;
+  careerPaths: IUserCareerPathDocument[];
 }
 
 export interface AuthenticatedRequest extends Request {
