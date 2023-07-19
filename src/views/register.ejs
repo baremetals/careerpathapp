@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('layouts/header'); -%>
+<link rel="stylesheet" href="/css/styles.css">
+<body>
+
+  <%- include('layouts/navbar'); -%>
+
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('/assets/img/contact-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="page-heading">
+            <h1>Register a new account</h1>            
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto"> 
+       
+
+        
+        <form action="/api/auth/register" method="POST">
+          <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
+              <label>Email</label>
+              <input type="text" class="form-control" placeholder="email" id="email" name="email" value="">              
+            </div>
+          </div>
+        <br>
+        <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
+                <label>First Name</label>
+                <input type="text" class="form-control" placeholder="first name" id="firstName" name="firstName" value="">
+            </div>
+        </div>
+        <br>
+        <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
+                <label>Last Name</label>
+                <input type="text" class="form-control" placeholder="last name" id="lastName" name="lastName" value="">
+            </div>
+        </div>
+        <br>
+          <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
+              <label>Password</label>
+              <input type="password" class="form-control" placeholder="Password" id="password" name="password" value="">              
+            </div>
+          </div>
+          <br> 
+            <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
+              <label>Confirm Password</label>
+              <input type="text" class="form-control" placeholder="confirm password" id="confirmPassword" name="confirmPassword" value="">              
+            </div>
+            <div class="control-group">
+                                 
+          <br>                    
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">Register</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+  <%- include('layouts/footer'); -%>
+  <%- include('layouts/scripts'); -%>
+
+</body>
+
+</html>

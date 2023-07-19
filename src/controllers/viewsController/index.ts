@@ -18,3 +18,15 @@ export const resetPasswordPageHandler = catchAsync(
     res.render('reset_password');
   },
 );
+
+export const loginPageHandler = catchAsync(
+  async (_eq: Request, res: Response) => {
+    res.render('login');
+  },
+);
+
+export const registerPageHandler = catchAsync(
+  async (_eq: Request, res: Response) => {
+    res.render('register');
+  },
+);

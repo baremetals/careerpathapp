@@ -38,7 +38,7 @@ const createActivationToken = async (
 
 export const registerHandler = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    // console.log('===============>', req.body)
+    console.log('===============>', req.headers.host);
     const user = await UserModel.findOne({
       email: req.body.email,
     });

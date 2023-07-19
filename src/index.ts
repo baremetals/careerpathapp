@@ -1,20 +1,19 @@
+import RedisStore from 'connect-redis';
+import cors from 'cors';
 import express from 'express';
 import session from 'express-session';
 import Redis from 'ioredis';
-import RedisStore from 'connect-redis';
-import cors from 'cors';
-import swaggerUI from 'swagger-ui-express';
 import swaggerJsDoc from 'swagger-jsdoc';
-// import hbs from 'hbs';
+import swaggerUI from 'swagger-ui-express';
 
-import AppError from './utils/appError';
-import globalErrorHandler from './errors/errorHandler';
-import careerPathRouter from './routes/careerPaths';
-import authRouter from './routes/auth';
-import userRouter from './routes/users';
-import adminRouter from './routes/admin';
-import uiRouter from './routes/ui';
 import path from 'path';
+import globalErrorHandler from './errors/errorHandler';
+import adminRouter from './routes/admin';
+import authRouter from './routes/auth';
+import careerPathRouter from './routes/careerPaths';
+import uiRouter from './routes/ui';
+import userRouter from './routes/users';
+import AppError from './utils/appError';
 // import dotenv from 'dotenv';
 // dotenv.config();
 
@@ -27,7 +26,6 @@ declare module 'express-session' {
   }
 }
 
-// const app = express();
 function createServer() {
   const app = express();
   const options = {
@@ -46,8 +44,8 @@ function createServer() {
     },
     apis: ['src/routes/*/*.ts'],
   };
-  app.set('view engine', 'hbs');
   app.set('views', path.join(__dirname, 'views'));
+  app.set('view engine', 'ejs');
   const publicPath = path.join(__dirname, 'public');
   app.use(express.static(publicPath));
 
@@ -90,6 +88,18 @@ function createServer() {
       },
     } as any),
   );
+  let loggedInUser: string | null = null;
+
+  const globalObject = {
+    loggedInUser,
+  };
+  globalObject.loggedInUser = loggedInUser;
+  console.log(globalObject.loggedInUser);
+
+  app.use('*', (req, _res, next) => {
+    loggedInUser = req.session.userId;
+    next();
+  });
 
   app.use('/', uiRouter);
   app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));
