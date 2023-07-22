@@ -7,6 +7,7 @@ import { InterestModel } from '../../models/Interest';
 import { JobRoleModel } from '../../models/JobRole';
 import { QuestionModel } from '../../models/Question';
 import { SkillModel } from '../../models/Skill';
+import { UserProfileModel } from '../../models/UserProfile';
 import * as Factory from '../../services/SharedService';
 
 // Questions
@@ -59,3 +60,6 @@ export const createJobRole = Factory.createOne(JobRoleModel);
 export const createManyJobRoles = Factory.createMany(JobRoleModel);
 export const getOneJobRole = Factory.getOne(JobRoleModel);
 export const getAllJobRoles = Factory.getMany(JobRoleModel);
+
+// User Profile
+export const createProfile = Factory.createOne(UserProfileModel);

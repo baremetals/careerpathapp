@@ -1,3 +1,4 @@
+import * as argon2 from 'argon2';
 import { NextFunction, Request, Response } from 'express';
 // import multer from 'multer';
 import { getSignedFileUrl, uploadFile } from '../../lib/fileUpload';
@@ -9,12 +10,7 @@ import { QuestionModel } from '../../models/Question';
 import { SkillModel } from '../../models/Skill';
 import { UserModel } from '../../models/User';
 import { UserProfileModel } from '../../models/UserProfile';
-import { UserQuestionResponseModel } from '../../models/UserQuestionResponse';
 import { EmailService } from '../../services/EmailService';
-import {
-  createResponses,
-  updateResponses,
-} from '../../services/QuestionResponse';
 import * as Factory from '../../services/SharedService';
 import {
   createCareerPathService,
@@ -70,24 +66,26 @@ const updateAvatar = async (
 
 const getMe = (req: Request, _res: Response, next: NextFunction) => {
   req.params.id = req.session.userId;
-
   next();
 };
 
 const changePassword = catchAsync(async (req, res, next) => {
   const user = await UserModel.findById(req.session.userId).select('+password');
+  // console.log(req.body.currentPassword);
 
-  if (
-    !user?.correctPassword(req.body.currentPassword, user.password as string)
-  ) {
-    return next(new AppError('Your current password is incorrect.', 401));
+  if (!user) {
+    return next(new AppError('User not found.', 404));
+  }
+
+  if (!(await argon2.verify(user.password, req.body.currentPassword))) {
+    return next(new AppError('Your current password is wrong.', 401));
   }
 
   user.password = req.body.newPassword;
   user.confirmPassword = req.body.confirmPassword;
   user.lastModifiedBy = user.fullName;
   user.lastModifiedAt = new Date();
-  await user.save({ validateBeforeSave: false });
+  await user.save();
 
   await new EmailService(user).sendPasswordChangeEmail();
 
@@ -98,6 +96,26 @@ const changePassword = catchAsync(async (req, res, next) => {
 });
 
 const updateMe = Factory.updateOne(UserModel);
+
+const deleteMe = catchAsync(async (req, res, next) => {
+  const user = await UserModel.findById(req.session.userId).select(
+    '+isDisabled',
+  );
+  // console.log(req.body.currentPassword);
+  if (!user) {
+    return next(new AppError('User not found.', 404));
+  }
+
+  user.isDisabled = true;
+  user.lastModifiedBy = user.fullName;
+  user.lastModifiedAt = new Date();
+  await user.save({ validateBeforeSave: false });
+
+  res.status(201).json({
+    status: 'success',
+    message: 'Your password has been changed',
+  });
+});
 
 const generateCareerPath = catchAsync(
   async (req: Request, _res: Response, next: NextFunction) => {
@@ -148,7 +166,7 @@ const getUserWithProfile = async (
   next: NextFunction,
 ) => {
   try {
-    const userId = req.params.userId;
+    const userId = req.session.userId;
 
     // Retrieve the user
     const user = await UserModel.findById(userId);
@@ -164,12 +182,10 @@ const getUserWithProfile = async (
       return next(new AppError('User profile not found', 404));
     }
 
-    // Assemble the user and user profile data
     const assembledData = {
       user: {
         id: user._id,
         email: user.email,
-        // Include any other relevant user fields
       },
       userProfile: {
         skills: userProfile.skills,
@@ -178,8 +194,8 @@ const getUserWithProfile = async (
         careerGoals: userProfile.careerGoals,
         certifications: userProfile.certifications,
         interests: userProfile.interests,
+        careerPaths: userProfile.careerPaths,
         preferredWorkEnvironments: userProfile.preferredWorkEnvironments,
-        // Include any other relevant profile fields
       },
     };
 
@@ -190,13 +206,9 @@ const getUserWithProfile = async (
   }
 };
 
-const createQuestionResponse = createResponses(UserQuestionResponseModel);
-const updateQuestionResponse = updateResponses(UserQuestionResponseModel);
-
 const getUser = Factory.getOne(UserModel);
 
 // User Profile
-const createProfile = Factory.createOne(UserProfileModel);
 const createExperience = Factory.createOne(ExperienceModel);
 const createEducation = Factory.createOne(EducationModel);
 const createCertification = Factory.createOne(CertificationModel);
@@ -206,7 +218,6 @@ const updateExperience = Factory.updateOne(ExperienceModel);
 const updateEducation = Factory.updateOne(EducationModel);
 const updateCertification = Factory.updateOne(CertificationModel);
 
-const deleteProfile = Factory.deleteOne(UserProfileModel);
 const deleteExperience = Factory.deleteOne(ExperienceModel);
 const deleteEducation = Factory.deleteOne(EducationModel);
 const deleteCertification = Factory.deleteOne(CertificationModel);
@@ -222,16 +233,14 @@ export {
   createEducation,
   createExperience,
   createInterest,
-  createProfile,
-  createQuestionResponse,
   createSkill,
   deleteCertification,
   deleteEducation,
   deleteExperience,
-  deleteProfile,
   generateCareerPath,
   getMe,
   getUser,
+  deleteMe,
   getUserWithProfile,
   updateAvatar,
   updateCertification,
@@ -240,5 +249,4 @@ export {
   updateMe,
   updateMySkillOrInterest,
   updateProfile,
-  updateQuestionResponse,
 };

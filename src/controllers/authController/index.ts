@@ -1,14 +1,15 @@
+import * as argon2 from 'argon2';
 import { NextFunction, Request, Response } from 'express';
 import Redis from 'ioredis';
+import { v4 } from 'uuid';
+import { IUserDocument } from '../../interfaces/user';
+import { ACCOUNT_ACTIVATED } from '../../lib/constants';
 import { UserModel } from '../../models/User';
+import { EmailService } from '../../services/EmailService';
+import { createUserInitialProfile } from '../../services/UserService';
 import AppError from '../../utils/appError';
 import catchAsync from '../../utils/catchAsync';
 import { isPasswordValid } from '../../utils/validators/PasswordValidators';
-import { createUserInitialProfile } from '../../services/UserService';
-import { EmailService } from '../../services/EmailService';
-import { v4 } from 'uuid';
-import { ACCOUNT_ACTIVATED } from '../../lib/constants';
-import { IUserDocument } from '../../interfaces/user';
 
 const createActivationToken = async (
   user: IUserDocument,
@@ -38,12 +39,18 @@ const createActivationToken = async (
 
 export const registerHandler = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    console.log('===============>', req.headers.host);
+    // console.log('===============>', req.headers.host);
+    const result = isPasswordValid(req.body.password);
+    if (!result.isValid) {
+      return next(new AppError(result.message, 400));
+    }
+
     const user = await UserModel.findOne({
       email: req.body.email,
-    });
+    }).select('+isDisabled');
 
     if (user && user?.isDisabled) {
+      // console.log('===============>', user);
       return next(
         new AppError(
           'Your account has been deactivated. Please reactivate your account',
@@ -52,10 +59,6 @@ export const registerHandler = catchAsync(
       );
     }
 
-    const result = isPasswordValid(req.body.password);
-    if (!result.isValid) {
-      return next(new AppError(result.message, 400));
-    }
     const fullName = `${req.body.firstName} ${req.body.lastName}`;
     const newUser = await UserModel.create({
       firstName: req.body.firstName,
@@ -68,7 +71,7 @@ export const registerHandler = catchAsync(
       lastModifiedBy: fullName,
     });
 
-    const profile = await createUserInitialProfile(newUser._id);
+    const profile = await createUserInitialProfile(newUser._id, fullName);
 
     if (!profile) {
       // TODO:
@@ -84,9 +87,7 @@ export const registerHandler = catchAsync(
       //   ),
       // );
     }
-    // const createdUser = await UserModel.findById(newUser._id).select(
-    //   '-password -createdAt -lastModifiedAt -createdBy -lastModifiedBy',
-    // );
+
     newUser.profile = profile._id;
     newUser.save({ validateBeforeSave: false });
     newUser.password = '';
@@ -158,16 +159,12 @@ export const loginHandler = catchAsync(
     const user = await UserModel.findOne({
       email,
     }).select('+password');
-    // console.log(user.password)
 
-    // if (!user || !(await argon2.verify(user!.password as string, password))) {
-    //   return next(new AppError('Incorrect email or password', 401));
-    // }
+    if (!user) {
+      return next(new AppError('User not found.', 404));
+    }
 
-    if (
-      !user ||
-      !user.correctPassword(password as string, user.password as string)
-    ) {
+    if (!(await argon2.verify(user.password, password))) {
       return next(new AppError('Incorrect email or password', 401));
     }
 
@@ -193,7 +190,7 @@ export const loginHandler = catchAsync(
 
     res.status(201).json({
       status: 'success',
-      message: 'Your user account has been created',
+      message: 'You have been logged in',
       data: { user },
     });
   },
@@ -230,7 +227,7 @@ export const forgotPasswordHandler = catchAsync(async (req, res, next) => {
   try {
     const resetURL = `${req.protocol}://${req.get(
       'host',
-    )}/api/users/resetPassword/${token}`;
+    )}/api/auth/reset-password/${token}`;
     await new EmailService(user, resetURL).sendPasswordResetEmail();
 
     res.status(200).json({
@@ -248,17 +245,25 @@ export const forgotPasswordHandler = catchAsync(async (req, res, next) => {
 });
 
 export const resetPasswordHandler = catchAsync(async (req, res, next) => {
+  const result = isPasswordValid(req.body.newPassword);
+  if (!result.isValid) {
+    return next(new AppError(result.message, 400));
+  }
+
   const redis = new Redis();
   const key = 'RESET_PASSWORD' + req.params.token;
   const userId = await redis.get(key);
 
+  if (!userId) {
+    return next(
+      new AppError('this token has expired. Please request a new token', 401),
+    );
+  }
+
   const user = await UserModel.findById(userId);
 
-  // 2) If token has not expired, and there is user, set the new password
   if (!user) {
-    return next(
-      new AppError('Token has expired, please request new token', 400),
-    );
+    return next(new AppError('No user found', 401));
   }
 
   user.password = req.body.newPassword;

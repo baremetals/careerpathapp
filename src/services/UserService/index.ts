@@ -8,6 +8,12 @@ import { UserProfileModel } from '../../models/UserProfile';
 import AppError from '../../utils/appError';
 import catchAsync from '../../utils/catchAsync';
 
+// const createUserService = (Model: Model<any>) =>
+//   catchAsync(async (req: Request, _res: Response, next: NextFunction) => {
+//     const response = await Model.create(req.body);
+//     next(response);
+//   });
+
 const updateUserProfile = async (
   body: Partial<IUserProfileDocument>,
   objectId: string,
@@ -67,7 +73,7 @@ const updateUserSkillOrInterest = (Model: Model<any>) =>
     });
   });
 
-const createUserInitialProfile = async (userId: string) => {
+const createUserInitialProfile = async (userId: string, fullName: string) => {
   // Todo use try catch to cath the errors
   return UserProfileModel.create({
     user: userId,
@@ -79,8 +85,9 @@ const createUserInitialProfile = async (userId: string) => {
     certifications: [],
     interests: [],
     careerPaths: [],
-    favouredIndustries: [],
     preferredWorkEnvironments: undefined,
+    createdBy: fullName,
+    lastModifiedBy: fullName,
   });
 };
 

@@ -56,8 +56,11 @@ const userRouter = Router();
 // Protect all routes after this middleware
 userRouter.use(authMiddleware);
 
-userRouter.get('/me', handler.getMe, handler.getUser);
-userRouter.patch('/me/update', handler.updateMe);
+userRouter
+  .route('/me')
+  .get(handler.getMe, handler.getUser)
+  .delete(handler.deleteMe)
+  .patch(handler.getMe, handler.updateMe);
 userRouter.post(
   '/me/avatar',
   multerUpload.single('avatar'),
@@ -70,18 +73,16 @@ userRouter.post(
   questionResponseMiddleware,
   handler.generateCareerPath,
 );
-userRouter.post(
-  '/me/question-responses/:objectId',
-  handler.updateQuestionResponse,
-  handler.generateCareerPaths,
-);
+// userRouter.post(
+//   '/me/question-responses/:objectId',
+//   handler.updateQuestionResponse,
+//   handler.generateCareerPath,
+// );
 
 userRouter
   .route('/profile')
   .get(handler.getUserWithProfile)
-  .post(handler.createProfile)
-  .patch(handler.updateProfile)
-  .delete(handler.deleteProfile);
+  .patch(handler.updateProfile);
 
 userRouter.post('/profile/experience', handler.createExperience);
 userRouter

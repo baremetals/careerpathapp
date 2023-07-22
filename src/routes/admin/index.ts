@@ -31,4 +31,8 @@ adminRouter
 adminRouter.route('/job-role').post(handler.createJobRole);
 adminRouter.route('/job-roles').post(handler.createManyJobRoles);
 
+// Skills
+adminRouter.route('/skill').post(handler.createSkill);
+adminRouter.route('/skills').post(handler.createManySkills);
+
 export default adminRouter;

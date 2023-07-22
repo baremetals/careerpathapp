@@ -83,8 +83,21 @@ userSchema.pre('save', function (next) {
 userSchema.methods.correctPassword = async function (
   candidatePassword: string,
   userPassword: string,
-) {
-  return await argon2.verify(userPassword, candidatePassword);
+): Promise<boolean> {
+  return new Promise((resolve, reject) => {
+    // Assuming this is the correct implementation of the argon2.verify function
+    argon2
+      .verify(userPassword, candidatePassword)
+      .then((passwordCheck) => {
+        console.log('----------------------->', passwordCheck);
+        resolve(passwordCheck);
+      })
+      .catch((error) => {
+        console.error('Error during password verification:', error);
+        reject(error);
+      });
+  });
+  // return argon2.verify(userPassword, candidatePassword);
 };
 
 const UserModel = model<IUserDocument>('User', userSchema);
