@@ -3,19 +3,10 @@ import { Model } from 'mongoose';
 import AppError from '../../utils/appError';
 import catchAsync from '../../utils/catchAsync';
 
-interface PopOptions {
-  path: string;
-  select?: boolean;
-}
-
-const getOne = (Model: Model<any>, popOptions?: PopOptions) =>
+const getOne = (Model: Model<any>) =>
   catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    let query = Model.findById(
-      req.params.id ? req.params.id : req.body.objectId,
-    );
-    if (popOptions) query = query.populate(popOptions);
+    const query = Model.findById(req.params.id);
     const doc = await query.exec();
-
     if (!doc) {
       return next(new AppError('No document found with that ID', 404));
     }
@@ -80,7 +71,7 @@ const createMany = (Model: Model<any>) =>
 const updateOne = (Model: Model<any>) =>
   catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const query = Model.findByIdAndUpdate(
-      req.params.id ? req.params.id : req.body.objectId,
+      req.params.id,
       { ...req.body, lastModifiedAt: Date.now() },
       {
         new: true,
@@ -115,4 +106,4 @@ const deleteOne = (Model: Model<any>) =>
       data: null,
     });
   });
-export { createMany, createOne, getMany, getOne, updateOne, deleteOne };
+export { createMany, createOne, deleteOne, getMany, getOne, updateOne };

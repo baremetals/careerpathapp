@@ -4,6 +4,7 @@ import authMiddleware from '../../middleware/authMiddleware';
 import * as handler from '../../controllers/userController';
 
 import { multerUpload } from '../../lib/fileUpload';
+import questionResponseMiddleware from '../../middleware/questionResponseMiddleware';
 
 /**
  * @swagger
@@ -55,8 +56,11 @@ const userRouter = Router();
 // Protect all routes after this middleware
 userRouter.use(authMiddleware);
 
-userRouter.get('/me', handler.getMe, handler.getUser);
-userRouter.patch('/me/update', handler.updateMe);
+userRouter
+  .route('/me')
+  .get(handler.getMe, handler.getUser)
+  .delete(handler.deleteMe)
+  .patch(handler.getMe, handler.updateMe);
 userRouter.post(
   '/me/avatar',
   multerUpload.single('avatar'),
@@ -66,21 +70,19 @@ userRouter.post('/me/change-password', handler.changePassword);
 
 userRouter.post(
   '/me/question-responses',
-  handler.createQuestionResponse,
+  questionResponseMiddleware,
   handler.generateCareerPath,
 );
-userRouter.post(
-  '/me/question-responses/:objectId',
-  handler.updateQuestionResponse,
-  handler.generateCareerPaths,
-);
+// userRouter.post(
+//   '/me/question-responses/:objectId',
+//   handler.updateQuestionResponse,
+//   handler.generateCareerPath,
+// );
 
 userRouter
   .route('/profile')
   .get(handler.getUserWithProfile)
-  .post(handler.createProfile)
-  .patch(handler.updateProfile)
-  .delete(handler.deleteProfile);
+  .patch(handler.updateProfile);
 
 userRouter.post('/profile/experience', handler.createExperience);
 userRouter

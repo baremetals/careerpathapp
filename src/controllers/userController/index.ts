@@ -1,32 +1,29 @@
+import * as argon2 from 'argon2';
 import { NextFunction, Request, Response } from 'express';
 // import multer from 'multer';
-import { InterestModel } from '../../models/Interest';
-import { SkillModel } from '../../models/Skill';
-import {
-  createSkillOrInterest,
-  updateUserSkillOrInterest,
-} from '../../services/UserService';
 import { getSignedFileUrl, uploadFile } from '../../lib/fileUpload';
 import { CertificationModel } from '../../models/Certification';
 import { EducationModel } from '../../models/Education';
 import { ExperienceModel } from '../../models/Experience';
+import { InterestModel } from '../../models/Interest';
 import { QuestionModel } from '../../models/Question';
-import { QuestionResponseModel } from '../../models/QuestionResponse';
+import { SkillModel } from '../../models/Skill';
 import { UserModel } from '../../models/User';
 import { UserProfileModel } from '../../models/UserProfile';
-import {
-  createResponses,
-  updateResponses,
-} from '../../services/QuestionResponse';
+import { EmailService } from '../../services/EmailService';
 import * as Factory from '../../services/SharedService';
+import {
+  createCareerPathService,
+  createSkillOrInterest,
+  updateUserSkillOrInterest,
+} from '../../services/UserService';
 import AppError from '../../utils/appError';
 import catchAsync from '../../utils/catchAsync';
 import {
   fetchCareerPathRoles,
-  getUserResponse,
+  // getUserResponse,
   traverseDecisionTree,
 } from '../../utils/questionResponse';
-import { EmailService } from '../../services/EmailService';
 
 const updateAvatar = async (
   req: Request,
@@ -69,24 +66,26 @@ const updateAvatar = async (
 
 const getMe = (req: Request, _res: Response, next: NextFunction) => {
   req.params.id = req.session.userId;
-
   next();
 };
 
 const changePassword = catchAsync(async (req, res, next) => {
   const user = await UserModel.findById(req.session.userId).select('+password');
+  // console.log(req.body.currentPassword);
 
-  if (
-    !user?.correctPassword(req.body.currentPassword, user.password as string)
-  ) {
-    return next(new AppError('Your current password is incorrect.', 401));
+  if (!user) {
+    return next(new AppError('User not found.', 404));
+  }
+
+  if (!(await argon2.verify(user.password, req.body.currentPassword))) {
+    return next(new AppError('Your current password is wrong.', 401));
   }
 
   user.password = req.body.newPassword;
   user.confirmPassword = req.body.confirmPassword;
   user.lastModifiedBy = user.fullName;
   user.lastModifiedAt = new Date();
-  await user.save({ validateBeforeSave: false });
+  await user.save();
 
   await new EmailService(user).sendPasswordChangeEmail();
 
@@ -98,68 +97,58 @@ const changePassword = catchAsync(async (req, res, next) => {
 
 const updateMe = Factory.updateOne(UserModel);
 
-const generateCareerPaths = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  try {
-    const userResponses = await getUserResponse(req.session.userId);
-    const questions = await QuestionModel.find({})
-      .sort({ order: 'asc' })
-      .exec();
-    // const slicedQuestions = questions.slice(1, questions.length - 2)
-    const data = await traverseDecisionTree(
-      // req.session.userId,
-      req.body.selectedIndustries,
-      questions,
-      next,
-      userResponses,
-    );
-
-    console.log('==============>: we cooking my data!!!!', data);
-
-    res.status(201).json({
-      status: 'success',
-    });
-  } catch (err) {
-    throw next(
-      new AppError(
-        'Your account has been deactivated. Please reactivate your account',
-        400,
-      ),
-    );
+const deleteMe = catchAsync(async (req, res, next) => {
+  const user = await UserModel.findById(req.session.userId).select(
+    '+isDisabled',
+  );
+  // console.log(req.body.currentPassword);
+  if (!user) {
+    return next(new AppError('User not found.', 404));
   }
-};
+
+  user.isDisabled = true;
+  user.lastModifiedBy = user.fullName;
+  user.lastModifiedAt = new Date();
+  await user.save({ validateBeforeSave: false });
+
+  res.status(201).json({
+    status: 'success',
+    message: 'Your password has been changed',
+  });
+});
 
 const generateCareerPath = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, _res: Response, next: NextFunction) => {
     try {
       // console.log('==============>: the user id', req.session.userId);
-      const userResponses = await getUserResponse(req.session.userId);
-      // console.log('==============>: the user responses', userResponses);
+
       const questions = await QuestionModel.find({})
         .sort({ order: 'asc' })
         .exec();
-      // const slicedQuestions = questions.slice(1, questions.length - 2)
+
+      if (req.body.responses.length !== questions.length) {
+        throw next(
+          new AppError('Please provide a response for all questions', 400),
+        );
+      }
       const data = await traverseDecisionTree(
         // req.session.userId,
         req.body.selectedIndustries,
         questions,
         next,
-        userResponses,
+        req.body.responses,
       );
-
-      // console.log('==============>: we cooking my data!!!!', data);
 
       const careerPaths = await fetchCareerPathRoles(data);
 
       console.log('==============>: career paths my dude', careerPaths);
 
-      res.status(201).json({
-        status: 'success',
-        data: careerPaths,
-      });
+      return createCareerPathService(careerPaths);
+
+      // res.status(201).json({
+      //   status: 'success',
+      //   data: careerPaths,
+      // });
     } catch (err) {
       throw next(
         new AppError(
@@ -177,7 +166,7 @@ const getUserWithProfile = async (
   next: NextFunction,
 ) => {
   try {
-    const userId = req.params.userId;
+    const userId = req.session.userId;
 
     // Retrieve the user
     const user = await UserModel.findById(userId);
@@ -193,12 +182,10 @@ const getUserWithProfile = async (
       return next(new AppError('User profile not found', 404));
     }
 
-    // Assemble the user and user profile data
     const assembledData = {
       user: {
         id: user._id,
         email: user.email,
-        // Include any other relevant user fields
       },
       userProfile: {
         skills: userProfile.skills,
@@ -207,8 +194,8 @@ const getUserWithProfile = async (
         careerGoals: userProfile.careerGoals,
         certifications: userProfile.certifications,
         interests: userProfile.interests,
+        careerPaths: userProfile.careerPaths,
         preferredWorkEnvironments: userProfile.preferredWorkEnvironments,
-        // Include any other relevant profile fields
       },
     };
 
@@ -219,13 +206,9 @@ const getUserWithProfile = async (
   }
 };
 
-const createQuestionResponse = createResponses(QuestionResponseModel);
-const updateQuestionResponse = updateResponses(QuestionResponseModel);
-
 const getUser = Factory.getOne(UserModel);
 
 // User Profile
-const createProfile = Factory.createOne(UserProfileModel);
 const createExperience = Factory.createOne(ExperienceModel);
 const createEducation = Factory.createOne(EducationModel);
 const createCertification = Factory.createOne(CertificationModel);
@@ -235,7 +218,6 @@ const updateExperience = Factory.updateOne(ExperienceModel);
 const updateEducation = Factory.updateOne(EducationModel);
 const updateCertification = Factory.updateOne(CertificationModel);
 
-const deleteProfile = Factory.deleteOne(UserProfileModel);
 const deleteExperience = Factory.deleteOne(ExperienceModel);
 const deleteEducation = Factory.deleteOne(EducationModel);
 const deleteCertification = Factory.deleteOne(CertificationModel);
@@ -246,29 +228,25 @@ const createInterest = createSkillOrInterest(InterestModel);
 const updateMySkillOrInterest = updateUserSkillOrInterest(UserProfileModel);
 
 export {
+  changePassword,
   createCertification,
   createEducation,
   createExperience,
   createInterest,
-  createProfile,
-  createQuestionResponse,
   createSkill,
   deleteCertification,
   deleteEducation,
   deleteExperience,
-  deleteProfile,
   generateCareerPath,
-  generateCareerPaths,
   getMe,
   getUser,
+  deleteMe,
   getUserWithProfile,
   updateAvatar,
-  changePassword,
   updateCertification,
   updateEducation,
   updateExperience,
   updateMe,
-  updateProfile,
-  updateQuestionResponse,
   updateMySkillOrInterest,
+  updateProfile,
 };

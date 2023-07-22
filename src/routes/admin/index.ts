@@ -22,13 +22,17 @@ adminRouter.route('/career-path/:id').patch(handler.updateCareerPath);
 adminRouter.route('/career-paths').post(handler.createManyCareerPaths);
 
 // Decision Tree Rules
-adminRouter.route('/decision-tree-rule').post(handler.createCareerPath);
+// adminRouter.route('/decision-tree-rule').post(handler.createCareerPath);
 adminRouter
   .route('/decision-tree-rules')
-  .post(handler.createManyDecisionTreeRules);
+  .post(handler.createManyCareerPathResponseAndWeight);
 
 // Job roles
 adminRouter.route('/job-role').post(handler.createJobRole);
 adminRouter.route('/job-roles').post(handler.createManyJobRoles);
+
+// Skills
+adminRouter.route('/skill').post(handler.createSkill);
+adminRouter.route('/skills').post(handler.createManySkills);
 
 export default adminRouter;

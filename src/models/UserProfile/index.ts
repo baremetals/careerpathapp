@@ -2,6 +2,7 @@ import { Schema, model } from 'mongoose';
 import { IUserProfileDocument } from '../../interfaces/user';
 
 const userProfileSchema = new Schema<IUserProfileDocument>({
+  user: { type: Schema.Types.ObjectId, ref: 'User' },
   skills: [{ type: Schema.Types.ObjectId, ref: 'Skill' }],
   education: [{ type: Schema.Types.ObjectId, ref: 'Education' }],
   experience: [{ type: Schema.Types.ObjectId, ref: 'Experience' }],
@@ -14,7 +15,7 @@ const userProfileSchema = new Schema<IUserProfileDocument>({
     } || undefined,
   selectedIndustries: { type: [Schema.Types.ObjectId], ref: 'Industry' },
   interests: { type: [Schema.Types.ObjectId], ref: 'Interest' },
-
+  careerPaths: { type: [Schema.Types.ObjectId], ref: 'UserCareerPath' },
   createdAt: {
     type: Date,
     default: Date.now(),
