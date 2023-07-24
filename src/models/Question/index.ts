@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { IQuestionDocument } from 'interfaces/';
+import { IQuestionDocument } from '../../interfaces/question';
 
 const questionSchema = new Schema<IQuestionDocument>({
   text: {

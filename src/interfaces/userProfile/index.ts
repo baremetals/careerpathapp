@@ -37,7 +37,6 @@ interface IInterestDocument extends IShared {
 
 interface ISkillDocument extends IShared {
   name: string;
-  relatedCareerPaths: Array<Schema.Types.ObjectId>;
 }
 
 interface IWorkEnvironmentDocument extends IShared {
@@ -48,6 +47,13 @@ interface ICareerGoalDocument extends IShared {
   name: string;
 }
 
+interface IUserCareerPathDocument extends IShared {
+  user: Schema.Types.ObjectId;
+  industry: string;
+  paths: Array<Schema.Types.ObjectId>;
+  jobs: Array<Schema.Types.ObjectId>;
+}
+
 export {
   IInterestDocument,
   ICertificationDocument,
@@ -56,4 +62,5 @@ export {
   IWorkEnvironmentDocument,
   ISkillDocument,
   ICareerGoalDocument,
+  IUserCareerPathDocument,
 };

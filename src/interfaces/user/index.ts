@@ -9,6 +9,7 @@ import {
   IInterestDocument,
   IWorkEnvironmentDocument,
   ISkillDocument,
+  IUserCareerPathDocument,
 } from '../userProfile';
 
 export interface IUserDocument extends IShared {
@@ -28,6 +29,12 @@ export interface IUserDocument extends IShared {
   correctPassword: (enteredPassword: string, hashedPassword: string) => boolean;
 }
 
+export interface IUserQuestionResponseDocument extends IShared {
+  user: Schema.Types.ObjectId;
+  question: Schema.Types.ObjectId;
+  response: string;
+}
+
 export interface IUserProfileDocument extends IShared {
   user: Schema.Types.ObjectId;
   skills: ISkillDocument[];
@@ -38,6 +45,7 @@ export interface IUserProfileDocument extends IShared {
   certifications?: ICertificationDocument[];
   interests?: IInterestDocument[];
   preferredWorkEnvironments?: IWorkEnvironmentDocument;
+  careerPaths: IUserCareerPathDocument[];
 }
 
 export interface AuthenticatedRequest extends Request {

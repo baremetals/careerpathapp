@@ -1,17 +1,19 @@
 import { NextFunction } from 'express';
 import { Types } from 'mongoose';
-import { IQuestionDocument, IQuestionResponseDocument } from '../../interfaces';
-import { DecisionTreeRuleModel } from '../../models/DecisionTreeRule';
-import { QuestionResponseModel } from '../../models/QuestionResponse';
-import AppError from '../../utils/appError';
+import { IQuestionDocument } from '../../interfaces/question';
+import { CareerPathResponseAndWeightModel } from '../../models/CareerPathResponseAndWeight';
 import { IndustryModel } from '../../models/Industry';
-import { ICareerPathDocument } from '../../interfaces/careerPath';
+import { UserQuestionResponseModel } from '../../models/UserQuestionResponse';
+import AppError from '../../utils/appError';
+// import { ICareerPathDocument } from '../../interfaces/careerPath';
+import { ICareerPathDocument, IJobRoleDocument } from 'interfaces/careerPath';
+import { IUserQuestionResponseDocument } from '../../interfaces/user';
 import { CareerPathModel } from '../../models/CareerPath';
 import { JobRoleModel } from '../../models/JobRole';
-import { IJobRoleDocument } from 'interfaces/careerPath';
+// import { IJobRoleDocument } from 'interfaces/careerPath';
 
 async function getRulesForQuestion(industryId: Types.ObjectId) {
-  return DecisionTreeRuleModel.find({
+  return CareerPathResponseAndWeightModel.find({
     industry: industryId,
   }).exec();
 }
@@ -21,25 +23,11 @@ async function traverseDecisionTree(
   selectedIndustries: Types.ObjectId[],
   questions: IQuestionDocument[],
   next: NextFunction,
-  userResponses: IQuestionResponseDocument[],
+  userResponses: IUserQuestionResponseDocument[],
 ): Promise<{ industry: string; score: number }[]> {
   try {
     // const userResponses = await getUserResponse(userId);
     const industryScores: { industry: string; score: number }[] = [];
-    console.log('the length of user responses', userResponses.length);
-    console.log('the length of the questions', questions.length);
-
-    if (userResponses.length !== questions.length) {
-      // throw new Error(
-      //   'Number of user responses does not match the number of questions',
-      // );
-      throw next(
-        new AppError(
-          'Number of user responses does not match the number of questions',
-          401,
-        ),
-      );
-    }
 
     for (const industry of selectedIndustries) {
       const objectId = new Types.ObjectId(industry);
@@ -82,7 +70,7 @@ async function traverseDecisionTree(
     }
     return industryScores;
   } catch (error) {
-    console.error('========fucking error!!!', error);
+    console.error('========bloody error!!!', error);
     // return error;
     throw next(
       new AppError('Something is wrong, please check back later', 401),
@@ -91,7 +79,7 @@ async function traverseDecisionTree(
 }
 
 async function getUserResponse(userId: string) {
-  return QuestionResponseModel.find({ user: userId }).exec();
+  return UserQuestionResponseModel.find({ user: userId }).exec();
 }
 
 async function getNextQuestionId(
@@ -108,137 +96,100 @@ async function getNextQuestionId(
   return nextQuestion._id;
 }
 
-// async function fetchCareerPathRoles(
-//   industryScores: { industry: string; score: number }[],
-//   next: NextFunction,
-// ) {
-//   try {
-//     console.log(industryScores);
-//     // const industryScores: { industry: string; score: number }[] = [];
-//     // const careerPaths: any[] = [];
-//     const careerPaths: { industry: string; paths: ICareerPathDocument[] }[] =
-//       [];
-//     const roles: { myPaths: string; jobs: IJobRoleDocument[] }[] = [];
-
-//     for (const industry of industryScores) {
-//       // console.log(industry);
-//       if (industry.score >= 0.5) {
-//         const ind = await IndustryModel.findById(industry.industry).exec();
-//         const paths = await CareerPathModel.find({
-//           industries: { $in: [industry.industry] },
-//         }).exec();
-//         // console.log('=============The Paths========>', paths);
-//         if (paths) {
-//           console.log('=============The Path========>', typeof paths);
-//           careerPaths.push({industry: ind?.name as string, paths  });
-//           for (const path of paths) {
-
-//             const jobRoles = await JobRoleModel.find({
-//               careerPath: path._id,
-//             }).exec();
-
-//             roles.push({ myPaths: path?.title as string, jobs: jobRoles });
-//           }
-//         }
-//       }
-//     }
-//   } catch (error) {
-//     throw next(
-//       new AppError(
-//         'Your account has been deactivated. Please reactivate your account',
-//         400,
-//       ),
-//     );
-//   }
-// }
-
 async function fetchCareerPathRoles(
   industryScores: { industry: string; score: number }[],
-  _userResponses: IQuestionResponseDocument[],
-  // _next: NextFunction,
+  page = 1,
+  limit = 5,
 ) {
   try {
-    const careerPaths: { industry: string; paths: ICareerPathDocument[] }[] =
-      [];
-    const roles: { myPaths: string; jobs: IJobRoleDocument[] }[] = [];
+    const skip = (page - 1) * limit;
+    const industryIds: string[] = industryScores
+      .filter((industry) => industry.score >= 0.5)
+      .map((industry) => industry.industry);
 
-    for (const industry of industryScores) {
-      if (industry.score >= 0.5) {
-        const industryDoc = await IndustryModel.findById(
-          industry.industry,
-        ).exec();
-        console.log('====the industryDoc', industryDoc);
-        if (industryDoc) {
-          const paths = await CareerPathModel.find({
-            industries: { $in: [industry.industry] },
-          }).exec();
-          console.log('====the career paths', paths);
-          if (paths.length > 0) {
-            careerPaths.push({ industry: industryDoc.name as string, paths });
-            for (const path of paths) {
-              const jobRoles = await JobRoleModel.find({
-                careerPath: path._id,
-              }).exec();
-              // const matchedRoles = await filterJobRoles(
-              //   jobRoles,
-              //   userResponses,
-              // );
-              // console.log(matchedRoles);
-              roles.push({ myPaths: path.title as string, jobs: jobRoles });
-            }
-          }
-        }
+    const industryDocs = await IndustryModel.find({ _id: { $in: industryIds } })
+      .select('+name')
+      .lean()
+      .exec();
+
+    const careerPathPromises = industryDocs.map(async (industryDoc) => {
+      const industryScoreObj = industryScores.find(
+        (industry) => industry.industry === industryDoc._id.toString(),
+      );
+
+      if (!industryScoreObj) {
+        return null;
       }
-    }
 
-    return { careerPaths, roles };
-  } catch (error) {
-    throw new AppError(
-      'Your account has been deactivated. Please reactivate your account',
-      400,
+      const industryScore = industryScoreObj.score;
+
+      const paths = await CareerPathModel.find({
+        industries: industryDoc._id,
+      })
+        .select(
+          '-industries -requiredWeight -createdAt -lastModifiedAt -createdBy -lastModifiedBy',
+        )
+        .lean()
+        .exec();
+
+      if (paths.length > 0) {
+        const pathPromises = paths.map(async (path) => {
+          const jobRoles = await JobRoleModel.find({
+            careerPath: path._id,
+            requiredWeight: { $lte: industryScore / 10 },
+          })
+            .select(
+              '-careerPath -educationRequirements -skills -progressPaths -relatedCareers -aliasTitles -requiredWeight',
+            )
+            .lean()
+            .exec();
+
+          return {
+            myPaths: path.title,
+            jobs: jobRoles,
+          };
+        });
+
+        const roles = await Promise.all(pathPromises);
+        const paginatedRoles = roles.map((role) =>
+          role.jobs.slice(skip, skip + limit),
+        );
+        // const paginatedRoles = roles.map((role) => {
+        //   return role.jobs.slice(skip, skip + limit);
+        //   // return {
+        //   //   myPaths: role.myPaths,
+        //   //   jobs: paginatedJobs,
+        //   // };
+        // });
+
+        return {
+          industry: industryDoc.name,
+          paths: paths,
+          // ...paginatedRoles,
+          jobs: paginatedRoles[0],
+        };
+      } else {
+        return null; //
+      }
+    });
+
+    const careerPathResults = await Promise.all(careerPathPromises);
+    const filteredResults = careerPathResults.filter(
+      (result) => result !== null,
     );
+    return filteredResults.map((result) => {
+      return {
+        industry: result?.industry || '',
+        paths: result?.paths as ICareerPathDocument[],
+        jobs: result?.jobs as IJobRoleDocument[],
+      };
+    });
+
+    // return { careerPaths: filteredResults };
+  } catch (error) {
+    throw new AppError('Sorry something is wrong, please try again later', 400);
   }
 }
-
-// async function filterJobRoles(
-//   roles: IJobRoleDocument[],
-//   userResponses: IQuestionResponseDocument[],
-// ): Promise<IJobRoleDocument[]> {
-//   //requiredResponses
-//   console.log('========the roles length========>:', roles.length);
-//   const selectedRoles: IJobRoleDocument[] = [];
-//   const userResponsesMap = new Map<string, IQuestionResponseDocument>();
-
-//   for (const response of userResponses) {
-//     userResponsesMap.set(response.question.toString(), response);
-//   }
-
-//   for (const role of roles) {
-//     const { requiredWeight } = role;
-//     const requiredQuestions = new Set(requiredResponses.map((r) => r.question));
-//     let totalScore = 0;
-//     console.log('========the roles========>:', role);
-
-//     for (const question of requiredQuestions) {
-//       const matchingResponse = userResponsesMap.get(question.toString());
-//       if (matchingResponse?.response === 'irrelevant') {
-//         totalScore++;
-//       }
-//       if (
-//         matchingResponse &&
-//         matchingResponse.response ===
-//           requiredResponses.find((r) => r.question === question)?.response
-//       ) {
-//         console.log('the responses required========>:', requiredResponses);
-//         totalScore++;
-//       }
-//     }
-//     if (totalScore >= 5) {
-//       selectedRoles.push(role);
-//     }
-//   }
-//   return selectedRoles;
-// }
 
 export {
   fetchCareerPathRoles,

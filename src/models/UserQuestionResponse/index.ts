@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
-import { IQuestionResponseDocument } from 'interfaces/';
+import { IUserQuestionResponseDocument } from '../../interfaces/user';
 
-const questionResponseSchema = new Schema<IQuestionResponseDocument>({
+const userQuestionResponseSchema = new Schema<IUserQuestionResponseDocument>({
   user: { type: Schema.Types.ObjectId, ref: 'User' },
   question: { type: Schema.Types.ObjectId, ref: 'Question' },
   response: {
@@ -23,9 +23,9 @@ const questionResponseSchema = new Schema<IQuestionResponseDocument>({
   lastModifiedBy: { type: String, default: 'admin', select: false },
 });
 
-const QuestionResponseModel = model<IQuestionResponseDocument>(
-  'QuestionResponse',
-  questionResponseSchema,
+const UserQuestionResponseModel = model<IUserQuestionResponseDocument>(
+  'UserQuestionResponse',
+  userQuestionResponseSchema,
 );
 
-export { QuestionResponseModel };
+export { UserQuestionResponseModel };

@@ -1,0 +1,91 @@
+<mxfile host="65bd71144e">
+    <diagram id="5J2n-HVY8NSB8V7LurG0" name="Page-1">
+        <mxGraphModel dx="342" dy="1379" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="User" style="verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;html=1;verticalAlign=top;strokeWidth=1;shape=mxgraph.mockup.containers.userMale;strokeColor=#666666;strokeColor2=#008cff;" vertex="1" parent="1">
+                    <mxGeometry x="150" y="-1160" width="40" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;sketch=0;" vertex="1" parent="1">
+                    <mxGeometry x="80" y="-1085" width="180" height="95" as="geometry"/>
+                </mxCell>
+                <mxCell id="48" style="edgeStyle=none;html=1;entryX=0;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="12" target="35">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="new user" style="whiteSpace=wrap;html=1;rounded=1;shadow=0;sketch=0;" vertex="1" parent="1">
+                    <mxGeometry x="40" y="-920" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="16" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="15" target="12">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="19" style="edgeStyle=none;html=1;entryX=0.346;entryY=-0.058;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="15" target="18">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" value="Web Client" style="aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image;image=img/lib/active_directory/web_server.svg;sketch=0;" vertex="1" parent="1">
+                    <mxGeometry x="150" y="-1078" width="40" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="27" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="18" target="26">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="50" style="edgeStyle=none;html=1;entryX=1;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="18" target="35">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="18" value="existing users" style="whiteSpace=wrap;html=1;rounded=1;shadow=0;sketch=0;" vertex="1" parent="1">
+                    <mxGeometry x="200" y="-920" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="25" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="20" target="24">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="20" value="create an account" style="whiteSpace=wrap;html=1;rounded=1;shadow=0;sketch=0;fillColor=rgb(24, 20, 29);" vertex="1" parent="1">
+                    <mxGeometry x="40" y="-760" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="45" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="24" target="43">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="24" value="activate account" style="whiteSpace=wrap;html=1;rounded=1;shadow=0;sketch=0;fillColor=rgb(24, 20, 29);" vertex="1" parent="1">
+                    <mxGeometry x="40" y="-680" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="30" style="edgeStyle=none;html=1;" edge="1" parent="1" source="26" target="29">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="26" value="login" style="whiteSpace=wrap;html=1;rounded=1;shadow=0;sketch=0;fillColor=rgb(24, 20, 29);" vertex="1" parent="1">
+                    <mxGeometry x="200" y="-760" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="68" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="29" target="66">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="29" value="interact with personal chat bot" style="whiteSpace=wrap;html=1;rounded=1;shadow=0;sketch=0;fillColor=rgb(24, 20, 29);" vertex="1" parent="1">
+                    <mxGeometry x="190" y="-600" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="31" value="Search careers paths, job roles and courses" style="whiteSpace=wrap;html=1;fillColor=rgb(24, 20, 29);rounded=1;shadow=0;sketch=0;" vertex="1" parent="1">
+                    <mxGeometry x="185" y="-460" width="110" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="51" style="edgeStyle=none;html=1;" edge="1" parent="1" source="35" target="20">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="52" style="edgeStyle=none;html=1;" edge="1" parent="1" source="35" target="26">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="35" value="interact with chat bot" style="whiteSpace=wrap;html=1;rounded=1;shadow=0;sketch=0;fillColor=rgb(24, 20, 29);" vertex="1" parent="1">
+                    <mxGeometry x="120" y="-840" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="61" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="43" target="60">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="43" value="provide bot with code sent to email" style="whiteSpace=wrap;html=1;rounded=1;shadow=0;sketch=0;fillColor=rgb(24, 20, 29);" vertex="1" parent="1">
+                    <mxGeometry x="25" y="-600" width="110" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="69" style="edgeStyle=none;html=1;" edge="1" parent="1" source="60" target="29">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="60" value="activation and login" style="whiteSpace=wrap;html=1;fillColor=rgb(24, 20, 29);rounded=1;shadow=0;sketch=0;" vertex="1" parent="1">
+                    <mxGeometry x="32.5" y="-500" width="95" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="66" value="survey to find suited career paths and roles" style="whiteSpace=wrap;html=1;fillColor=rgb(24, 20, 29);rounded=1;shadow=0;sketch=0;" vertex="1" parent="1">
+                    <mxGeometry x="350" y="-520" width="105" height="70" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

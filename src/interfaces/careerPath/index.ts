@@ -30,7 +30,7 @@ interface IJobRoleDocument extends IShared {
   progressPaths: string[];
   relatedCareers: string[];
   aliasTitles: string[];
-  // requiredWeight: number;
+  requiredWeight: number | string;
 }
 
 export { IIndustryDocument, ICareerPathDocument, IJobRoleDocument };
