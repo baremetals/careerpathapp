@@ -5,12 +5,16 @@ import * as handler from '../../controllers/adminController';
 
 const adminRouter = Router();
 
+adminRouter
+  .route('/questions')
+  .get(handler.getAllQuestions)
+  .post(handler.createManyQuestions);
 // Protect all routes
 adminRouter.use(authMiddleware, adminMiddleware('admin', 'dev'));
 
 // Questions
 adminRouter.route('/question').post(handler.createQuestion);
-adminRouter.route('/questions').post(handler.createManyQuestions);
+// adminRouter.route('/questions').post(handler.createManyQuestions);
 
 // Industries
 adminRouter.route('/industry').post(handler.createIndustry);

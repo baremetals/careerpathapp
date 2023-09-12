@@ -25,7 +25,7 @@ const getMany = (Model: Model<any>) =>
     // let filter = {};
     // if (req.params.tourId) filter = { tour: req.params.tourId };
 
-    const response = Model.find();
+    const response = await Model.find();
 
     // const features = new APIFeatures(Model.find(filter), req.query)
     //   .filter()

@@ -4,12 +4,17 @@ import { IQuestionDocument } from '../../interfaces/question';
 const questionSchema = new Schema<IQuestionDocument>({
   text: {
     type: String,
+    unique: true,
     required: true,
   },
-  type: { type: String, required: false },
-  focus: { type: String, required: true },
   level: { type: String, required: true, default: 'advance' },
-  answers: { type: [String], required: true },
+  responseOptions: [
+    {
+      responseId: String,
+      text: String,
+    },
+  ],
+
   order: { type: Number, required: true },
   description: { type: String, required: false },
   createdAt: {

@@ -59,4 +59,27 @@ async function deleteFile(fileName: string) {
   return s3Instance.send(command);
 }
 
-export { multerUpload, uploadFile, getSignedFileUrl, deleteFile };
+const createPresignedUrlWithClient = (fileName: string) => {
+  const command = new PutObjectCommand({
+    Bucket: bucketName,
+    Key: fileName,
+  });
+  return getSignedUrl(s3Instance, command, { expiresIn: 3600 }); // fileName: string;
+};
+
+const createUniqueFileName = (originalFileName: string) => {
+  const contentExtension =
+    originalFileName.split('.')[originalFileName.split('.').length - 1];
+  return `${Math.round(
+    Math.random() * 1000000000000,
+  ).toString()}.${contentExtension}`;
+};
+
+export {
+  multerUpload,
+  uploadFile,
+  getSignedFileUrl,
+  deleteFile,
+  createPresignedUrlWithClient,
+  createUniqueFileName,
+};

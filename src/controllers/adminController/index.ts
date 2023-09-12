@@ -1,5 +1,6 @@
 // import { NextFunction, Request, Response } from 'express';
 // import catchAsync from '../../utils/catchAsync';
+import { saveQuestionsAndResponses } from '../../services/AdminServices';
 import { CareerPathModel } from '../../models/CareerPath';
 import { CareerPathResponseAndWeightModel } from '../../models/CareerPathResponseAndWeight';
 import { IndustryModel } from '../../models/Industry';
@@ -12,7 +13,8 @@ import * as Factory from '../../services/SharedService';
 
 // Questions
 export const createQuestion = Factory.createOne(QuestionModel);
-export const createManyQuestions = Factory.createMany(QuestionModel);
+// export const createManyQuestions = Factory.createMany(QuestionModel);
+export const createManyQuestions = saveQuestionsAndResponses();
 export const getOneQuestion = Factory.getOne(QuestionModel);
 export const getAllQuestions = Factory.getMany(QuestionModel);
 
