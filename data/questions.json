@@ -1,191 +1,423 @@
 [
     {
-        "text": "What industries or sectors are you particularly drawn to?",
-        "answers": [],
-        "type": "list",
-        "focus": "career-path",
+        "questionId": "",
+        "text": "How do you typically handle challenges and obstacles in your personal life?",
+        "responseOptions": [
+            {
+                "order": 1,
+                "text": "I face them head-on and try to find solutions"
+            },
+            {
+              "order": 2,
+              "text": "I seek guidance and support from others"
+            },
+            {
+              "order": 3,
+              "text": "I take my time to assess the situation before acting"
+            }
+        ],
+        "category": "Personality",
         "level": "advance",
         "description": "",
         "order": 1
     },
     {
-        "text": "What level of interaction do you prefer in your work?",
-        "answers": ["working with people", "working with data", "working with machines"],
-        "type": "closed-ended",
-        "focus": "career-path",
+        "text": "Are you comfortable taking the initiative and leading group projects or activities?",
+        "responseOptions": [
+          {
+            "order": 1,
+            "text": "I enjoy leading and organising"
+          },
+          {
+            "order": 2,
+            "text": "I prefer contributing as a team member"
+          },
+          {
+            "order": 3,
+            "text": "It depends on the situation and group dynamics"
+          }
+        ],
+        "category": "Personality",
         "level": "advance",
         "description": "",
         "order": 2
     },
     {
-        "text": "Are you interested in working on projects that have a social impact or contribute to the greater good?",
-        "answers": ["yes", "no"],
-        "type": "boolean",
-        "focus": "career-path",
+        "text": "How do you respond to new or unfamiliar situations that require adaptation?",
+        "responseOptions": [
+          {
+            "order": 1,
+            "text": "I embrace change and see it as an opportunity for growth"
+          },
+          {
+            "order": 2,
+            "text": "I feel a bit uneasy initially but adjust gradually"
+          },
+          {
+            "order": 3,
+            "text": "I find it challenging and prefer familiar environments"
+          }
+        ],
+        "category": "Personality",
         "level": "advance",
         "description": "",
         "order": 3
     },
     {
-        "text": "What level of interaction do you prefer in your work?",
-        "answers": ["creative", "analytical", "both"],
-        "type": "closed-ended",
-        "focus": "career-path",
+        "text": "Do you enjoy collaborating with peers to accomplish common goals?",
+        "responseOptions": [
+          {
+            "order": 1,
+            "text": "I thrive in team settings and value teamwork"
+          },
+          {
+            "order": 2,
+            "text": "I'm comfortable working both independently and in teams"
+          },
+          {
+            "order": 3,
+            "text": "I prefer working alone on tasks"
+          }
+        ],
+        "category": "Personality",
         "level": "advance",
         "description": "",
         "order": 4
     },
     {
-        "text": "Do you prefer working independently or as part of a team?",
-        "answers": ["independently", "team", "both"],
-        "type": "closed-ended",
-        "focus": "career-path",
+        "text": "How do you cope with stress and pressures in your daily life?",
+        "responseOptions": [
+          {
+            "order": 1,
+            "text": "I manage stress well and stay focused on solutions"
+          },
+          {
+            "order": 2,
+            "text": "I seek support and practice relaxation techniques"
+          },
+          {
+            "order": 3,
+            "text": "I find stress overwhelming and struggle to cope"
+          }
+        ],
+        "category": "Personality",
         "level": "advance",
         "description": "",
         "order": 5
     },
     {
-        "text": "Do you enjoy problem-solving and finding innovative solutions?",
-        "answers": ["yes", "no"],
-        "type": "boolean",
-        "focus": "career-path",
+        "text": "What subjects or hobbies do you find most intriguing and enjoyable?",
+        "responseOptions": [
+            {
+                "order": 1,
+                "text": "Technology and innovation"
+            },
+            {
+              "order": 2,
+              "text": "Arts and creative expression"
+            },
+            {
+              "order": 3,
+              "text": "Social causes and community service"
+            }
+        ],
+        "category": "Interests",
         "level": "advance",
         "description": "",
         "order": 6
     },
     {
-        "text": "Are you comfortable with frequent learning and adapting to new technologies or methodologies?",
-        "answers": ["yes", "no"],
-        "type": "boolean",
-        "focus": "career-path",
+        "text": "Are you interested in exploring new technologies and their practical applications?",
+        "responseOptions": [
+            {
+                "order": 1,
+                "text": "I'm curious about the latest tech advancements"
+            },
+            {
+              "order": 2,
+              "text": "I have some interest but would like to learn more"
+            },
+            {
+              "order": 3,
+              "text": "Technology is not a primary area of interest for me"
+            }
+        ],
+        "category": "Interests",
         "level": "advance",
         "description": "",
         "order": 7
     },
     {
-        "text": "Are you interested in continuous professional development and learning opportunities?",
-        "answers": ["yes", "no"],
-        "type": "boolean",
-        "focus": "career-path",
+        "text": "What kind of community or volunteer activities do you have an interest in?",
+        "responseOptions": [
+          {
+            "order": 1,
+            "text": "Environmental conservation and sustainability"
+          },
+          {
+            "order": 2,
+            "text": "Education and mentoring programs"
+          },
+          {
+            "order": 3,
+            "text": "Helping under served communities and vulnerable groups"
+          }
+        ],
+        "category": "Interests",
         "level": "advance",
         "description": "",
         "order": 8
     },
     {
-        "text": "Are you interested in working in a fast-paced or dynamic environment?",
-        "answers": ["fast paced", "dynamic", "both"],
-        "type": "closed-ended",
-        "focus": "job-role",
+        "text": "Do you prefer working with people, data, or hands-on tasks?",
+        "responseOptions": [
+            {
+                "order": 1,
+                "text": "I enjoy interacting with people and building relationships"
+            },
+            {
+              "order": 2,
+              "text": "I like working with data and analysing information"
+            },
+            {
+              "order": 3,
+              "text": "I prefer practical and hands-on activities and projects"
+            }
+        ],
+        "category": "Interests",
         "level": "advance",
         "description": "",
         "order": 9
     },
     {
-        "text": "Do you enjoy research and analysis?",
-        "answers": ["yes", "no"],
-        "type": "boolean",
-        "focus": "job-role",
+        "text": "Are you passionate about making a positive impact on your local community or society?",
+        "responseOptions": [
+            {
+                "order": 1,
+                "text": "I want to contribute to meaningful change"
+            },
+            {
+              "order": 2,
+              "text": "I would like to get involved and make a difference"
+            },
+            {
+              "order": 3,
+              "text": "Making an impact is not a top priority for me"
+            }
+        ],
+        "category": "Interests",
         "level": "advance",
         "description": "",
         "order": 10
     },
     {
-        "text": "Are you able to control your emotions in difficult situations?",
-        "answers": ["yes", "no"],
-        "type": "boolean",
-        "focus": "job-role",
+        "text": "How confident do you feel in expressing your ideas and thoughts to others?",
+        "responseOptions": [
+            {
+                "order": 1,
+                "text": "I'm very confident and articulate in communication"
+            },
+            {
+              "order": 2,
+              "text": "I'm comfortable but sometimes feel a bit reserved"
+            },
+            {
+              "order": 3,
+              "text": "I struggle to express myself effectively"
+            }
+        ],
+        "category": "Skills",
         "level": "advance",
         "description": "",
         "order": 11
     },
     {
-        "text": "Are you interested in leadership or management roles in your career?",
-        "answers": ["yes", "no"],
-        "type": "boolean",
-        "focus": "job-role",
+        "text": "Are you comfortable with basic data analysis and interpretation",
+        "responseOptions": [
+            {
+                "order": 1,
+                "text": "I have some experience and skills in data analysis"
+            },
+            {
+              "order": 2,
+              "text": "I'm willing to learn more about data analysis"
+            },
+            {
+              "order": 3,
+              "text": "Data analysis is not an area of interest for me"
+            }
+        ],
+        "category": "Skills",
         "level": "advance",
         "description": "",
         "order": 12
     },
     {
-        "text": "I like to focus on details",
-        "answers": ["yes", "no"],
-        "type": "boolean",
-        "focus": "job-role",
+        "text": "How willing are you to learn and adapt to new technologies and software tools",
+        "responseOptions": [
+            {
+                "order": 1,
+                "text": "I enjoy learning new things"
+            },
+            {
+              "order": 2,
+              "text": "I'm open to learning but may need some guidance"
+            },
+            {
+              "order": 3,
+              "text": "I'm hesitant about learning new technologies"
+            }
+        ],
+        "category": "Skills",
         "level": "advance",
         "description": "",
         "order": 13
     },
     {
-        "text": "I like to see the results of the work I do",
-        "answers": ["yes", "no"],
-        "type": "boolean",
-        "focus": "job-role",
+        "text": "Do you consider yourself a good problem solver and critical thinker?",
+        "responseOptions": [
+            {
+                "order": 1,
+                "text": "I'm confident in my problem-solving abilities"
+            },
+            {
+              "order": 2,
+              "text": "I'm capable but I sometimes seek help to solve complex problems"
+            },
+            {
+              "order": 3,
+              "text": "Problem-solving is not my strong suit"
+            }
+        ],
+        "category": "Skills",
         "level": "advance",
         "description": "",
         "order": 14
     },
     {
-        "text": "Are you comfortable with public speaking or presenting ideas?",
-        "answers": ["yes", "no"],
-        "type": "closed-ended",
-        "focus": "job-role",
+        "text": "How well do you manage your time and organise your daily activities",
+        "responseOptions": [
+            {
+                "order": 1,
+                "text": "I'm excellent at time management and staying organised"
+            },
+            {
+              "order": 2,
+              "text": "I manage my time well but there's room for improvement"
+            },
+            {
+              "order": 3,
+              "text": "I often struggle with time management and staying organised"
+            }
+        ],
+        "category": "Skills",
         "level": "advance",
         "description": "",
         "order": 15
     },
     {
-        "text": "I plan my day so I can use my time best.",
-        "answers": ["yes", "no"],
-        "type": "boolean",
-        "focus": "job-role",
+        "text": "What is your highest level of formal education or the degree you are pursuing",
+        "responseOptions": [
+            {
+                "order": 1,
+                "text": "Secondary school or equivalent"
+            },
+            {
+              "order": 2,
+              "text": "College or vocational qualifications"
+            },
+            {
+              "order": 3,
+              "text": "Bachelor's degree or higher"
+            }
+        ],
+        "category": "Education",
         "level": "advance",
         "description": "",
         "order": 16
     },
     {
-        "text": "I feel restricted when I have to follow a routine.",
-        "answers": ["yes", "no"],
-        "type": "boolean",
-        "focus": "job-role",
+        "text": "Have you participated in any workshops or training programs related to your interests?",
+        "responseOptions": [
+            {
+                "order": 1,
+                "text": "I have attended relevant workshops or training"
+            },
+            {
+              "order": 2,
+              "text": "I've considered it but haven't attended any yet"
+            },
+            {
+              "order": 3,
+              "text": "I haven't participated in any workshops"
+            }
+        ],
+        "category": "Education",
         "level": "advance",
         "description": "",
         "order": 17
     },
     {
-        "text": "Are you open to frequent travel for work?",
-        "answers": ["yes", "no"],
-        "type": "boolean",
-        "focus": "job-role",
+        "text": "How important is continuous learning and personal development to you?",
+        "responseOptions": [
+          {
+            "order": 1,
+            "text": "Very important"
+          },
+          {
+            "order": 2,
+            "text": "It's important"
+          },
+          {
+            "order": 3,
+            "text": "I'm not overly concerned about continuous learning"
+          }
+        ],
+        "category": "Education",
         "level": "advance",
         "description": "",
         "order": 18
     },
     {
-        "text": "How important is work-life balance to you?",
-        "answers": ["important", "not important"],
-        "type": "open-ended",
-        "focus": "job-role",
+        "text": "Are you open to exploring educational opportunities even if you haven't worked before?",
+        "responseOptions": [
+          {
+            "order": 1,
+            "text": "I'm eager to enhance my skills and knowledge"
+          },
+          {
+            "order": 2,
+            "text": "I might consider it depending on the opportunity"
+          },
+          {
+            "order": 3,
+            "text": "Education is not a priority for me at the moment"
+          }
+        ],
+        "category": "Education",
         "level": "advance",
         "description": "",
         "order": 19
     },
     {
-        "text": "What is your preferred work settings?",
-        "answers": ["office", "remote", "field", "hybrid"],
-        "type": "open-ended",
-        "focus": "job-role",
+        "text": "Have you engaged in any personal projects or research aligned with your interests? ",
+        "responseOptions": [
+          {
+            "order": 1,
+            "text": "I have initiated projects or research related to my interests"
+          },
+          {
+            "order": 2,
+            "text": "I've considered it but haven't started any yet"
+          },
+          {
+            "order": 3,
+            "text": "I haven't engaged in any personal projects"
+          }
+        ],
+        "category": "Education",
         "level": "advance",
         "description": "",
         "order": 20
-    },
-    {
-        "text": "What are your primary areas of interest or passion? ",
-        "answers": [],
-        "type": "closed-ended",
-        "focus": "job-role",
-        "level": "advance",
-        "description": "",
-        "order": 21
     }
 ]

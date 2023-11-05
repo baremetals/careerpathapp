@@ -14,6 +14,7 @@ import careerPathRouter from './routes/careerPaths';
 import uiRouter from './routes/ui';
 import userRouter from './routes/users';
 import AppError from './utils/appError';
+import uploadRouter from './routes/uploads';
 // import dotenv from 'dotenv';
 // dotenv.config();
 
@@ -105,6 +106,7 @@ function createServer() {
   app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));
   app.use('/api/auth', authRouter);
   app.use('/api/users', userRouter);
+  app.use('/api/uploads', uploadRouter);
   app.use('/api/careers', careerPathRouter);
   app.use('/api/admin', adminRouter);
 

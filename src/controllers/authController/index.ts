@@ -107,7 +107,7 @@ export const activateUserHandler = catchAsync(
       );
     }
 
-    const user = await UserModel.findById(userId);
+    const user = await UserModel.findById(userId).exec();
 
     if (!user) {
       return next(new AppError('User not found.', 404));
