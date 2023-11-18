@@ -12,11 +12,18 @@ const questionSchema = new Schema<IQuestionDocument>({
     {
       responseId: String,
       text: String,
+      responseOption: String,
     },
   ],
 
   order: { type: Number, required: true },
   description: { type: String, required: false },
+  category: { type: String, required: false },
+  version: { type: Number, required: true },
+  ageGroup: {
+    min: Number,
+    max: Number,
+  },
   createdAt: {
     type: Date,
     default: Date.now(),

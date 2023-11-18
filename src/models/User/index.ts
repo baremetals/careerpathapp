@@ -46,7 +46,7 @@ const userSchema = new Schema<IUserDocument>({
   avatar: { type: String, default: defaultAvatar },
   isDisabled: { type: Boolean, default: false, select: false },
   isActive: { type: Boolean, default: false },
-  profile: { type: Schema.Types.ObjectId, ref: 'UserProfile' },
+  profileId: { type: Schema.Types.ObjectId, ref: 'UserProfile' },
 
   createdAt: {
     type: Date,
@@ -66,7 +66,7 @@ const userSchema = new Schema<IUserDocument>({
 
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
-  this.password = await argon2.hash(this.password as string);
+  this.password = await argon2.hash(this.password);
 
   // Delete passwordConfirm field
   this.confirmPassword = undefined;
@@ -97,7 +97,6 @@ userSchema.methods.correctPassword = async function (
         reject(error);
       });
   });
-  // return argon2.verify(userPassword, candidatePassword);
 };
 
 const UserModel = model<IUserDocument>('User', userSchema);

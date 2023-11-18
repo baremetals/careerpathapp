@@ -7,7 +7,7 @@ import {
   IEducationDocument,
   IExperienceDocument,
   IInterestDocument,
-  IWorkEnvironmentDocument,
+  ISuitabilityScoreDocument,
   ISkillDocument,
   IUserCareerPathDocument,
 } from '../userProfile';
@@ -24,28 +24,36 @@ export interface IUserDocument extends IShared {
   isDisabled: boolean;
   isActive: boolean;
   role: string;
-  profile: IUserProfileDocument;
+  profileId: IUserProfileDocument;
   passwordChangedAt: number;
   correctPassword: (enteredPassword: string, hashedPassword: string) => boolean;
 }
 
+type TResponseType = {
+  questionId: Schema.Types.ObjectId;
+  questionVersion: number;
+  responseId: Schema.Types.ObjectId;
+  responseOption: string;
+};
+
 export interface IUserQuestionResponseDocument extends IShared {
-  user: Schema.Types.ObjectId;
-  question: Schema.Types.ObjectId;
-  response: string;
+  profileId: Schema.Types.ObjectId;
+  selectedIndustries: Array<string>;
+  selectedInterests: Array<string>;
+  responses: Array<TResponseType>;
 }
 
 export interface IUserProfileDocument extends IShared {
-  user: Schema.Types.ObjectId;
-  skills: ISkillDocument[];
-  education: IEducationDocument[];
-  experience: IExperienceDocument[];
-  careerGoals: ICareerGoalDocument[];
-  selectedIndustries: Array<Schema.Types.ObjectId>;
-  certifications?: ICertificationDocument[];
-  interests?: IInterestDocument[];
-  preferredWorkEnvironments?: IWorkEnvironmentDocument;
-  careerPaths: IUserCareerPathDocument[];
+  userId: Schema.Types.ObjectId;
+  skills: Array<ISkillDocument>;
+  education: Array<IEducationDocument>;
+  experience: Array<IExperienceDocument>;
+  careerGoals: Array<ICareerGoalDocument>;
+  certifications?: Array<ICertificationDocument>;
+  interests?: Array<IInterestDocument>;
+  preferredWorkEnvironment?: string;
+  careerPaths: Array<IUserCareerPathDocument>;
+  suitabilityScores: Array<ISuitabilityScoreDocument>;
 }
 
 export interface AuthenticatedRequest extends Request {

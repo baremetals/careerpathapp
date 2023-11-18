@@ -46,6 +46,11 @@ interface IWorkEnvironmentDocument extends IShared {
 interface ICareerGoalDocument extends IShared {
   name: string;
 }
+interface ISuitabilityScoreDocument extends IShared {
+  industryName: string;
+  industryId: Schema.Types.ObjectId;
+  score: number;
+}
 
 interface IUserCareerPathDocument extends IShared {
   user: Schema.Types.ObjectId;
@@ -63,4 +68,5 @@ export {
   ISkillDocument,
   ICareerGoalDocument,
   IUserCareerPathDocument,
+  ISuitabilityScoreDocument,
 };

@@ -2,12 +2,21 @@ import { Schema, model } from 'mongoose';
 import { IUserQuestionResponseDocument } from '../../interfaces/user';
 
 const userQuestionResponseSchema = new Schema<IUserQuestionResponseDocument>({
-  user: { type: Schema.Types.ObjectId, ref: 'User' },
-  question: { type: Schema.Types.ObjectId, ref: 'Question' },
-  response: {
-    type: String,
+  profileId: {
+    type: Schema.Types.ObjectId,
+    ref: 'UserProfile',
     required: true,
   },
+  selectedIndustries: { type: [String] },
+  selectedInterests: { type: [String] },
+  responses: [
+    {
+      questionId: { type: Schema.Types.ObjectId, ref: 'Question' },
+      questionVersion: { type: Number, required: true },
+      responseId: { type: Schema.Types.ObjectId, ref: 'ResponseOption' },
+      responseOption: { type: String, required: true },
+    },
+  ],
 
   createdAt: {
     type: Date,
@@ -28,4 +37,6 @@ const UserQuestionResponseModel = model<IUserQuestionResponseDocument>(
   userQuestionResponseSchema,
 );
 
+userQuestionResponseSchema.index({ profileId: 1 });
+userQuestionResponseSchema.index({ 'responses.questionId': 1 });
 export { UserQuestionResponseModel };

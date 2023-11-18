@@ -2,17 +2,22 @@ import { Types } from 'mongoose';
 import { IShared } from '../../interfaces';
 
 type TResponseOption = {
-  responseId: string;
   text: string;
+  optionNumber: string;
 };
 
 interface IQuestionDocument extends IShared {
   text: string;
-  responseOptions: TResponseOption[];
+  responseOptions: Array<TResponseOption>;
   category: string;
   level: string;
   order: number;
+  version: number;
   description?: string;
+  ageGroup: {
+    min: number;
+    max: number;
+  };
 }
 
 interface IQuestionResponseOptionDocument extends IShared {
