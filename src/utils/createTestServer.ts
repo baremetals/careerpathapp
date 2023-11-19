@@ -1,20 +1,20 @@
 import express from 'express';
-import mongoose from 'mongoose';
 import session from 'express-session';
+import mongoose from 'mongoose';
 // import Redis from 'ioredis';
-import { MongoMemoryServer } from 'mongodb-memory-server';
-import redis from 'redis-mock';
 import RedisStore from 'connect-redis';
 import cors from 'cors';
+import { MongoMemoryServer } from 'mongodb-memory-server';
+import redis from 'redis-mock';
 
-import AppError from './appError';
-import globalErrorHandler from '../errors/errorHandler';
-import careerPathRouter from '../routes/careerPaths';
-import authRouter from '../routes/auth';
-import userRouter from '../routes/users';
-import adminRouter from '../routes/admin';
-import uiRouter from '../routes/ui';
 import path from 'path';
+import globalErrorHandler from '../errors/errorHandler';
+import adminRouter from '../routes/admin';
+import authRouter from '../routes/auth-route';
+import careerPathRouter from '../routes/careerPaths';
+import uiRouter from '../routes/ui';
+import userRouter from '../routes/users-route';
+import AppError from './appError';
 // import dotenv from 'dotenv';
 // dotenv.config();
 

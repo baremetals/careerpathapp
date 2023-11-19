@@ -9,12 +9,12 @@ import swaggerUI from 'swagger-ui-express';
 import path from 'path';
 import globalErrorHandler from './errors/errorHandler';
 import adminRouter from './routes/admin';
-import authRouter from './routes/auth';
+import authRouter from './routes/auth-route';
 import careerPathRouter from './routes/careerPaths';
 import uiRouter from './routes/ui';
-import userRouter from './routes/users';
-import AppError from './utils/appError';
 import uploadRouter from './routes/uploads';
+import userRouter from './routes/users-route';
+import AppError from './utils/appError';
 // import dotenv from 'dotenv';
 // dotenv.config();
 

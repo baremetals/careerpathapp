@@ -2,11 +2,10 @@ import * as argon2 from 'argon2';
 import { NextFunction, Request, Response } from 'express';
 import Redis from 'ioredis';
 import { v4 } from 'uuid';
+import { ACCOUNT_ACTIVATED } from '../../common/constants';
 import { IUserDocument } from '../../interfaces/user';
-import { ACCOUNT_ACTIVATED } from '../../lib/constants';
 import { UserModel } from '../../models/User';
 import { EmailService } from '../../services/EmailService';
-import { createUserInitialProfile } from '../../services/UserService';
 import AppError from '../../utils/appError';
 import catchAsync from '../../utils/catchAsync';
 import { isPasswordValid } from '../../utils/validators/PasswordValidators';
@@ -32,104 +31,10 @@ const createActivationToken = async (
     res.status(201).json({
       status: 'success',
       message:
-        'Your user account has been created, please activate your account to begin.',
+        'Your request has been processed, please activate your account to begin.',
     });
   } catch (error) {}
 };
-
-export const registerHandler = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
-    // console.log('===============>', req.headers.host);
-    const result = isPasswordValid(req.body.password);
-    if (!result.isValid) {
-      return next(new AppError(result.message, 400));
-    }
-
-    const user = await UserModel.findOne({
-      email: req.body.email,
-    }).select('+isDisabled');
-
-    if (user && user?.isDisabled) {
-      // console.log('===============>', user);
-      return next(
-        new AppError(
-          'Your account has been deactivated. Please reactivate your account',
-          400,
-        ),
-      );
-    }
-
-    const fullName = `${req.body.firstName} ${req.body.lastName}`;
-    const newUser = await UserModel.create({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      fullName,
-      email: req.body.email.trim().toLowerCase(),
-      password: req.body.password,
-      confirmPassword: req.body.confirmPassword,
-      createdBy: fullName,
-      lastModifiedBy: fullName,
-    });
-
-    const profile = await createUserInitialProfile(newUser._id, fullName);
-
-    if (!profile) {
-      // TODO:
-      // this will be a good use case for sentry.
-      console.log(
-        '======>: something happened the profile failed to create',
-        profile,
-      );
-      // return next(
-      //   new AppError(
-      //     'Your account has been created',
-      //     400,
-      //   ),
-      // );
-    }
-
-    newUser.profile = profile._id;
-    newUser.save({ validateBeforeSave: false });
-    newUser.password = '';
-    createActivationToken(newUser, req, res);
-  },
-);
-
-export const activateUserHandler = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
-    const redis = new Redis();
-    const key = ACCOUNT_ACTIVATED + req.params.token;
-    const userId = await redis.get(key);
-
-    if (!userId) {
-      return next(
-        new AppError('this token has expired. Please request a new token', 401),
-      );
-    }
-
-    const user = await UserModel.findById(userId).exec();
-
-    if (!user) {
-      return next(new AppError('User not found.', 404));
-    }
-
-    if (user.isActive) {
-      return 'Your account is already activated.';
-    }
-
-    user.isActive = true;
-    user.lastModifiedBy = user.fullName;
-    user.lastModifiedAt = new Date();
-    user.save({ validateBeforeSave: false });
-
-    await redis.del(key);
-
-    res.status(201).json({
-      status: 'success',
-      message: 'Your user account has been activated you may now log in.',
-    });
-  },
-);
 
 export const newActivationHandler = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {

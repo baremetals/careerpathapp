@@ -1,21 +1,27 @@
 import { Router } from 'express';
 import {
   loginHandler,
-  registerHandler,
   logoutHandler,
   forgotPasswordHandler,
   resetPasswordHandler,
-  activateUserHandler,
   newActivationHandler,
-} from '../../controllers/authController';
+} from '../../controllers/auth-controller';
+import registerNewAccountHandler from 'controllers/auth-controller/registerNewAccountHandler';
 import authMiddleware from '../../middleware/authMiddleware';
+import { validate } from 'middleware/validate';
+import { registerUserSchema } from 'user-input-validation-schema/register-user-schema';
+import accountActivationHandler from 'controllers/auth-controller/accountActivationHandler';
 
 const authRouter = Router();
 
-authRouter.route('/register').post(registerHandler);
+authRouter.post(
+  '/register',
+  validate(registerUserSchema),
+  registerNewAccountHandler,
+);
 
 authRouter.route('/login').post(loginHandler);
-authRouter.get('/activate/:token', activateUserHandler);
+authRouter.get('/activate/:token', accountActivationHandler);
 authRouter.post('/request-activation', newActivationHandler);
 authRouter.get('/logout', authMiddleware, logoutHandler);
 authRouter.post('/forgot-password', forgotPasswordHandler);

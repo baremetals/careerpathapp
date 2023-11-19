@@ -195,7 +195,7 @@ const getUserWithProfile = async (
         certifications: userProfile.certifications,
         interests: userProfile.interests,
         careerPaths: userProfile.careerPaths,
-        preferredWorkEnvironments: userProfile.preferredWorkEnvironments,
+        preferredWorkEnvironments: userProfile.preferredWorkEnvironment,
       },
     };
 

@@ -22,7 +22,7 @@ export class EmailService {
       <p>${msg}</p><br>
       <br>
       <br>
-      <a href="${this.url}" target='_blank'><button type="button">Submit</button></a>
+      <a href="${this.url}" target='_blank' data-cy="activation-link"><button type="button">Submit</button></a>
     `;
     const mailOptions: MailDataRequired | MailDataRequired[] = {
       to: this.to,
@@ -36,6 +36,11 @@ export class EmailService {
     } catch (error: any) {
       console.error(error.response.body);
     }
+  }
+
+  async sendAccountRegistrationEmail() {
+    const text = `Account creation was initiated. Follow the link below to activate your account.`;
+    await this.send('Activate your account', text);
   }
 
   async sendWelcomeEmail() {

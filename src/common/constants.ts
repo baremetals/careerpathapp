@@ -1,3 +1,5 @@
+export const ACCOUNT_CREATION_SESSION_PREFIX = 'registration-attempt-';
+
 export const ACCOUNT_ACTIVATED = 'ACCOUNT_ACTIVATED';
 export const MIME_TYPES = [
   'image/jpeg',

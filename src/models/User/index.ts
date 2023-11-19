@@ -2,7 +2,7 @@ import { Schema, model } from 'mongoose';
 import validator from 'validator';
 import * as argon2 from 'argon2';
 import { IUserDocument } from 'interfaces/user';
-import { defaultAvatar } from '../../lib/constants';
+import { defaultAvatar } from '../../common/constants';
 
 const userSchema = new Schema<IUserDocument>({
   email: {
@@ -17,17 +17,6 @@ const userSchema = new Schema<IUserDocument>({
     required: [true, 'Please provide a password'],
     minlength: 8,
     select: false,
-  },
-  confirmPassword: {
-    type: String,
-    required: [true, 'Please confirm your password'],
-    validate: {
-      // This only works on CREATE and SAVE!!!
-      validator: function (el: string): boolean {
-        return el === (this as any).password;
-      },
-      message: 'Passwords are not the same!',
-    },
   },
 
   firstName: {

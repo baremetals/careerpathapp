@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import authMiddleware from '../../middleware/authMiddleware';
 // import * as handler from '../../controllers/userController';
-import * as handler from '../../controllers/userController';
+import * as handler from '../../controllers/users-controller';
 
 import { multerUpload } from '../../lib/fileUpload';
 import questionResponseMiddleware from '../../middleware/questionResponseMiddleware';
