@@ -109,7 +109,7 @@ const createCareerPathService = (careerPaths: TCareerPaths) =>
       '+_id +fullName +profile',
     );
     const careerPathDocuments = careerPaths.map((path) => ({
-      user: user?.profile, //new Types.ObjectId(user.profile),
+      user: user?.profileId, //new Types.ObjectId(user.profile),
       industry: path.industry,
       paths: path.paths.map((obj) => obj),
       jobs: path.jobs.map((obj) => obj),
@@ -122,7 +122,7 @@ const createCareerPathService = (careerPaths: TCareerPaths) =>
 
     const insertedIds = insertedDocuments.map((result) => result._id);
 
-    await UserProfileModel.findByIdAndUpdate(user?.profile.toString(), {
+    await UserProfileModel.findByIdAndUpdate(user?.profileId.toString(), {
       selectedIndustries: req.body.selectedIndustries,
       skills: req.body.selectedSkills,
       careerPaths: insertedIds,

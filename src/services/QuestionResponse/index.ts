@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
 import { Model } from 'mongoose';
-import { updateUserProfile } from '../../services/UserService';
 import AppError from '../../utils/appError';
 import catchAsync from '../../utils/catchAsync';
 
@@ -19,12 +18,6 @@ const createResponses = (Model: Model<any>) =>
       return next(new AppError('No data to store', 401));
     }
 
-    const body = {
-      selectedIndustries: req.body.selectedIndustries,
-      selectedInterests: req.body.selectedInterests,
-    };
-    await updateUserProfile(body, req.body.objectId, next);
-
     await Model.insertMany(responses);
 
     next();
@@ -38,11 +31,6 @@ const updateResponses = (Model: Model<any>) =>
       // selectedInterests,
       // selectedIndustries
     } = req.body;
-    const body = {
-      selectedIndustries: req.body.selectedIndustries,
-      selectedInterests: req.body.selectedInterests,
-    };
-    await updateUserProfile(body, req.body.objectId, next);
 
     if (responses.length < 1) {
       return next(new AppError('No data to store', 401));

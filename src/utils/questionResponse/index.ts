@@ -2,14 +2,10 @@ import { NextFunction } from 'express';
 import { Types } from 'mongoose';
 import { IQuestionDocument } from '../../interfaces/question';
 import { CareerPathResponseAndWeightModel } from '../../models/CareerPathResponseAndWeight';
-import { IndustryModel } from '../../models/Industry';
 import { UserQuestionResponseModel } from '../../models/UserQuestionResponse';
 import AppError from '../../utils/appError';
 // import { ICareerPathDocument } from '../../interfaces/careerPath';
-import { ICareerPathDocument, IJobRoleDocument } from 'interfaces/careerPath';
 import { IUserQuestionResponseDocument } from '../../interfaces/user';
-import { CareerPathModel } from '../../models/CareerPath';
-import { JobRoleModel } from '../../models/JobRole';
 // import { IJobRoleDocument } from 'interfaces/careerPath';
 
 async function getRulesForQuestion(industryId: Types.ObjectId) {
@@ -96,103 +92,103 @@ async function getNextQuestionId(
   return nextQuestion._id;
 }
 
-async function fetchCareerPathRoles(
-  industryScores: { industry: string; score: number }[],
-  page = 1,
-  limit = 5,
-) {
-  try {
-    const skip = (page - 1) * limit;
-    const industryIds: string[] = industryScores
-      .filter((industry) => industry.score >= 0.5)
-      .map((industry) => industry.industry);
+// async function fetchCareerPathRoles(
+//   industryScores: { industry: string; score: number }[],
+//   page = 1,
+//   limit = 5,
+// ) {
+//   try {
+//     const skip = (page - 1) * limit;
+//     const industryIds: string[] = industryScores
+//       .filter((industry) => industry.score >= 0.5)
+//       .map((industry) => industry.industry);
 
-    const industryDocs = await IndustryModel.find({ _id: { $in: industryIds } })
-      .select('+name')
-      .lean()
-      .exec();
+//     const industryDocs = await IndustryModel.find({ _id: { $in: industryIds } })
+//       .select('+name')
+//       .lean()
+//       .exec();
 
-    const careerPathPromises = industryDocs.map(async (industryDoc) => {
-      const industryScoreObj = industryScores.find(
-        (industry) => industry.industry === industryDoc._id.toString(),
-      );
+//     const careerPathPromises = industryDocs.map(async (industryDoc) => {
+//       const industryScoreObj = industryScores.find(
+//         (industry) => industry.industry === industryDoc._id.toString(),
+//       );
 
-      if (!industryScoreObj) {
-        return null;
-      }
+//       if (!industryScoreObj) {
+//         return null;
+//       }
 
-      const industryScore = industryScoreObj.score;
+//       const industryScore = industryScoreObj.score;
 
-      const paths = await CareerPathModel.find({
-        industries: industryDoc._id,
-      })
-        .select(
-          '-industries -requiredWeight -createdAt -lastModifiedAt -createdBy -lastModifiedBy',
-        )
-        .lean()
-        .exec();
+//       const paths = await CareerPathModel.find({
+//         industries: industryDoc._id,
+//       })
+//         .select(
+//           '-industries -requiredWeight -createdAt -lastModifiedAt -createdBy -lastModifiedBy',
+//         )
+//         .lean()
+//         .exec();
 
-      if (paths.length > 0) {
-        const pathPromises = paths.map(async (path) => {
-          const jobRoles = await JobRoleModel.find({
-            careerPath: path._id,
-            requiredWeight: { $lte: industryScore / 10 },
-          })
-            .select(
-              '-careerPath -educationRequirements -skills -progressPaths -relatedCareers -aliasTitles -requiredWeight',
-            )
-            .lean()
-            .exec();
+//       if (paths.length > 0) {
+//         const pathPromises = paths.map(async (path) => {
+//           const jobRoles = await JobRoleModel.find({
+//             careerPath: path._id,
+//             requiredWeight: { $lte: industryScore / 10 },
+//           })
+//             .select(
+//               '-careerPath -educationRequirements -skills -progressPaths -relatedCareers -aliasTitles -requiredWeight',
+//             )
+//             .lean()
+//             .exec();
 
-          return {
-            myPaths: path.title,
-            jobs: jobRoles,
-          };
-        });
+//           return {
+//             myPaths: path.title,
+//             jobs: jobRoles,
+//           };
+//         });
 
-        const roles = await Promise.all(pathPromises);
-        const paginatedRoles = roles.map((role) =>
-          role.jobs.slice(skip, skip + limit),
-        );
-        // const paginatedRoles = roles.map((role) => {
-        //   return role.jobs.slice(skip, skip + limit);
-        //   // return {
-        //   //   myPaths: role.myPaths,
-        //   //   jobs: paginatedJobs,
-        //   // };
-        // });
+//         const roles = await Promise.all(pathPromises);
+//         const paginatedRoles = roles.map((role) =>
+//           role.jobs.slice(skip, skip + limit),
+//         );
+//         // const paginatedRoles = roles.map((role) => {
+//         //   return role.jobs.slice(skip, skip + limit);
+//         //   // return {
+//         //   //   myPaths: role.myPaths,
+//         //   //   jobs: paginatedJobs,
+//         //   // };
+//         // });
 
-        return {
-          industry: industryDoc.name,
-          paths: paths,
-          // ...paginatedRoles,
-          jobs: paginatedRoles[0],
-        };
-      } else {
-        return null; //
-      }
-    });
+//         return {
+//           industry: industryDoc.name,
+//           paths: paths,
+//           // ...paginatedRoles,
+//           jobs: paginatedRoles[0],
+//         };
+//       } else {
+//         return null; //
+//       }
+//     });
 
-    const careerPathResults = await Promise.all(careerPathPromises);
-    const filteredResults = careerPathResults.filter(
-      (result) => result !== null,
-    );
-    return filteredResults.map((result) => {
-      return {
-        industry: result?.industry || '',
-        paths: result?.paths as ICareerPathDocument[],
-        jobs: result?.jobs as IJobRoleDocument[],
-      };
-    });
+//     const careerPathResults = await Promise.all(careerPathPromises);
+//     const filteredResults = careerPathResults.filter(
+//       (result) => result !== null,
+//     );
+//     return filteredResults.map((result) => {
+//       return {
+//         industry: result?.industry || '',
+//         paths: result?.paths as ICareerPathDocument[],
+//         jobs: result?.jobs as IJobRoleDocument[],
+//       };
+//     });
 
-    // return { careerPaths: filteredResults };
-  } catch (error) {
-    throw new AppError('Sorry something is wrong, please try again later', 400);
-  }
-}
+//     // return { careerPaths: filteredResults };
+//   } catch (error) {
+//     throw new AppError('Sorry something is wrong, please try again later', 400);
+//   }
+// }
 
 export {
-  fetchCareerPathRoles,
+  // fetchCareerPathRoles,
   getRulesForQuestion,
   getUserResponse,
   traverseDecisionTree,
