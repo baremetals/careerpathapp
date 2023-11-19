@@ -13,17 +13,17 @@ import { UserProfileModel } from '../../models/UserProfile';
 import { EmailService } from '../../services/EmailService';
 import * as Factory from '../../services/SharedService';
 import {
-  createCareerPathService,
+  // createCareerPathService,
   createSkillOrInterest,
   updateUserSkillOrInterest,
 } from '../../services/UserService';
 import AppError from '../../utils/appError';
 import catchAsync from '../../utils/catchAsync';
-import {
-  fetchCareerPathRoles,
-  // getUserResponse,
-  traverseDecisionTree,
-} from '../../utils/questionResponse';
+import // fetchCareerPathRoles,
+
+// getUserResponse,
+// straverseDecisionTree,
+'../../utils/questionResponse';
 
 const updateAvatar = async (
   req: Request,
@@ -131,19 +131,19 @@ const generateCareerPath = catchAsync(
           new AppError('Please provide a response for all questions', 400),
         );
       }
-      const data = await traverseDecisionTree(
-        // req.session.userId,
-        req.body.selectedIndustries,
-        questions,
-        next,
-        req.body.responses,
-      );
+      // const data = await traverseDecisionTree(
+      //   // req.session.userId,
+      //   req.body.selectedIndustries,
+      //   questions,
+      //   next,
+      //   req.body.responses,
+      // );
 
-      const careerPaths = await fetchCareerPathRoles(data);
+      // const careerPaths = await fetchCareerPathRoles(data);
 
-      console.log('==============>: career paths my dude', careerPaths);
+      // console.log('==============>: career paths my dude', careerPaths);
 
-      return createCareerPathService(careerPaths);
+      return;
 
       // res.status(201).json({
       //   status: 'success',
@@ -237,10 +237,10 @@ export {
   deleteCertification,
   deleteEducation,
   deleteExperience,
+  deleteMe,
   generateCareerPath,
   getMe,
   getUser,
-  deleteMe,
   getUserWithProfile,
   updateAvatar,
   updateCertification,
