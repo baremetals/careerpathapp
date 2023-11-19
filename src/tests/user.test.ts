@@ -1,10 +1,10 @@
-import { Application } from 'express';
-import request from 'supertest';
-import Redis from 'ioredis';
-import createTestServer from '../utils/createTestServer';
-import { EmailService } from '../services/EmailService';
 import * as argon2 from 'argon2';
-import { ACCOUNT_CREATION_SESSION_PREFIX } from 'common/constants';
+import { Application } from 'express';
+import Redis from 'ioredis';
+import { ACCOUNT_CREATION_SESSION_PREFIX } from 'lib/constants';
+import request from 'supertest';
+import { EmailService } from '../services/EmailService';
+import createTestServer from '../utils/createTestServer';
 
 const registerInput = {
   email: 'verib47907@iturchia.com',

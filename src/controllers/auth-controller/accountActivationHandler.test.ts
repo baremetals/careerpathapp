@@ -1,9 +1,9 @@
 import * as argon2 from 'argon2';
-import { ACCOUNT_CREATION_SESSION_PREFIX } from 'common/constants';
-import { ERROR_MESSAGES } from 'common/error-messages';
 import { signJwtAsymmetric } from 'controllers/utils/jwt';
 import { Application } from 'express';
 import Redis from 'ioredis';
+import { ACCOUNT_CREATION_SESSION_PREFIX } from 'lib/constants';
+import { ERROR_MESSAGES } from 'lib/error-messages';
 import { UserModel } from 'models/User';
 import request from 'supertest';
 import { responseBodyIncludesCustomErrorMessage } from 'utils/test-utils';

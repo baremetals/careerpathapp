@@ -1,8 +1,8 @@
-import { ERROR_MESSAGES } from 'common/error-messages';
 import { verifyJwtAsymmetric } from 'controllers/utils/jwt';
 import { NextFunction, Request, Response } from 'express';
 import Redis from 'ioredis';
-import { ACCOUNT_CREATION_SESSION_PREFIX } from '../../common/constants';
+import { ERROR_MESSAGES } from 'lib/error-messages';
+import { ACCOUNT_CREATION_SESSION_PREFIX } from '../../lib/constants';
 import { UserModel } from '../../models/User';
 import { createUserInitialProfile } from '../../services/UserService';
 import AppError from '../../utils/appError';

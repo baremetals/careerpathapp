@@ -4,8 +4,8 @@ import {
   nameMinLength,
   passwordMaxLength,
   passwordMinLength,
-} from '../common/auth-validation-config';
-import { ERROR_MESSAGES } from '../common/error-messages';
+} from '../lib/auth-validation-config';
+import { ERROR_MESSAGES } from '../lib/error-messages';
 
 export const registerUserSchema = object({
   body: object({

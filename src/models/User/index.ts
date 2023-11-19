@@ -1,8 +1,8 @@
-import { Schema, model } from 'mongoose';
-import validator from 'validator';
 import * as argon2 from 'argon2';
 import { IUserDocument } from 'interfaces/user';
-import { defaultAvatar } from '../../common/constants';
+import { Schema, model } from 'mongoose';
+import validator from 'validator';
+import { defaultAvatar } from '../../lib/constants';
 
 const userSchema = new Schema<IUserDocument>({
   email: {
