@@ -57,7 +57,7 @@ const userRouter = Router();
 userRouter.use(authMiddleware);
 
 userRouter
-  .route('/me')
+  .route('')
   .get(handler.getMe, handler.getUser)
   .delete(handler.deleteMe)
   .patch(handler.getMe, handler.updateMe);

@@ -76,16 +76,16 @@ const updateUserSkillOrInterest = (Model: Model<any>) =>
 const createUserInitialProfile = async (userId: string, fullName: string) => {
   // Todo use try catch to cath the errors
   return UserProfileModel.create({
-    user: userId,
+    userId,
     skills: [],
     education: [],
     experience: [],
     careerGoals: [],
-    selectedIndustries: [],
     certifications: [],
     interests: [],
     careerPaths: [],
-    preferredWorkEnvironments: undefined,
+    preferredWorkEnvironments: 'hybrid',
+    suitabilityScores: [],
     createdBy: fullName,
     lastModifiedBy: fullName,
   });

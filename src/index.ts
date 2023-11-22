@@ -7,7 +7,7 @@ import swaggerJsDoc from 'swagger-jsdoc';
 import swaggerUI from 'swagger-ui-express';
 
 import path from 'path';
-import globalErrorHandler from './errors/errorHandler';
+import globalErrorHandler from './middleware/errorHandler';
 import adminRouter from './routes/admin';
 import authRouter from './routes/auth-route';
 import careerPathRouter from './routes/careerPaths';
@@ -15,6 +15,11 @@ import uiRouter from './routes/ui';
 import uploadRouter from './routes/uploads';
 import userRouter from './routes/users-route';
 import AppError from './utils/appError';
+import {
+  AuthRoutePaths,
+  UsersRoutePaths,
+  AdminRoutePaths,
+} from './enums/APIRoutPaths';
 // import dotenv from 'dotenv';
 // dotenv.config();
 
@@ -104,11 +109,11 @@ function createServer() {
 
   app.use('/', uiRouter);
   app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));
-  app.use('/api/auth', authRouter);
-  app.use('/api/users', userRouter);
+  app.use(`/api${AuthRoutePaths.ROOT}`, authRouter);
+  app.use(`/api${UsersRoutePaths.ROOT}`, userRouter);
   app.use('/api/uploads', uploadRouter);
   app.use('/api/careers', careerPathRouter);
-  app.use('/api/admin', adminRouter);
+  app.use(`/api${AdminRoutePaths.ROOT}`, adminRouter);
 
   app.all('*', function (req, _res, next) {
     next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

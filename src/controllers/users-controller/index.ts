@@ -1,6 +1,7 @@
 import * as argon2 from 'argon2';
 import { NextFunction, Request, Response } from 'express';
 // import multer from 'multer';
+import { UserStatuses } from '../../lib/auth-validation-config';
 import { getSignedFileUrl, uploadFile } from '../../lib/fileUpload';
 import { CertificationModel } from '../../models/Certification';
 import { EducationModel } from '../../models/Education';
@@ -98,15 +99,13 @@ const changePassword = catchAsync(async (req, res, next) => {
 const updateMe = Factory.updateOne(UserModel);
 
 const deleteMe = catchAsync(async (req, res, next) => {
-  const user = await UserModel.findById(req.session.userId).select(
-    '+isDisabled',
-  );
+  const user = await UserModel.findById(req.session.userId).select('+status');
   // console.log(req.body.currentPassword);
   if (!user) {
     return next(new AppError('User not found.', 404));
   }
 
-  user.isDisabled = true;
+  user.status = UserStatuses.DELETED;
   user.lastModifiedBy = user.fullName;
   user.lastModifiedAt = new Date();
   await user.save({ validateBeforeSave: false });

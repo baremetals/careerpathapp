@@ -22,6 +22,10 @@ export const verifyJwtAsymmetric = <T>(
     const publicKey = Buffer.from(key, 'base64').toString('ascii');
     return jwt.verify(token, publicKey) as T;
   } catch (error) {
+    // console.log(
+    //   'JWT FUNCTION RUNNING SHOW THE ERROR------------------->',
+    //   error,
+    // );
     return null;
   }
 };
@@ -42,6 +46,10 @@ export const verifyJwtSymmetric = <T>(token: string, key: string): T | null => {
   try {
     return jwt.verify(token, key) as T;
   } catch (error) {
+    // console.log(
+    //   'JWT FUNCTION RUNNING SHOW THE ERROR------------------->',
+    //   error,
+    // );
     return null;
   }
 };

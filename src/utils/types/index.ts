@@ -1,1 +1,4 @@
-export type CustomErrorDetails = { message: string; field?: string };
+export type AppErrorDetails = {
+  message: string;
+  field?: string;
+};

@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import session from 'express-session';
 import mongoose from 'mongoose';
 // import Redis from 'ioredis';
@@ -8,13 +8,13 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 import redis from 'redis-mock';
 
 import path from 'path';
-import globalErrorHandler from '../errors/errorHandler';
-import adminRouter from '../routes/admin';
-import authRouter from '../routes/auth-route';
-import careerPathRouter from '../routes/careerPaths';
-import uiRouter from '../routes/ui';
-import userRouter from '../routes/users-route';
-import AppError from './appError';
+import globalErrorHandler from '../../middleware/errorHandler';
+import adminRouter from '../../routes/admin';
+import authRouter from '../../routes/auth-route';
+import careerPathRouter from '../../routes/careerPaths';
+import uiRouter from '../../routes/ui';
+import userRouter from '../../routes/users-route';
+import AppError from '../../utils/appError';
 // import dotenv from 'dotenv';
 // dotenv.config();
 
@@ -75,16 +75,28 @@ async function createTestServer() {
       },
     } as any),
   );
-
+  app.use((req: Request, _res, next) => {
+    if (req.headers['x-test-user-id']) {
+      req.session.userId = req.headers['x-test-user-id'] as string;
+    }
+    // req.session.userId = 'Test Nigger'; // Mocked session object
+    next();
+  });
+  // console.log(req.seesion.userId);
   app.use('/', uiRouter);
   app.use('/api/auth', authRouter);
   app.use('/api/users', userRouter);
   app.use('/api/careers', careerPathRouter);
   app.use('/api/admin', adminRouter);
 
-  app.all('*', function (req, _res, next) {
+  app.all('*', function (req: Request, _res: Response, next: NextFunction) {
     next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
   });
+  // app.all('*', (req: Request, _res: Response, next: NextFunction) => {
+  //   const err = new Error(`Route ${req.originalUrl} not found`) as any;
+  //   err.status = 404;
+  //   next(err);
+  // });
   app.use(globalErrorHandler);
 
   return app;

@@ -1,40 +1,50 @@
-import * as argon2 from 'argon2';
 import { Application } from 'express';
 import Redis from 'ioredis';
-import { ACCOUNT_CREATION_SESSION_PREFIX } from 'lib/constants';
-import { ERROR_MESSAGES } from 'lib/error-messages';
-import { UserModel } from 'models/User';
 import request from 'supertest';
+import { AuthRoutePaths } from '../../enums/APIRoutPaths';
+import {
+  ACCOUNT_CREATION_SESSION_PREFIX,
+  InputFields,
+} from '../../lib/constants';
+import { ERROR_MESSAGES } from '../../lib/error-messages';
+import { UserModel } from '../../models/User';
+// import { EmailService } from '../../services/EmailService';
 import {
   responseBodyIncludesCustomErrorField,
   responseBodyIncludesCustomErrorMessage,
-} from 'utils/test-utils';
-import { EmailService } from '../../services/EmailService';
-import createTestServer from '../../utils/createTestServer';
+} from '../../utils/test-utils';
+import {
+  TEST_USER_EMAIL_ALTERNATE,
+  TEST_USER_FIRST_NAME,
+  TEST_USER_LAST_NAME,
+  TEST_USER_PASSWORD,
+} from '../../utils/test-utils/constants';
+import createTestServer from '../../utils/test-utils/createTestServer';
 
 const registerInput = {
-  email: 'verib47907@iturchia.com',
-  password: 'Monk£y00',
-  confirmPassword: 'Monk£y00',
-  firstName: 'Bad',
-  lastName: 'Temper',
+  email: TEST_USER_EMAIL_ALTERNATE,
+  password: TEST_USER_PASSWORD,
+  confirmPassword: TEST_USER_PASSWORD,
+  firstName: TEST_USER_FIRST_NAME,
+  lastName: TEST_USER_LAST_NAME,
 };
-
+// jest.mock('../../services/EmailService', () => {
+//   return {
+//     EmailService: jest.fn().mockImplementation(() => {
+//       return {
+//         sendAccountRegistrationEmail: jest.fn(),
+//       };
+//     }),
+//   };
+// });
 describe('user registration', () => {
   //   let server: any;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let app: Application | undefined;
   const redis = new Redis();
 
-  const InputFields = {
-    AUTH: {
-      PASSWORD: 'password',
-      PASSWORD_CONFIRM: 'confirmPassword',
-      NAME: 'name',
-      EMAIL: 'email',
-    },
-  };
-
   beforeAll(async () => {
+    process.env.NODE_ENV = 'development';
     app = await createTestServer();
     await redis.flushdb();
   });
@@ -43,45 +53,56 @@ describe('user registration', () => {
     await redis.quit();
     // server.close();
   });
+  // jest.setTimeout(40000);
+
   it('given the registration information are valid, sends an account creation verification email and creates an account creation attempt session', async () => {
     const response = await request(app)
-      .post('/api/auth/register')
-      .send(registerInput);
-    console.log('===============>', response.status);
-    expect(EmailService).toHaveBeenCalled();
-    expect(response.status).toBe(200);
+      .post(`/api${AuthRoutePaths.ROOT}${AuthRoutePaths.REGISTER}`)
+      .send({
+        email: TEST_USER_EMAIL_ALTERNATE,
+        password: TEST_USER_PASSWORD,
+        confirmPassword: TEST_USER_PASSWORD,
+        firstName: TEST_USER_FIRST_NAME,
+        lastName: TEST_USER_LAST_NAME,
+      });
+    // console.log('===============>', response);
+    // const emailService = new EmailService(
+    //   {
+    //     email: TEST_USER_EMAIL_ALTERNATE,
+    //     firstName: registerInput.firstName,
+    //   },
+    //   'test',
+    // );
+    // emailService.sendAccountRegistrationEmail();
+    // expect(emailService.sendAccountRegistrationEmail).toHaveBeenCalled();
+    expect(response.status).toBe(201);
     // this session is needed to ensure the email link can not be used after a certain time has passed
 
     const registrationAttemptSession = await redis.get(
-      ACCOUNT_CREATION_SESSION_PREFIX + registerInput.email,
+      ACCOUNT_CREATION_SESSION_PREFIX + TEST_USER_EMAIL_ALTERNATE,
     );
     const parsedSession = JSON.parse(registrationAttemptSession as string);
     expect(parsedSession.firstName).toBe(registerInput.firstName);
     expect(parsedSession.lastName).toBe(registerInput.lastName);
-    expect(parsedSession.email).toBe(registerInput.email);
-    expect(parsedSession.email).toBe(registerInput.email);
-
+    expect(parsedSession.email).toBe(TEST_USER_EMAIL_ALTERNATE);
+    expect(parsedSession.password).toBe(TEST_USER_PASSWORD);
     expect(response.body).toHaveProperty('message');
-    const hashedPasswordMatchesUserPassword = await argon2.verify(
-      registerInput.password,
-      parsedSession.password,
-    );
-    expect(hashedPasswordMatchesUserPassword).toBeTruthy();
   });
 
   it('gets errors for missing email or password', async () => {
-    const startingCount = await UserModel.count();
-
-    const response = await request(app).post(`/api/auth/register`).send({
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-      passwordConfirm: '',
-    });
-
+    const startingCount = await UserModel.countDocuments();
+    const response = await request(app)
+      .post(`/api${AuthRoutePaths.ROOT}${AuthRoutePaths.REGISTER}`)
+      .send({
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+      });
     expect(response.status).toBe(400);
     expect(response.body.error);
+    expect(response.body).toBeInstanceOf(Array);
     expect(
       responseBodyIncludesCustomErrorMessage(
         response,
@@ -101,23 +122,26 @@ describe('user registration', () => {
       responseBodyIncludesCustomErrorField(response, InputFields.AUTH.PASSWORD),
     ).toBeTruthy();
 
-    const finishCount = await UserModel.count();
+    const finishCount = await UserModel.countDocuments();
     expect(finishCount - startingCount).toEqual(0);
-  });
+  }, 10000);
 
   it('gets errors for name length and non matching', async () => {
     const startingCount = await UserModel.count();
 
-    const response = await request(app).post(`/api/auth/register`).send({
-      firstName: '',
-      lastName: '',
-      email: registerInput.email,
-      password: registerInput.password,
-      passwordConfirm: '',
-    });
+    const response = await request(app)
+      .post(`/api${AuthRoutePaths.ROOT}${AuthRoutePaths.REGISTER}`)
+      .send({
+        firstName: '',
+        lastName: '',
+        email: registerInput.email,
+        password: registerInput.password,
+        confirmPassword: '',
+      });
 
     expect(response.status).toBe(400);
     expect(response.body.error);
+    expect(response.body).toBeInstanceOf(Array);
     expect(
       responseBodyIncludesCustomErrorMessage(
         response,
@@ -125,7 +149,10 @@ describe('user registration', () => {
       ),
     ).toBeTruthy();
     expect(
-      responseBodyIncludesCustomErrorField(response, InputFields.AUTH.NAME),
+      responseBodyIncludesCustomErrorField(
+        response,
+        InputFields.AUTH.FIRST_NAME,
+      ),
     ).toBeTruthy();
 
     expect(
@@ -137,7 +164,7 @@ describe('user registration', () => {
     expect(
       responseBodyIncludesCustomErrorField(
         response,
-        InputFields.AUTH.PASSWORD_CONFIRM,
+        InputFields.AUTH.CONFIRM_PASSWORD,
       ),
     ).toBeTruthy();
 

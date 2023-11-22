@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-// import AppError from '../utils/appError';
+import AppError from '../utils/appError';
+import { AppErrorDetails } from '../utils/types';
 
 // const handleCastErrorDB = (err: any) => {
 //   const message = `Invalid ${err.path}: ${err.value}.`;
@@ -19,15 +20,37 @@ import { NextFunction, Request, Response } from 'express';
 //   const message = `Invalid input data. ${errors.join('. ')}`;
 //   return new AppError(message, 400);
 // };
-const sendErrorDev = (err: any, res: Response) => {
-  // console.error('ERROR 💥', err);
-  const errorStatusCode = err.statusCode ? err.statusCode : 401;
-  res.status(errorStatusCode).json({
-    status: err.status,
-    error: err,
-    message: err.message,
-    stack: err.stack,
-  });
+
+const sendErrorDev = (error: any, res: Response) => {
+  // console.error('ERROR 💥', error);
+  const errorStatusCode = error.statusCode
+    ? error.statusCode
+    : error[0].statusCode
+    ? error[0].statusCode
+    : 401;
+  let errors: AppErrorDetails[] | undefined;
+  if (error[0] instanceof AppError) {
+    // console.error('I AM, RUNNING💥');
+    errors = error.map((appError: AppError) => {
+      const errorToReturn: AppErrorDetails = { message: appError.message };
+      // console.error('ERROR 💥', errorToReturn);
+      if (appError.field) errorToReturn.field = appError.field;
+      // errorToReturn;
+      return errorToReturn;
+    });
+  }
+  let jsonToSend;
+
+  if (errors) jsonToSend = errors;
+  else {
+    jsonToSend = {
+      status: error.status,
+      error: error,
+      message: error.message,
+      stack: error.stack,
+    };
+  }
+  res.status(errorStatusCode).json(jsonToSend);
 };
 
 const sendErrorProd = (err: any, _req: Request, res: Response) => {

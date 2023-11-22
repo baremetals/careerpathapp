@@ -1,14 +1,13 @@
-import * as argon2 from 'argon2';
-import { signJwtAsymmetric } from 'controllers/utils/jwt';
 import { NextFunction, Request, Response } from 'express';
 import Redis from 'ioredis';
-import { ACCOUNT_CREATION_SESSION_PREFIX } from 'lib/constants';
-import { ERROR_MESSAGES } from 'lib/error-messages';
-import { UserRegistrationUserInput } from 'user-input-validation-schema/register-user-schema';
+import { ACCOUNT_CREATION_SESSION_PREFIX } from '../../lib/constants';
+import { ERROR_MESSAGES } from '../../lib/error-messages';
 import { UserModel } from '../../models/User';
 import { EmailService } from '../../services/EmailService';
+import { UserRegistrationUserInput } from '../../user-input-validation-schema/register-user-schema';
 import AppError from '../../utils/appError';
 import catchAsync from '../../utils/catchAsync';
+import { signJwtAsymmetric } from '../utils/jwt';
 
 export default catchAsync(async function registerNewAccountHandler(
   req: Request<object, object, UserRegistrationUserInput>,
@@ -23,9 +22,9 @@ export default catchAsync(async function registerNewAccountHandler(
 
   if (emailAlreadyExists) {
     // console.log('===============>', user);
-    return next(
+    return next([
       new AppError(ERROR_MESSAGES.AUTH.EMAIL_IN_USE_OR_UNAVAILABLE, 403),
-    );
+    ]);
   }
 
   const token = signJwtAsymmetric(
@@ -36,16 +35,19 @@ export default catchAsync(async function registerNewAccountHandler(
     },
   );
 
-  const hashedPassword = await argon2.hash(password);
+  // console.log('============', token);
+
   const redis = new Redis();
 
   await redis.set(
     ACCOUNT_CREATION_SESSION_PREFIX + email,
-    JSON.stringify({ email, firstName, lastName, password: hashedPassword }),
+    JSON.stringify({ email, firstName, lastName, password }),
     'EX',
-    1000 * 60 * 60 * 48,
+    60 * 60 * 24 * 2,
   ); // 48 hours
-  const url = `${req.protocol}://${req.get('host')}/api/auth/activate/${token}`;
+  const url = `${req.protocol}://${req.get(
+    'host',
+  )}/api/auth/account-activation/${token}`;
 
   await new EmailService(
     { email, firstName },
@@ -53,7 +55,6 @@ export default catchAsync(async function registerNewAccountHandler(
   ).sendAccountRegistrationEmail();
 
   res.status(201).json({
-    status: 'success',
     message:
       'Your request has been processed, please activate your account to begin.',
   });

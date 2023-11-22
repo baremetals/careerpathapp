@@ -7,8 +7,8 @@ import {
   IEducationDocument,
   IExperienceDocument,
   IInterestDocument,
-  ISuitabilityScoreDocument,
   ISkillDocument,
+  ISuitabilityScoreDocument,
   IUserCareerPathDocument,
 } from '../userProfile';
 
@@ -21,8 +21,7 @@ export interface IUserDocument extends IShared {
   fullName: string;
   avatar: string;
   bio: string;
-  isDisabled: boolean;
-  isActive: boolean;
+  status: string;
   role: string;
   profileId: IUserProfileDocument;
   passwordChangedAt: number;
@@ -58,4 +57,34 @@ export interface IUserProfileDocument extends IShared {
 
 export interface AuthenticatedRequest extends Request {
   user: IUserDocument;
+}
+
+export class SanitizedUser {
+  id: string;
+  createdAt: number;
+  role: string;
+  status: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  fullName: string;
+  avatar: string;
+  bio: string;
+  profileId: IUserProfileDocument;
+  lastModifiedAt: number;
+
+  constructor(user: IUserDocument) {
+    this.id = user._id;
+    this.createdAt = +user.createdAt;
+    this.lastModifiedAt = +user.lastModifiedAt;
+    this.firstName = user.firstName;
+    this.lastName = user.lastName;
+    this.fullName = user.fullName;
+    this.email = user.email;
+    this.role = user.role;
+    this.avatar = user.avatar;
+    this.status = user.status;
+    this.profileId = user.profileId;
+    this.bio = user.bio;
+  }
 }

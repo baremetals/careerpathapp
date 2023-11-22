@@ -32,6 +32,8 @@ export const ERROR_MESSAGES = {
     ACCOUNT_BANNED: 'The specified account has been banned',
     PASSWORD_RESET_EMAIL_DOES_NOT_MATCH_TOKEN:
       'The provided email address did not match with the password reset token',
+    NEW_PASSWORD_MATCH_CURRENT_PASSWORD:
+      'The new password provided is the same as the current one. Please update your password',
     ACCOUNT_LOCKED:
       'Your account has been locked for security reasons, please reset your password to regain access',
   },

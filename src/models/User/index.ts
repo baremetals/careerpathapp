@@ -33,19 +33,16 @@ const userSchema = new Schema<IUserDocument>({
   },
   bio: { type: String, required: false },
   avatar: { type: String, default: defaultAvatar },
-  isDisabled: { type: Boolean, default: false, select: false },
-  isActive: { type: Boolean, default: false },
+  status: { type: String, default: 'active', select: false },
   profileId: { type: Schema.Types.ObjectId, ref: 'UserProfile' },
 
   createdAt: {
     type: Date,
     default: Date.now(),
-    select: false,
   },
   lastModifiedAt: {
     type: Date,
     default: Date.now(),
-    select: false,
   },
   createdBy: { type: String, default: 'admin', select: false },
   lastModifiedBy: { type: String, default: 'admin', select: false },
