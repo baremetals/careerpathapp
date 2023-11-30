@@ -11,7 +11,7 @@ import path from 'path';
 import globalErrorHandler from '../../middleware/errorHandler';
 import adminRouter from '../../routes/admin';
 import authRouter from '../../routes/auth-route';
-import careerPathRouter from '../../routes/careerPaths';
+import careerPathRouter from '../../routes/careers-route';
 import uiRouter from '../../routes/ui';
 import userRouter from '../../routes/users-route';
 import AppError from '../../utils/appError';

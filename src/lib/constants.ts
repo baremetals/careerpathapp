@@ -25,6 +25,8 @@ export const InputFields = {
   AUTH: {
     PASSWORD: 'password',
     CONFIRM_PASSWORD: 'confirmPassword',
+    CURRENT_PASSWORD: 'currentPassword',
+    NEW_PASSWORD: 'newPassword',
     FIRST_NAME: 'firstName',
     LAST_NAME: 'lastName',
     EMAIL: 'email',

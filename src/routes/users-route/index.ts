@@ -1,10 +1,16 @@
 import { Router } from 'express';
-import authMiddleware from '../../middleware/authMiddleware';
-// import * as handler from '../../controllers/userController';
-import * as handler from '../../controllers/users-controller';
-
+import logoutHandler from '../../controllers/authController/logoutHandler';
+import * as handler from '../../controllers/users-controller/';
+import changePasswordHandler from '../../controllers/users-controller/changePasswordHandler';
+import deleteAccountHandler from '../../controllers/users-controller/deleteAccountHandler';
+import getMeHandler from '../../controllers/users-controller/getMeHandler';
+import getUserHandler from '../../controllers/users-controller/getUserHandler';
+import updateAvatarHandler from '../../controllers/users-controller/updateAvatarHandler';
+import { UsersRoutePaths } from '../../enums/APIRoutPaths';
 import { multerUpload } from '../../lib/fileUpload';
-import questionResponseMiddleware from '../../middleware/questionResponseMiddleware';
+import authMiddleware from '../../middleware/authMiddleware';
+import { validate } from '../../middleware/validate';
+import { changePasswordSchema } from '../../user-input-validation-schema/change-password-schema';
 
 /**
  * @swagger
@@ -57,27 +63,21 @@ const userRouter = Router();
 userRouter.use(authMiddleware);
 
 userRouter
-  .route('')
-  .get(handler.getMe, handler.getUser)
-  .delete(handler.deleteMe)
-  .patch(handler.getMe, handler.updateMe);
-userRouter.post(
-  '/me/avatar',
-  multerUpload.single('avatar'),
-  handler.updateAvatar,
-);
-userRouter.post('/me/change-password', handler.changePassword);
+  .route(UsersRoutePaths.ME)
+  .get(getMeHandler, getUserHandler)
+  .put(deleteAccountHandler, logoutHandler)
+  .patch(getMeHandler, handler.updateMeHandler);
 
 userRouter.post(
-  '/me/question-responses',
-  questionResponseMiddleware,
-  handler.generateCareerPath,
+  UsersRoutePaths.UPLOAD_AVATAR,
+  multerUpload.single('avatar'),
+  updateAvatarHandler,
 );
-// userRouter.post(
-//   '/me/question-responses/:objectId',
-//   handler.updateQuestionResponse,
-//   handler.generateCareerPath,
-// );
+userRouter.put(
+  UsersRoutePaths.CHANGE_PASSWORD,
+  validate(changePasswordSchema),
+  changePasswordHandler,
+);
 
 userRouter
   .route('/profile')

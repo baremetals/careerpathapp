@@ -8,9 +8,6 @@ import catchAsync from '../utils/catchAsync';
 const authMiddleWare = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      // console.log('The mock has userId Here=======>', req.session.userId);
-      console.log('THE HEADERS HERE=======>', req.headers);
-
       if (!req.session.userId) {
         return next(new AppError(ERROR_MESSAGES.AUTH.NOT_LOGGED_IN, 401));
       }
@@ -23,6 +20,7 @@ const authMiddleWare = catchAsync(
       next();
     } catch (err) {
       console.log(err);
+      return next(new AppError(ERROR_MESSAGES.AUTH.NO_USER_EXISTS, 401));
     }
   },
 );

@@ -1,21 +1,14 @@
-import { Request, Response, NextFunction } from 'express';
-// import { EmailService } from '../services/EmailService';
-// import catchAsync from '../utils/catchAsync';
+import { Request, Response } from 'express';
 
-export const rootHandler = async (
-  _req: Request,
-  res: Response,
-  _next: NextFunction,
-) => {
-  // const url = `${req.protocol}://${req.get('host')}/activate/`;
-  // await new EmailService(
-  //   {
-  //     email: 'petaviv728@lukaat.com',
-  //     firstName: 'Petaviv',
-  //   },
-  //   url,
-  // ).sendWelcomeEmail();
-  res
-    .status(200)
-    .json({ message: 'Welcome to the Career Path Recommendation App!' });
+export const rootHandler = async (_req: Request, res: Response) => {
+  res.send(`
+        "<html>"
+        "<body style='padding: 10px;'>"
+        "<h1>Welcome to the API</h1>"
+        "<div>"
+        "Check the docs: <a href='/api-docs'>here</a>"
+        "</div>"
+        "</body>"
+        "</html>"
+  `);
 };

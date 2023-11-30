@@ -25,13 +25,15 @@ export default catchAsync(async function loginHandler(
   }
 
   if (user.status === UserStatuses.LOCKED_OUT)
-    return next([new AppError(ERROR_MESSAGES.AUTH.ACCOUNT_LOCKED, 401)]);
+    return next(new AppError(ERROR_MESSAGES.AUTH.ACCOUNT_LOCKED, 401));
 
   if (!(await argon2.verify(user.password, password))) {
     return next(new AppError(ERROR_MESSAGES.AUTH.INVALID_CREDENTIALS, 401));
   }
 
   req.session.userId = user._id;
+  req.session.userName = user.fullName;
+  req.session.profileId = user.profileId;
   req.session.role = user.role ? user.role : 'user';
 
   res.status(201).json({ user: new SanitizedUser(user) });

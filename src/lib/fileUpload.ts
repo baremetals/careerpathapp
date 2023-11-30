@@ -1,7 +1,7 @@
 import {
-  PutObjectCommand,
-  GetObjectCommand,
   DeleteObjectCommand,
+  GetObjectCommand,
+  PutObjectCommand,
 } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 // import os from 'os';
@@ -22,6 +22,7 @@ async function uploadFile(
   body: Buffer,
   mimetype: string,
 ) {
+  console.log('Uploading file========================>');
   const contentExtension =
     originalname.split('.')[originalname.split('.').length - 1];
   const fileName = `${Math.round(
@@ -59,10 +60,14 @@ async function deleteFile(fileName: string) {
   return s3Instance.send(command);
 }
 
-const createPresignedUrlWithClient = (fileName: string) => {
+const createPresignedUrlWithClient = (
+  fileName: string,
+  contentType: string,
+) => {
   const command = new PutObjectCommand({
     Bucket: bucketName,
     Key: fileName,
+    ContentType: contentType,
   });
   return getSignedUrl(s3Instance, command, { expiresIn: 3600 }); // fileName: string;
 };
@@ -76,10 +81,10 @@ const createUniqueFileName = (originalFileName: string) => {
 };
 
 export {
-  multerUpload,
-  uploadFile,
-  getSignedFileUrl,
-  deleteFile,
   createPresignedUrlWithClient,
   createUniqueFileName,
+  deleteFile,
+  getSignedFileUrl,
+  multerUpload,
+  uploadFile,
 };

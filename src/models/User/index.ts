@@ -33,8 +33,8 @@ const userSchema = new Schema<IUserDocument>({
   },
   bio: { type: String, required: false },
   avatar: { type: String, default: defaultAvatar },
-  status: { type: String, default: 'active', select: false },
-  profileId: { type: Schema.Types.ObjectId, ref: 'UserProfile' },
+  status: { type: String, default: 'active', select: true },
+  profileId: { type: Schema.Types.ObjectId, ref: 'UserProfile', unique: true },
 
   createdAt: {
     type: Date,

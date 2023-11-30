@@ -4,6 +4,7 @@ import { Schema, model } from 'mongoose';
 const industrySchema = new Schema<IIndustryDocument>({
   name: {
     type: String,
+    unique: true,
     required: true,
   },
   description: { type: String, required: false },

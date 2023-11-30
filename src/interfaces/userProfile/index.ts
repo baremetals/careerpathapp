@@ -47,9 +47,9 @@ interface ICareerGoalDocument extends IShared {
   name: string;
 }
 interface ISuitabilityScoreDocument extends IShared {
-  industryName: string;
-  industryId: Schema.Types.ObjectId;
-  score: number;
+  profileId: Schema.Types.ObjectId;
+  chosenIndustriesAndScores: Array<TSuitabilityScoreType>;
+  industriesAndScores: Array<TSuitabilityScoreType>;
 }
 
 interface IUserCareerPathDocument extends IShared {
@@ -59,14 +59,35 @@ interface IUserCareerPathDocument extends IShared {
   jobs: Array<Schema.Types.ObjectId>;
 }
 
+interface IUserQuestionResponseDocument extends IShared {
+  profileId: Schema.Types.ObjectId;
+  selectedIndustries: Array<string>;
+  selectedInterests: Array<string>;
+  responses: Array<TResponseType>;
+}
+export type TResponseType = {
+  questionId: Schema.Types.ObjectId;
+  questionNumber: number;
+  questionVersion: number;
+  responseId: Schema.Types.ObjectId;
+  responseToQuestion: string;
+};
+
+export type TSuitabilityScoreType = {
+  industryName: string;
+  industryId: Schema.Types.ObjectId;
+  score: number;
+};
+
 export {
-  IInterestDocument,
+  ICareerGoalDocument,
   ICertificationDocument,
   IEducationDocument,
   IExperienceDocument,
-  IWorkEnvironmentDocument,
+  IInterestDocument,
   ISkillDocument,
-  ICareerGoalDocument,
-  IUserCareerPathDocument,
   ISuitabilityScoreDocument,
+  IUserCareerPathDocument,
+  IUserQuestionResponseDocument,
+  IWorkEnvironmentDocument,
 };

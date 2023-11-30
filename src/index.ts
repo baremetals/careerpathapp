@@ -7,28 +7,29 @@ import swaggerJsDoc from 'swagger-jsdoc';
 import swaggerUI from 'swagger-ui-express';
 
 import path from 'path';
+import {
+  AdminRoutePaths,
+  AuthRoutePaths,
+  CareerRoutePaths,
+  UsersRoutePaths,
+} from './enums/APIRoutPaths';
 import globalErrorHandler from './middleware/errorHandler';
 import adminRouter from './routes/admin';
 import authRouter from './routes/auth-route';
-import careerPathRouter from './routes/careerPaths';
+import careerPathRouter from './routes/careers-route';
 import uiRouter from './routes/ui';
 import uploadRouter from './routes/uploads';
 import userRouter from './routes/users-route';
 import AppError from './utils/appError';
-import {
-  AuthRoutePaths,
-  UsersRoutePaths,
-  AdminRoutePaths,
-} from './enums/APIRoutPaths';
-// import dotenv from 'dotenv';
-// dotenv.config();
+import { Schema } from 'mongoose';
 
 // This is required to extend the  express-session type.
 declare module 'express-session' {
   interface Session {
     userId: string;
     role: string;
-    // userName: string;
+    userName: string;
+    profileId: Schema.Types.ObjectId;
   }
 }
 
@@ -44,7 +45,7 @@ function createServer() {
       },
       servers: [
         {
-          url: 'http://localhost:9500',
+          url: 'http://localhost:4000',
         },
       ],
     },
@@ -63,7 +64,6 @@ function createServer() {
     password: process.env.REDIS_PASSWORD,
   });
 
-  // const RedisStore = connectRedis(session);
   const redisStore = new RedisStore({
     client: redis,
   });
@@ -94,25 +94,13 @@ function createServer() {
       },
     } as any),
   );
-  let loggedInUser: string | null = null;
-
-  const globalObject = {
-    loggedInUser,
-  };
-  globalObject.loggedInUser = loggedInUser;
-  console.log(globalObject.loggedInUser);
-
-  app.use('*', (req, _res, next) => {
-    loggedInUser = req.session.userId;
-    next();
-  });
 
   app.use('/', uiRouter);
   app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));
   app.use(`/api${AuthRoutePaths.ROOT}`, authRouter);
   app.use(`/api${UsersRoutePaths.ROOT}`, userRouter);
-  app.use('/api/uploads', uploadRouter);
-  app.use('/api/careers', careerPathRouter);
+  app.use(`/api${UsersRoutePaths.UPLOADS}`, uploadRouter);
+  app.use(`/api${CareerRoutePaths.ROOT}`, careerPathRouter);
   app.use(`/api${AdminRoutePaths.ROOT}`, adminRouter);
 
   app.all('*', function (req, _res, next) {

@@ -1,17 +1,17 @@
 import { Router } from 'express';
-import registerNewAccountHandler from '../../controllers/auth-controller/registerNewAccountHandler';
+import accountActivationHandler from '../../controllers/authController/accountActivationHandler';
+import forgotPasswordRequestHandler from '../../controllers/authController/forgotPasswordRequestHandler';
+import loginHandler from '../../controllers/authController/loginHandler';
+import logoutHandler from '../../controllers/authController/logoutHandler';
+import registerNewAccountHandler from '../../controllers/authController/registerNewAccountHandler';
+import resetPasswordRequestHandler from '../../controllers/authController/resetPasswordRequestHandler';
+import { AuthRoutePaths } from '../../enums/APIRoutPaths';
+import { ROUTE_TOKEN } from '../../lib/constants';
 import authMiddleware from '../../middleware/authMiddleware';
 import { validate } from '../../middleware/validate';
-import { registerUserSchema } from '../../user-input-validation-schema/register-user-schema';
-import accountActivationHandler from '../../controllers/auth-controller/accountActivationHandler';
-import loginHandler from '../../controllers/auth-controller/loginHandler';
-import logoutHandler from '../../controllers/auth-controller/logoutHandler';
-import forgotPasswordRequestHandler from '../../controllers/auth-controller/forgotPasswordRequestHandler';
-import resetPasswordRequestHandler from '../../controllers/auth-controller/resetPasswordRequestHandler';
-import { AuthRoutePaths } from '../../enums/APIRoutPaths';
 import { loginSchema } from '../../user-input-validation-schema/login-schema';
-import { changePasswordSchema } from '../../user-input-validation-schema/change-password-schema';
-import { ROUTE_TOKEN } from '../../lib/constants';
+import { registerUserSchema } from '../../user-input-validation-schema/register-user-schema';
+import { resetPasswordSchema } from '../../user-input-validation-schema/reset-password-schema';
 
 const authRouter = Router();
 
@@ -33,7 +33,7 @@ authRouter.post(
 );
 authRouter.post(
   `${AuthRoutePaths.RESET_PASSWORD}/:${ROUTE_TOKEN}`,
-  validate(changePasswordSchema),
+  validate(resetPasswordSchema),
   resetPasswordRequestHandler,
 );
 

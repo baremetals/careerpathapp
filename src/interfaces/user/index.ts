@@ -6,9 +6,7 @@ import {
   ICertificationDocument,
   IEducationDocument,
   IExperienceDocument,
-  IInterestDocument,
   ISkillDocument,
-  ISuitabilityScoreDocument,
   IUserCareerPathDocument,
 } from '../userProfile';
 
@@ -23,23 +21,9 @@ export interface IUserDocument extends IShared {
   bio: string;
   status: string;
   role: string;
-  profileId: IUserProfileDocument;
+  profileId: Schema.Types.ObjectId;
   passwordChangedAt: number;
   correctPassword: (enteredPassword: string, hashedPassword: string) => boolean;
-}
-
-type TResponseType = {
-  questionId: Schema.Types.ObjectId;
-  questionVersion: number;
-  responseId: Schema.Types.ObjectId;
-  responseOption: string;
-};
-
-export interface IUserQuestionResponseDocument extends IShared {
-  profileId: Schema.Types.ObjectId;
-  selectedIndustries: Array<string>;
-  selectedInterests: Array<string>;
-  responses: Array<TResponseType>;
 }
 
 export interface IUserProfileDocument extends IShared {
@@ -49,10 +33,10 @@ export interface IUserProfileDocument extends IShared {
   experience: Array<IExperienceDocument>;
   careerGoals: Array<ICareerGoalDocument>;
   certifications?: Array<ICertificationDocument>;
-  interests?: Array<IInterestDocument>;
   preferredWorkEnvironment?: string;
   careerPaths: Array<IUserCareerPathDocument>;
-  suitabilityScores: Array<ISuitabilityScoreDocument>;
+  suitabilityScoresId: Schema.Types.ObjectId;
+  questionsResponsesId: Schema.Types.ObjectId;
 }
 
 export interface AuthenticatedRequest extends Request {
@@ -70,7 +54,7 @@ export class SanitizedUser {
   fullName: string;
   avatar: string;
   bio: string;
-  profileId: IUserProfileDocument;
+  profileId: Schema.Types.ObjectId;
   lastModifiedAt: number;
 
   constructor(user: IUserDocument) {

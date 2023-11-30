@@ -7,6 +7,7 @@ import {
 
 export const ERROR_MESSAGES = {
   SERVER_GENERIC: 'Internal server error',
+  SERVER_RESPONSE_NOT_JSON: 'External server response not JSON',
   AUTH: {
     NOT_LOGGED_IN: 'You are not logged in',
     INVALID_OR_EXPIRED_TOKEN: 'Invalid or expired token',
@@ -19,7 +20,7 @@ export const ERROR_MESSAGES = {
         return `Incorrect email or password, this is your final attempt before account will be locked`;
       return `Incorrect email or password, you have ${remaining} attempts remaining`;
     },
-    NO_USER_EXISTS: 'The specified user longer exists',
+    NO_USER_EXISTS: `The specified user doesn't exists`,
     ROLE_RESTRICTED: 'That action is role restricted',
     EMAIL_DOES_NOT_EXIST: 'No user with that email exists',
     EMAIL_IN_USE_OR_UNAVAILABLE:
@@ -43,6 +44,18 @@ export const ERROR_MESSAGES = {
   ADMIN: {
     NO_IP_TO_BAN: 'No IP address was found',
   },
+  FACTORY: {
+    DOC_NOT_FOUND: 'Document not found',
+    NO_DOCUMENTS: 'No documentS provided',
+    REQUIRED_FILTER_OR_UPDATE: 'Filter and update data are required',
+  },
+  UPLOAD: {
+    NOT_AN_IMAGE: 'Not an image! Please upload only images.',
+    NOT_A_FILE: 'Not a FILE! Please upload only approved file types.',
+    LARGE_FILE_SIZE:
+      'Image too large please upload a smaller size than 1069736',
+    UPLOAD_FAILED: 'Upload failed, please try again later.',
+  },
   VALIDATION: {
     AUTH: {
       REQUIRED_FIELD: {
@@ -54,11 +67,19 @@ export const ERROR_MESSAGES = {
       CONFIRM_DELETE_ACCOUNT_EMAIL_MATCH:
         "Email address typed did not match your account's email",
       INVALID_EMAIL: 'Invalid email',
+      INVALID_PASSWORD: 'The current password provided is invalid',
       PASSWORD_MIN_LENGTH: `Password must be at least ${passwordMinLength} characters`,
       PASSWORD_MAX_LENGTH: `Password must be no longer than ${passwordMaxLength} characters`,
       PASSWORDS_DONT_MATCH: 'Password confirmation does not match the password',
       NAME_MIN_LENGTH: `Name must be at least ${nameMinLength} characters`,
       NAME_MAX_LENGTH: `Name must be no longer than ${nameMaxLength} characters`,
     },
+  },
+  CAREER_PATH: {
+    ISSUE_SAVING_RESPONSES:
+      'Sorry your responses could not be saved please try again later',
+    INDUSTRY_MISSING: 'Please provide at least one industry.',
+    SKILLS_MISSING: 'Please provide at least one skill',
+    MISSING_RESPONSE: 'Please provide a response for all questions',
   },
 };

@@ -27,6 +27,8 @@ const sendErrorDev = (error: any, res: Response) => {
     ? error.statusCode
     : error[0].statusCode
     ? error[0].statusCode
+    : error[0].status || 401
+    ? error[0].statusCode
     : 401;
   let errors: AppErrorDetails[] | undefined;
   if (error[0] instanceof AppError) {
@@ -74,6 +76,8 @@ export default function globalErrorHandler(
   _next: NextFunction,
 ) {
   if (process.env.NODE_ENV === 'development') {
+    // const error = { ...err };
+    // error.message = err.message;
     sendErrorDev(err, res);
   } else if (process.env.NODE_ENV === 'production') {
     const error = { ...err };

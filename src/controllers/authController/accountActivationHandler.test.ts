@@ -13,7 +13,7 @@ import {
   TEST_USER_PASSWORD,
 } from '../../utils/test-utils/constants';
 import createTestServer from '../../utils/test-utils/createTestServer';
-import { signJwtAsymmetric } from '../../controllers/utils/jwt';
+import { signJwtAsymmetric } from '../utils/jwt';
 
 describe('user activation', () => {
   process.env.NODE_ENV = 'development';

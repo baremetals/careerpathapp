@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import createServer from './index';
-
+dotenv.config();
 process.on('uncaughtException', (err) => {
   console.log('UNCAUGHT EXCEPTION! Shutting down...');
   console.log(err.name, err.message);
@@ -10,7 +10,6 @@ process.on('uncaughtException', (err) => {
 
 const port = process.env.PORT ? process.env.PORT : 9500;
 
-dotenv.config();
 const app = createServer();
 const DB = process?.env?.DATABASE?.replace(
   '<password>',
