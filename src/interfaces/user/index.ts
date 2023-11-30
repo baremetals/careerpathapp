@@ -6,8 +6,6 @@ import {
   ICertificationDocument,
   IEducationDocument,
   IExperienceDocument,
-  IInterestDocument,
-  IWorkEnvironmentDocument,
   ISkillDocument,
   IUserCareerPathDocument,
 } from '../userProfile';
@@ -21,33 +19,56 @@ export interface IUserDocument extends IShared {
   fullName: string;
   avatar: string;
   bio: string;
-  isDisabled: boolean;
-  isActive: boolean;
+  status: string;
   role: string;
-  profile: IUserProfileDocument;
+  profileId: Schema.Types.ObjectId;
   passwordChangedAt: number;
   correctPassword: (enteredPassword: string, hashedPassword: string) => boolean;
 }
 
-export interface IUserQuestionResponseDocument extends IShared {
-  user: Schema.Types.ObjectId;
-  question: Schema.Types.ObjectId;
-  response: string;
-}
-
 export interface IUserProfileDocument extends IShared {
-  user: Schema.Types.ObjectId;
-  skills: ISkillDocument[];
-  education: IEducationDocument[];
-  experience: IExperienceDocument[];
-  careerGoals: ICareerGoalDocument[];
-  selectedIndustries: Array<Schema.Types.ObjectId>;
-  certifications?: ICertificationDocument[];
-  interests?: IInterestDocument[];
-  preferredWorkEnvironments?: IWorkEnvironmentDocument;
-  careerPaths: IUserCareerPathDocument[];
+  userId: Schema.Types.ObjectId;
+  skills: Array<ISkillDocument>;
+  education: Array<IEducationDocument>;
+  experience: Array<IExperienceDocument>;
+  careerGoals: Array<ICareerGoalDocument>;
+  certifications?: Array<ICertificationDocument>;
+  preferredWorkEnvironment?: string;
+  careerPaths: Array<IUserCareerPathDocument>;
+  suitabilityScoresId: Schema.Types.ObjectId;
+  questionsResponsesId: Schema.Types.ObjectId;
 }
 
 export interface AuthenticatedRequest extends Request {
   user: IUserDocument;
+}
+
+export class SanitizedUser {
+  id: string;
+  createdAt: number;
+  role: string;
+  status: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  fullName: string;
+  avatar: string;
+  bio: string;
+  profileId: Schema.Types.ObjectId;
+  lastModifiedAt: number;
+
+  constructor(user: IUserDocument) {
+    this.id = user._id;
+    this.createdAt = +user.createdAt;
+    this.lastModifiedAt = +user.lastModifiedAt;
+    this.firstName = user.firstName;
+    this.lastName = user.lastName;
+    this.fullName = user.fullName;
+    this.email = user.email;
+    this.role = user.role;
+    this.avatar = user.avatar;
+    this.status = user.status;
+    this.profileId = user.profileId;
+    this.bio = user.bio;
+  }
 }

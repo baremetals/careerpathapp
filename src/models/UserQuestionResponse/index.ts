@@ -1,11 +1,27 @@
 import { Schema, model } from 'mongoose';
-import { IUserQuestionResponseDocument } from '../../interfaces/user';
+import {
+  IUserQuestionResponseDocument,
+  TResponseType,
+} from '../../interfaces/userProfile';
+
+const responseSchema = new Schema<TResponseType>({
+  questionId: { type: Schema.Types.ObjectId, ref: 'Question', required: true },
+  questionVersion: { type: Number, required: true },
+  questionNumber: { type: Number, required: true },
+  responseId: { type: Schema.Types.ObjectId, ref: 'ResponseOption' },
+  responseToQuestion: { type: String, required: true },
+});
 
 const userQuestionResponseSchema = new Schema<IUserQuestionResponseDocument>({
-  user: { type: Schema.Types.ObjectId, ref: 'User' },
-  question: { type: Schema.Types.ObjectId, ref: 'Question' },
-  response: {
-    type: String,
+  profileId: {
+    type: Schema.Types.ObjectId,
+    ref: 'UserProfile',
+    required: true,
+  },
+  selectedIndustries: { type: [String], required: true },
+  selectedInterests: { type: [String], required: false },
+  responses: {
+    type: [responseSchema],
     required: true,
   },
 
@@ -28,4 +44,6 @@ const UserQuestionResponseModel = model<IUserQuestionResponseDocument>(
   userQuestionResponseSchema,
 );
 
+userQuestionResponseSchema.index({ profileId: 1 }, { unique: true });
+userQuestionResponseSchema.index({ 'responses.questionId': 1 });
 export { UserQuestionResponseModel };

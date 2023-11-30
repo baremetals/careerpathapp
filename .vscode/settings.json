@@ -8,7 +8,13 @@
     "source.fixAll.format": true,
     "source.organizeImports": true
   },
-  "cSpell.words": ["asynciterable", "careerpathapp", "careersapp", "resave"],
+  "cSpell.words": [
+    "asynciterable",
+    "careerpathapp",
+    "careersapp",
+    "resave",
+    "undici"
+  ],
   "[html]": {
     "editor.defaultFormatter": "vscode.html-language-features"
   }

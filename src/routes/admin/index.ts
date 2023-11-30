@@ -1,16 +1,21 @@
 import { Router } from 'express';
-import authMiddleware from '../../middleware/authMiddleware';
-import adminMiddleware from '../../middleware/adminMiddleware';
 import * as handler from '../../controllers/adminController';
+import adminMiddleware from '../../middleware/adminMiddleware';
+import authMiddleware from '../../middleware/authMiddleware';
 
 const adminRouter = Router();
 
+adminRouter
+  .route('/questions')
+  .get(handler.getAllQuestions)
+  .post(handler.createManyQuestions)
+  .put(handler.updateManyQuestions);
 // Protect all routes
 adminRouter.use(authMiddleware, adminMiddleware('admin', 'dev'));
 
 // Questions
 adminRouter.route('/question').post(handler.createQuestion);
-adminRouter.route('/questions').post(handler.createManyQuestions);
+// adminRouter.route('/questions').post(handler.createManyQuestions);
 
 // Industries
 adminRouter.route('/industry').post(handler.createIndustry);

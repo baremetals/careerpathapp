@@ -7,22 +7,29 @@ import swaggerJsDoc from 'swagger-jsdoc';
 import swaggerUI from 'swagger-ui-express';
 
 import path from 'path';
-import globalErrorHandler from './errors/errorHandler';
+import {
+  AdminRoutePaths,
+  AuthRoutePaths,
+  CareerRoutePaths,
+  UsersRoutePaths,
+} from './enums/APIRoutPaths';
+import globalErrorHandler from './middleware/errorHandler';
 import adminRouter from './routes/admin';
-import authRouter from './routes/auth';
-import careerPathRouter from './routes/careerPaths';
+import authRouter from './routes/auth-route';
+import careerPathRouter from './routes/careers-route';
 import uiRouter from './routes/ui';
-import userRouter from './routes/users';
+import uploadRouter from './routes/uploads';
+import userRouter from './routes/users-route';
 import AppError from './utils/appError';
-// import dotenv from 'dotenv';
-// dotenv.config();
+import { Schema } from 'mongoose';
 
 // This is required to extend the  express-session type.
 declare module 'express-session' {
   interface Session {
     userId: string;
     role: string;
-    // userName: string;
+    userName: string;
+    profileId: Schema.Types.ObjectId;
   }
 }
 
@@ -38,7 +45,7 @@ function createServer() {
       },
       servers: [
         {
-          url: 'http://localhost:9500',
+          url: 'http://localhost:4000',
         },
       ],
     },
@@ -57,7 +64,6 @@ function createServer() {
     password: process.env.REDIS_PASSWORD,
   });
 
-  // const RedisStore = connectRedis(session);
   const redisStore = new RedisStore({
     client: redis,
   });
@@ -88,25 +94,14 @@ function createServer() {
       },
     } as any),
   );
-  let loggedInUser: string | null = null;
-
-  const globalObject = {
-    loggedInUser,
-  };
-  globalObject.loggedInUser = loggedInUser;
-  console.log(globalObject.loggedInUser);
-
-  app.use('*', (req, _res, next) => {
-    loggedInUser = req.session.userId;
-    next();
-  });
 
   app.use('/', uiRouter);
   app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));
-  app.use('/api/auth', authRouter);
-  app.use('/api/users', userRouter);
-  app.use('/api/careers', careerPathRouter);
-  app.use('/api/admin', adminRouter);
+  app.use(`/api${AuthRoutePaths.ROOT}`, authRouter);
+  app.use(`/api${UsersRoutePaths.ROOT}`, userRouter);
+  app.use(`/api${UsersRoutePaths.UPLOADS}`, uploadRouter);
+  app.use(`/api${CareerRoutePaths.ROOT}`, careerPathRouter);
+  app.use(`/api${AdminRoutePaths.ROOT}`, adminRouter);
 
   app.all('*', function (req, _res, next) {
     next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

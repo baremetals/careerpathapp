@@ -1,22 +1,29 @@
 import { Types } from 'mongoose';
 import { IShared } from '../../interfaces';
 
-enum QuestionType {
-  OpenEnded = 'open-ended',
-  ClosedEnded = 'closed-ended',
-  List = 'list',
-  Boolean = 'boolean',
-}
+type TResponseOption = {
+  text: string;
+  optionNumber: string;
+};
 
 interface IQuestionDocument extends IShared {
   text: string;
-  answers: string[];
-  // category: Schema.Types.ObjectId;
-  type?: QuestionType;
-  focus: string;
+  responseOptions: Array<TResponseOption>;
+  category: string;
   level: string;
   order: number;
+  version: number;
   description?: string;
+  ageGroup: {
+    min: number;
+    max: number;
+  };
+}
+
+interface IQuestionResponseOptionDocument extends IShared {
+  questionId: Types.ObjectId;
+  text: string;
+  order: number;
 }
 
 /**
@@ -32,4 +39,9 @@ interface ICareerPathResponseAndWeight extends IShared {
   weight: number;
 }
 
-export { ICareerPathResponseAndWeight, IQuestionDocument };
+export {
+  ICareerPathResponseAndWeight,
+  IQuestionDocument,
+  IQuestionResponseOptionDocument,
+  TResponseOption,
+};
