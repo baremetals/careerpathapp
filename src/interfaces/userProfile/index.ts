@@ -53,8 +53,8 @@ interface ISuitabilityScoreDocument extends IShared {
 }
 
 interface IUserCareerPathDocument extends IShared {
-  user: Schema.Types.ObjectId;
-  industry: string;
+  profileId: Schema.Types.ObjectId;
+  // industries: Array<Schema.Types.ObjectId>;
   paths: Array<Schema.Types.ObjectId>;
   jobs: Array<Schema.Types.ObjectId>;
 }

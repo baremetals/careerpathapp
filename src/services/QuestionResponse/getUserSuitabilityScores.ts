@@ -13,7 +13,7 @@ export default async function getUserSuitabilityScores(
   const questionsResponses: TQuestionsResponses = { inputs: inputs };
 
   return fetchHook(
-    process.env.CAREER_APP_MODEL_SERVER_URL as string,
+    `${process.env.CAREER_APP_MODEL_SERVER_URL}/predict`,
     questionsResponses,
   );
 }

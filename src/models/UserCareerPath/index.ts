@@ -2,11 +2,11 @@ import { Schema, model } from 'mongoose';
 import { IUserCareerPathDocument } from '../../interfaces/userProfile';
 
 const userCareerPathSchema = new Schema<IUserCareerPathDocument>({
-  user: { type: Schema.Types.ObjectId, ref: 'UserProfile' },
-  industry: {
-    type: String,
-    required: true,
-  },
+  profileId: { type: Schema.Types.ObjectId, ref: 'UserProfile' },
+  // industries: {
+  //   type: [Schema.Types.ObjectId],
+  //   required: true,
+  // },
   paths: { type: [Schema.Types.ObjectId], ref: 'CareerPath' },
   jobs: { type: [Schema.Types.ObjectId], ref: 'JobRole' },
 
@@ -29,4 +29,5 @@ const UserCareerPathModel = model<IUserCareerPathDocument>(
   userCareerPathSchema,
 );
 
+userCareerPathSchema.index({ profileId: 1 }, { unique: true });
 export { UserCareerPathModel };

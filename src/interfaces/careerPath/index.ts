@@ -14,11 +14,6 @@ interface ICareerPathDocument extends IShared {
   industries: Array<Schema.Types.ObjectId>;
 }
 
-// type requiredResponses = {
-//   question: Schema.Types.ObjectId;
-//   response: string | string[];
-// };
-
 interface IJobRoleDocument extends IShared {
   title: string;
   description: string;

@@ -4,14 +4,15 @@
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true,
-    "source.fixAll.format": true,
-    "source.organizeImports": true
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.format": "explicit",
+    "source.organizeImports": "explicit"
   },
   "cSpell.words": [
     "asynciterable",
     "careerpathapp",
     "careersapp",
+    "Milvus",
     "resave",
     "undici"
   ],
