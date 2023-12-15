@@ -1,6 +1,6 @@
 import { Request } from 'express';
-import { IShared } from 'interfaces';
-import { Schema } from 'mongoose';
+import { IShared } from '@/interfaces';
+import mongoose, { Schema } from 'mongoose';
 import {
   ICareerGoalDocument,
   ICertificationDocument,
@@ -21,7 +21,7 @@ export interface IUserDocument extends IShared {
   bio: string;
   status: string;
   role: string;
-  profileId: Schema.Types.ObjectId;
+  profileId: mongoose.Types.ObjectId;
   passwordChangedAt: number;
   correctPassword: (enteredPassword: string, hashedPassword: string) => boolean;
 }
@@ -54,7 +54,7 @@ export class SanitizedUser {
   fullName: string;
   avatar: string;
   bio: string;
-  profileId: Schema.Types.ObjectId;
+  profileId: mongoose.Types.ObjectId;
   lastModifiedAt: number;
 
   constructor(user: IUserDocument) {

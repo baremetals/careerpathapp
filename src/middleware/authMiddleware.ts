@@ -1,26 +1,50 @@
+import { CookieNames } from '@/lib/constants';
+import { ERROR_MESSAGES } from '@/lib/error-messages';
+import { HTTP_STATUS_CODES } from '@/lib/status-codes';
+import { UserRepo } from '@/repository/UserRepo';
+import AppError from '@/utils/appError';
+import catchAsync from '@/utils/catchAsync';
 import { NextFunction, Request, Response } from 'express';
-import { CookieNames } from '../lib/constants';
-import { ERROR_MESSAGES } from '../lib/error-messages';
-import { UserModel } from '../models/User';
-import AppError from '../utils/appError';
-import catchAsync from '../utils/catchAsync';
 
 const authMiddleWare = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
+    const userRepo = new UserRepo();
     try {
       if (!req.session.userId) {
-        return next(new AppError(ERROR_MESSAGES.AUTH.NOT_LOGGED_IN, 401));
+        return next(
+          new AppError(
+            ERROR_MESSAGES.AUTH.NOT_LOGGED_IN,
+            HTTP_STATUS_CODES.UNAUTHORIZED,
+          ),
+        );
       }
-      const currentUser = await UserModel.findById(req.session.userId);
+      const currentUser = await userRepo.findById(req.session.userId);
       if (!currentUser) {
-        req.session?.destroy;
+        req.session?.destroy((err: any) => {
+          if (err) {
+            console.log('destroy session failed I am zod');
+            res
+              .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
+              .json({ message: 'Failed to destroy session' });
+          }
+        });
         res.clearCookie(CookieNames.ACCESS_TOKEN);
-        return next(new AppError(ERROR_MESSAGES.AUTH.NO_USER_EXISTS, 401));
+        return next(
+          new AppError(
+            ERROR_MESSAGES.AUTH.NO_USER_EXISTS,
+            HTTP_STATUS_CODES.UNAUTHORIZED,
+          ),
+        );
       }
       next();
     } catch (err) {
       console.log(err);
-      return next(new AppError(ERROR_MESSAGES.AUTH.NO_USER_EXISTS, 401));
+      return next(
+        new AppError(
+          ERROR_MESSAGES.AUTH.NO_USER_EXISTS,
+          HTTP_STATUS_CODES.UNAUTHORIZED,
+        ),
+      );
     }
   },
 );

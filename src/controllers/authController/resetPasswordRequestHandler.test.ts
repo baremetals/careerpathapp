@@ -1,24 +1,23 @@
 import { Application } from 'express';
 import Redis from 'ioredis';
 import request from 'supertest';
-import { AuthRoutePaths } from '../../enums/APIRoutPaths';
-import { CookieNames, RESET_PASSWORD } from '../../lib/constants';
-import { ERROR_MESSAGES } from '../../lib/error-messages';
-// import { EmailService } from '../../services/EmailService';
+import { AuthRoutePaths } from '@/enums/APIRoutPaths';
+import { CookieNames, RESET_PASSWORD, InputFields } from '@/lib/constants';
+import { ERROR_MESSAGES } from '@/lib/error-messages';
+// import { EmailService } from '@/services/EmailService';
+import { signJwtAsymmetric } from '@/utils/jwt';
+import {
+  responseBodyIncludesCustomErrorField,
+  responseBodyIncludesCustomErrorMessage,
+} from '@/utils/test-utils';
 import {
   TEST_USER_ALTERNATE_PASSWORD,
   TEST_USER_EMAIL,
   TEST_USER_EMAIL_ALTERNATE,
   TEST_USER_PASSWORD,
-} from '../../utils/test-utils/constants';
-import { InputFields } from '../../lib/constants';
-import {
-  responseBodyIncludesCustomErrorField,
-  responseBodyIncludesCustomErrorMessage,
-} from '../../utils/test-utils';
-import createTestServer from '../../utils/test-utils/createTestServer';
-import { signJwtAsymmetric } from '../utils/jwt';
-import createTestUser from '../../utils/test-utils/create-test-user';
+} from '@/utils/test-utils/constants';
+import createTestUser from '@/utils/test-utils/create-test-user';
+import createTestServer from '@/utils/test-utils/createTestServer';
 
 describe('reset password handler', () => {
   process.env.NODE_ENV = 'development';

@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.359.0",
+    "@aws-sdk/client-sqs": "^3.470.0",
     "@aws-sdk/s3-request-presigner": "^3.359.0",
     "@sendgrid/mail": "^7.7.0",
     "@types/cors": "^2.8.13",

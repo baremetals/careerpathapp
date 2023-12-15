@@ -1,4 +1,6 @@
+import AppError from '@/utils/appError';
 import { S3Client, S3ClientConfig } from '@aws-sdk/client-s3';
+import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -17,4 +19,29 @@ const config: S3ClientConfig = {
 
 const s3Instance = new S3Client(config);
 
-export { bucketName, s3Instance };
+const sqsClient = new SQSClient({
+  region,
+  credentials: {
+    accessKeyId,
+    secretAccessKey,
+  },
+}); // replace REGION with your AWS region
+
+async function sendMessageToQueue(queueUrl: string, messageBody: string) {
+  const params = {
+    QueueUrl: queueUrl,
+    MessageBody: messageBody,
+  };
+
+  const command = new SendMessageCommand(params);
+
+  try {
+    const data = await sqsClient.send(command);
+    console.log('Success, message sent. Message ID: ', data.MessageId);
+  } catch (error) {
+    console.error('Error, message not sent: ', error);
+    throw new AppError('Error, message not sent', 500);
+  }
+}
+
+export { bucketName, s3Instance, sendMessageToQueue };

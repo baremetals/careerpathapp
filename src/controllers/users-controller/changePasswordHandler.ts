@@ -1,7 +1,7 @@
 import * as argon2 from 'argon2';
 import { ERROR_MESSAGES } from '../../lib/error-messages';
 import { UserModel } from '../../models/User';
-import { EmailService } from '../../services/EmailService';
+import { EmailService } from '../../services/NotificationService';
 import AppError from '../../utils/appError';
 import catchAsync from '../../utils/catchAsync';
 

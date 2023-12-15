@@ -1,33 +1,46 @@
 import { NextFunction, Request, Response } from 'express';
-import Redis from 'ioredis';
-import { ACCOUNT_CREATION_SESSION_PREFIX } from '../../lib/constants';
-import { ERROR_MESSAGES } from '../../lib/error-messages';
-import { UserModel } from '../../models/User';
-import { EmailService } from '../../services/EmailService';
-import { UserRegistrationUserInput } from '../../user-input-validation-schema/register-user-schema';
-import AppError from '../../utils/appError';
-import catchAsync from '../../utils/catchAsync';
-import { signJwtAsymmetric } from '../utils/jwt';
+import {
+  ACCOUNT_ACTIVATION_PARTIAL_URL,
+  ACCOUNT_CREATION_SESSION_PREFIX,
+  SESSION_EXPIRATION_SECONDS,
+} from '@/lib/constants';
+import { ERROR_MESSAGES } from '@/lib/error-messages';
+import { UserRepo } from '@/repository/UserRepo';
+import { SessionService } from '@/services/SessionService';
+import { TokenService } from '@/services/TokenService';
+import { UserRegistrationUserInput } from '@/user-input-validation-schema/register-user-schema';
+import AppError from '@/utils/appError';
+import catchAsync from '@/utils/catchAsync';
+import { IUserDocument } from '@/interfaces/user';
+import { HTTP_STATUS_CODES } from '@/lib/status-codes';
+import { SQSService } from '@/services/NotificationService/SQSSERVICE';
+import { accountActivationTemplate } from '@/services/NotificationService/email-templates/accountActivationTemplate';
 
 export default catchAsync(async function registerNewAccountHandler(
   req: Request<object, object, UserRegistrationUserInput>,
   res: Response,
   next: NextFunction,
 ) {
+  const userRepo = new UserRepo();
+  const tokenService = new TokenService();
+  const sessionService = new SessionService();
+  const sqsService = new SQSService();
   const { firstName, lastName, email, password } = req.body;
 
-  const emailAlreadyExists = await UserModel.findOne({
+  const emailAlreadyExists: IUserDocument = await userRepo.findOne({
     email: req.body.email,
   });
 
   if (emailAlreadyExists) {
-    // console.log('===============>', user);
     return next([
-      new AppError(ERROR_MESSAGES.AUTH.EMAIL_IN_USE_OR_UNAVAILABLE, 403),
+      new AppError(
+        ERROR_MESSAGES.AUTH.EMAIL_IN_USE_OR_UNAVAILABLE,
+        HTTP_STATUS_CODES.FORBIDDEN,
+      ),
     ]);
   }
 
-  const token = signJwtAsymmetric(
+  const token = tokenService.signToken(
     { email },
     process.env.ACCOUNT_ACTIVATION_TOKEN_PRIVATE_KEY as string,
     {
@@ -35,27 +48,35 @@ export default catchAsync(async function registerNewAccountHandler(
     },
   );
 
-  // console.log('============', token);
-
-  const redis = new Redis();
-
-  await redis.set(
+  await sessionService.setSession(
     ACCOUNT_CREATION_SESSION_PREFIX + email,
     JSON.stringify({ email, firstName, lastName, password }),
-    'EX',
-    60 * 60 * 24 * 2,
-  ); // 48 hours
-  const url = `${req.protocol}://${req.get(
-    'host',
-  )}/api/auth/account-activation/${token}`;
+    SESSION_EXPIRATION_SECONDS,
+  );
 
-  await new EmailService(
-    { email, firstName },
-    url,
-  ).sendAccountRegistrationEmail();
+  try {
+    const url = `${req.protocol}://${req.get(
+      'host',
+    )}/${ACCOUNT_ACTIVATION_PARTIAL_URL}/${token}`;
 
-  res.status(201).json({
-    message:
-      'Your request has been processed, please activate your account to begin.',
-  });
+    const htmlTemplate = accountActivationTemplate(firstName, url);
+
+    await sqsService.sendMessage(
+      process.env.ACCOUNT_ACTIVATION_QUEUE_URL as string,
+      {
+        to: email,
+        subject: 'Reset Password',
+        htmlTemplate,
+      },
+    );
+
+    res.status(HTTP_STATUS_CODES.NO_CONTENT).json();
+  } catch (err) {
+    return next(
+      new AppError(
+        ERROR_MESSAGES.SERVER_GENERIC,
+        HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR,
+      ),
+    );
+  }
 });

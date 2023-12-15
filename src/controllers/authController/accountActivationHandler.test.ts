@@ -6,6 +6,7 @@ import { AuthRoutePaths } from '../../enums/APIRoutPaths';
 import { ACCOUNT_CREATION_SESSION_PREFIX } from '../../lib/constants';
 import { ERROR_MESSAGES } from '../../lib/error-messages';
 import { UserModel } from '../../models/User';
+import { signJwtAsymmetric } from '../../utils/jwt';
 import {
   TEST_USER_EMAIL_ALTERNATE,
   TEST_USER_FIRST_NAME,
@@ -13,7 +14,6 @@ import {
   TEST_USER_PASSWORD,
 } from '../../utils/test-utils/constants';
 import createTestServer from '../../utils/test-utils/createTestServer';
-import { signJwtAsymmetric } from '../utils/jwt';
 
 describe('user activation', () => {
   process.env.NODE_ENV = 'development';

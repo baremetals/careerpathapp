@@ -1,74 +1,78 @@
 import { NextFunction, Request, Response } from 'express';
-import Redis from 'ioredis';
-import { SanitizedUser } from '../../interfaces/user';
-import { ACCOUNT_CREATION_SESSION_PREFIX } from '../../lib/constants';
-import { ERROR_MESSAGES } from '../../lib/error-messages';
-import { UserModel } from '../../models/User';
-import { createUserInitialProfile } from '../../services/UserService';
-import AppError from '../../utils/appError';
-import catchAsync from '../../utils/catchAsync';
-import { verifyJwtAsymmetric } from '../utils/jwt';
+import { SanitizedUser } from '@/interfaces/user';
+import { ACCOUNT_CREATION_SESSION_PREFIX } from '@/lib/constants';
+import { ERROR_MESSAGES } from '@/lib/error-messages';
+import AppError from '@/utils/appError';
+import catchAsync from '@/utils/catchAsync';
+import { SessionService } from '@/services/SessionService';
+import { UserRepo } from '@/repository/UserRepo';
+import { ProfileRepo } from '@/repository/ProfileRepo';
+import { HTTP_STATUS_CODES } from '@/lib/status-codes';
+import { welcomeTemplate } from '@/services/NotificationService/email-templates/welcomeTemplate';
+import { SQSService } from '@/services/NotificationService/SQSSERVICE';
 
 export default catchAsync(async function accountActivationHandler(
   req: Request,
   res: Response,
   next: NextFunction,
 ) {
-  const { token } = req.params;
-  if (!token)
-    return next(
-      new AppError(ERROR_MESSAGES.AUTH.INVALID_OR_EXPIRED_TOKEN, 401),
-    );
-  // console.log('ACTIVATION CODE RUNNING------------------->', token);
-  const decoded: { email: string } | null = verifyJwtAsymmetric(
-    token,
-    process.env.ACCOUNT_ACTIVATION_TOKEN_PUBLIC_KEY as string,
-  );
+  const { email } = req.decoded;
+  const sessionService = new SessionService();
+  const userRepo = new UserRepo();
+  const profileRepo = new ProfileRepo();
+  const sqsService = new SQSService();
 
-  if (!decoded)
-    return next(
-      new AppError(ERROR_MESSAGES.AUTH.INVALID_OR_EXPIRED_TOKEN, 401),
-    );
-  const { email } = decoded;
-
-  const redis = new Redis();
   const key = ACCOUNT_CREATION_SESSION_PREFIX + email;
-  const accountActivationSession = await redis.get(key);
+  const accountActivationSession = await sessionService.getSession(key);
 
   if (!accountActivationSession)
     return next(
       new AppError(
         ERROR_MESSAGES.AUTH.USED_OR_EXPIRED_ACCOUNT_CREATION_SESSION,
-        401,
+        HTTP_STATUS_CODES.UNAUTHORIZED,
       ),
     );
   const parsedSession = JSON.parse(accountActivationSession);
   const { firstName, lastName, password } = parsedSession;
 
-  const fullName = `${firstName.trim()} ${lastName.trim()}`;
-
-  const newUser = await UserModel.create({
-    firstName: firstName.trim(),
-    lastName: lastName.trim(),
-    fullName,
-    email: email.trim().toLowerCase(),
+  const newUser = await userRepo.createUser(
+    firstName,
+    lastName,
+    email,
     password,
-    createdBy: fullName,
-    lastModifiedBy: fullName,
-  });
+  );
 
-  const profile = await createUserInitialProfile(newUser._id, fullName);
+  const profile = await profileRepo.createProfile(
+    newUser._id,
+    newUser.fullName,
+  );
+  await userRepo.updateUserWithProfileId(newUser._id, profile._id);
 
-  newUser.profileId = profile._id;
-  newUser.lastModifiedAt = new Date();
-  newUser.lastModifiedBy = fullName;
-  newUser.save({ validateBeforeSave: false });
+  await sessionService.deleteSession(key);
 
-  await redis.del(key);
+  try {
+    const homeUrl = `${req.protocol}://${req.get('host')}`;
 
-  res.status(201).json({
-    status: 'success',
-    message: 'Your user account has been activated.',
+    const htmlTemplate = welcomeTemplate(firstName, homeUrl);
+
+    await sqsService.sendMessage(
+      process.env.ACCOUNT_ACTIVATION_QUEUE_URL as string,
+      {
+        to: email,
+        subject: 'Welcome to the Careers App',
+        htmlTemplate,
+      },
+    );
+  } catch (err) {
+    return next(
+      new AppError(
+        ERROR_MESSAGES.SERVER_GENERIC,
+        HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR,
+      ),
+    );
+  }
+
+  res.status(HTTP_STATUS_CODES.CREATED).json({
     data: { user: new SanitizedUser(newUser) },
   });
 });

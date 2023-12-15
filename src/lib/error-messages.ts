@@ -9,6 +9,7 @@ export const ERROR_MESSAGES = {
   SERVER_GENERIC: 'Internal server error',
   SERVER_RESPONSE_NOT_JSON: 'External server response not JSON',
   AUTH: {
+    ADMIN_FORBIDDEN: 'You do not have permission to perform this action',
     NOT_LOGGED_IN: 'You are not logged in',
     INVALID_OR_EXPIRED_TOKEN: 'Invalid or expired token',
     EXPIRED_SESSION: 'User session has expired, please log in again',
@@ -28,6 +29,8 @@ export const ERROR_MESSAGES = {
     NAME_IN_USE_OR_UNAVAILABLE:
       'The specified name is already in use or is unavailable',
     CHANGE_PASSWORD_EMAIL: 'Error trying to send password reset email',
+    CHANGE_PASSWORD_EMAIL_FAILED:
+      'Error trying to reset password, please try again later',
     CHANGE_PASSWORD_TOKEN:
       'No token provided - use the link in your email to get a page with a token',
     ACCOUNT_BANNED: 'The specified account has been banned',
