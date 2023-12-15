@@ -1,4 +1,4 @@
-import { Schema } from 'mongoose';
+import mongoose from 'mongoose';
 import { ISuitabilityScoreReturnType, mapScoresToIndustries } from '.';
 import { ERROR_MESSAGES } from '@/lib/error-messages';
 import { IndustryModel } from '@/models/Industry';
@@ -8,7 +8,7 @@ import AppError from '@/utils/appError';
 
 type TSaveSuitabilityScores = {
   scores: ISuitabilityScoreReturnType;
-  profileId: Schema.Types.ObjectId;
+  profileId: mongoose.Types.ObjectId;
   userName: string;
 };
 export default async function saveSuitabilityScores({

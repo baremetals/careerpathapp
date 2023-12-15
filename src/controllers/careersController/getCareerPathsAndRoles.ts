@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import getMilvusRecommendedRoles from '../../services/Careers/getMilvusRecommendedRoles';
-import saveCareerPathsAndRoles from '../../services/Careers/saveCareerPathsAndRoles';
-import createQuestionnaireResponse from '../../services/QuestionResponse/createQuestionnaireResponse';
-import catchAsync from '../../utils/catchAsync';
-import findCareerPathsAndRoles from '../../services/Careers/findCareerPathsAndRoles';
+import getMilvusRecommendedRoles from '@/services/Careers/getMilvusRecommendedRoles';
+import saveCareerPathsAndRoles from '@/services/Careers/saveCareerPathsAndRoles';
+import createQuestionnaireResponse from '@/services/QuestionResponse/createQuestionnaireResponse';
+import catchAsync from '@/utils/catchAsync';
+import findCareerPathsAndRoles from '@/services/Careers/findCareerPathsAndRoles';
 
 export default catchAsync(async function getCareerPathsAndRoles(
   req: Request,

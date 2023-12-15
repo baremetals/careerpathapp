@@ -25,7 +25,9 @@ export default catchAsync(async function forgotPasswordRequestHandler(
   const sessionService = new SessionService();
   const sqsService = new SQSService();
 
-  const user: IUserDocument = await userRepo.findOne({ email: req.body.email });
+  const user: IUserDocument = (await userRepo.findOne({
+    email: req.body.email,
+  })) as IUserDocument;
 
   if (!user || user.status === UserStatuses.DELETED) {
     return next(

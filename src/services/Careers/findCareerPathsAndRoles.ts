@@ -1,4 +1,4 @@
-import { IUserCareerPathDocument } from 'interfaces/userProfile';
+import { IUserCareerPathDocument } from '@/interfaces/userProfile';
 import { ERROR_MESSAGES } from '../../lib/error-messages';
 import { CareerPathModel } from '../../models/CareerPath';
 import { JobRoleModel } from '../../models/JobRole';

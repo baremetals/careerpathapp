@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { ICareerPathDocument, IJobRoleDocument } from 'interfaces/careerPath';
+import { ICareerPathDocument, IJobRoleDocument } from '@/interfaces/careerPath';
 import { Model } from 'mongoose';
 import { IUserProfileDocument } from '../../interfaces/user';
 import { UserModel } from '../../models/User';

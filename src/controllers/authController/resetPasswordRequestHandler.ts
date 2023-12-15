@@ -23,10 +23,10 @@ export default catchAsync(async function resetPasswordRequestHandler(
   const { email } = req.decoded;
   const key = RESET_PASSWORD + token;
 
-  const user: IUserDocument = await userRepo.findOne({
+  const user: IUserDocument = (await userRepo.findOne({
     email,
     select: '+password',
-  });
+  })) as IUserDocument;
 
   if (!user || user.status === UserStatuses.DELETED) {
     return next(

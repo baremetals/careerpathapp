@@ -1,4 +1,4 @@
-import { Schema } from 'mongoose';
+import mongoose from 'mongoose';
 import { TRolesAndIndustries, extractObjectIds } from '.';
 import { ERROR_MESSAGES } from '@/lib/error-messages';
 import { JobRoleModel } from '@/models/JobRole';
@@ -8,7 +8,7 @@ import AppError from '@/utils/appError';
 
 type TSaveCareerPathsAndRoles = {
   roles: TRolesAndIndustries[];
-  profileId: Schema.Types.ObjectId;
+  profileId: mongoose.Types.ObjectId;
   userName: string;
 };
 export default async function saveCareerPathsAndRoles({

@@ -27,9 +27,9 @@ export default catchAsync(async function registerNewAccountHandler(
   const sqsService = new SQSService();
   const { firstName, lastName, email, password } = req.body;
 
-  const emailAlreadyExists: IUserDocument = await userRepo.findOne({
+  const emailAlreadyExists: IUserDocument = (await userRepo.findOne({
     email: req.body.email,
-  });
+  })) as IUserDocument;
 
   if (emailAlreadyExists) {
     return next([
