@@ -1,7 +1,7 @@
-import { IUserQuestionResponseDocument } from '../../interfaces/userProfile';
-import { ERROR_MESSAGES } from '../../lib/error-messages';
-import { UserQuestionResponseModel } from '../../models/UserQuestionResponse';
-import AppError from '../../utils/appError';
+import { IUserQuestionResponseDocument } from '@/interfaces/userProfile';
+import { ERROR_MESSAGES } from '@/lib/error-messages';
+import { UserQuestionResponseModel } from '@/models/UserQuestionResponse';
+import AppError from '@/utils/appError';
 
 export default async function updateQuestionnaireResponse(
   responses: IUserQuestionResponseDocument,

@@ -1,4 +1,4 @@
-import { IShared } from 'interfaces';
+import { IShared } from '@/interfaces';
 import { Schema } from 'mongoose';
 
 interface IEducationDocument extends IShared {

@@ -1,4 +1,4 @@
-import { IJobRoleDocument } from 'interfaces/careerPath';
+import { IJobRoleDocument } from '@/interfaces/careerPath';
 import { Schema, model } from 'mongoose';
 
 const jobRoleSchema = new Schema<IJobRoleDocument>({

@@ -1,5 +1,5 @@
-import { IIndustryDocument } from '../../interfaces/careerPath';
-import { TSuitabilityScoreType } from '../../interfaces/userProfile';
+import { IIndustryDocument } from '@/interfaces/careerPath';
+import { TSuitabilityScoreType } from '@/interfaces/userProfile';
 
 export interface ISuitabilityScoreReturnType {
   errors: any;

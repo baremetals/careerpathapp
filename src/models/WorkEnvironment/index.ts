@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { IWorkEnvironmentDocument } from '../../interfaces/userProfile';
+import { IWorkEnvironmentDocument } from '@/interfaces/userProfile';
 
 const workEnvironmentSchema = new Schema<IWorkEnvironmentDocument>({
   name: { type: String, required: true },

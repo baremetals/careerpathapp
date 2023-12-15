@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { ISkillDocument } from '../../interfaces/userProfile';
+import { ISkillDocument } from '@/interfaces/userProfile';
 
 const skillSchema = new Schema<ISkillDocument>({
   name: { type: String, unique: true, required: true },

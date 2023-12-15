@@ -1,4 +1,4 @@
-import { ICareerPathDocument } from 'interfaces/careerPath';
+import { ICareerPathDocument } from '@/interfaces/careerPath';
 import { Schema, model } from 'mongoose';
 
 const careerPathSchema = new Schema<ICareerPathDocument>({

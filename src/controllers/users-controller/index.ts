@@ -1,25 +1,25 @@
 import { NextFunction, Request, Response } from 'express';
-import Factory from '../../factory';
-import { CertificationModel } from '../../models/Certification';
-import { EducationModel } from '../../models/Education';
-import { ExperienceModel } from '../../models/Experience';
-import { InterestModel } from '../../models/Interest';
-import { QuestionModel } from '../../models/Question';
-import { SkillModel } from '../../models/Skill';
-import { UserModel } from '../../models/User';
-import { UserProfileModel } from '../../models/UserProfile';
+import Factory from '@/factory';
+import { CertificationModel } from '@/models/Certification';
+import { EducationModel } from '@/models/Education';
+import { ExperienceModel } from '@/models/Experience';
+import { InterestModel } from '@/models/Interest';
+import { QuestionModel } from '@/models/Question';
+import { SkillModel } from '@/models/Skill';
+import { UserModel } from '@/models/User';
+import { UserProfileModel } from '@/models/UserProfile';
 import {
   // createCareerPathService,
   createSkillOrInterest,
   updateUserSkillOrInterest,
-} from '../../services/UserService';
-import AppError from '../../utils/appError';
-import catchAsync from '../../utils/catchAsync';
+} from '@/services/UserService';
+import AppError from '@/utils/appError';
+import catchAsync from '@/utils/catchAsync';
 import // fetchCareerPathRoles,
 
 // getUserResponse,
 // straverseDecisionTree,
-'../../utils/questionResponse';
+'@/utils/questionResponse';
 
 const updateMeHandler = Factory.updateOne(UserModel);
 

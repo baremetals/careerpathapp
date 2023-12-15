@@ -1,10 +1,10 @@
 import { Schema } from 'mongoose';
 import { ISuitabilityScoreReturnType, mapScoresToIndustries } from '.';
-import { ERROR_MESSAGES } from '../../lib/error-messages';
-import { IndustryModel } from '../../models/Industry';
-import { SuitabilityScoreModel } from '../../models/SuitabilityScore';
-import { UserProfileModel } from '../../models/UserProfile';
-import AppError from '../../utils/appError';
+import { ERROR_MESSAGES } from '@/lib/error-messages';
+import { IndustryModel } from '@/models/Industry';
+import { SuitabilityScoreModel } from '@/models/SuitabilityScore';
+import { UserProfileModel } from '@/models/UserProfile';
+import AppError from '@/utils/appError';
 
 type TSaveSuitabilityScores = {
   scores: ISuitabilityScoreReturnType;

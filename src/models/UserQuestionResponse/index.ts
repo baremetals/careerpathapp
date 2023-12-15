@@ -2,7 +2,7 @@ import { Schema, model } from 'mongoose';
 import {
   IUserQuestionResponseDocument,
   TResponseType,
-} from '../../interfaces/userProfile';
+} from '@/interfaces/userProfile';
 
 const responseSchema = new Schema<TResponseType>({
   questionId: { type: Schema.Types.ObjectId, ref: 'Question', required: true },

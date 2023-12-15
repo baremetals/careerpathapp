@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { IExperienceDocument } from '../../interfaces/userProfile';
+import { IExperienceDocument } from '@/interfaces/userProfile';
 
 const experienceSchema = new Schema<IExperienceDocument>({
   company: { type: String, required: true },

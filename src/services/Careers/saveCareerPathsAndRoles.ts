@@ -1,10 +1,10 @@
 import { Schema } from 'mongoose';
 import { TRolesAndIndustries, extractObjectIds } from '.';
-import { ERROR_MESSAGES } from '../../lib/error-messages';
-import { JobRoleModel } from '../../models/JobRole';
-import { UserCareerPathModel } from '../../models/UserCareerPath';
-import { UserProfileModel } from '../../models/UserProfile';
-import AppError from '../../utils/appError';
+import { ERROR_MESSAGES } from '@/lib/error-messages';
+import { JobRoleModel } from '@/models/JobRole';
+import { UserCareerPathModel } from '@/models/UserCareerPath';
+import { UserProfileModel } from '@/models/UserProfile';
+import AppError from '@/utils/appError';
 
 type TSaveCareerPathsAndRoles = {
   roles: TRolesAndIndustries[];

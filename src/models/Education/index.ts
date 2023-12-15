@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { IEducationDocument } from '../../interfaces/userProfile';
+import { IEducationDocument } from '@/interfaces/userProfile';
 
 const educationSchema = new Schema<IEducationDocument>({
   school: { type: String, required: true },

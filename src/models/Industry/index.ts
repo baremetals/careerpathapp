@@ -1,4 +1,4 @@
-import { IIndustryDocument } from 'interfaces/careerPath';
+import { IIndustryDocument } from '@/interfaces/careerPath';
 import { Schema, model } from 'mongoose';
 
 const industrySchema = new Schema<IIndustryDocument>({

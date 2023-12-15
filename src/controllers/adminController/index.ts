@@ -1,15 +1,15 @@
 // import { NextFunction, Request, Response } from 'express';
-// import catchAsync from '../../utils/catchAsync';
-import Factory from '../../factory/';
-import { CareerPathModel } from '../../models/CareerPath';
-import { CareerPathResponseAndWeightModel } from '../../models/CareerPathResponseAndWeight';
-import { IndustryModel } from '../../models/Industry';
-import { InterestModel } from '../../models/Interest';
-import { JobRoleModel } from '../../models/JobRole';
-import { QuestionModel } from '../../models/Question';
-import { SkillModel } from '../../models/Skill';
-import { UserProfileModel } from '../../models/UserProfile';
-import { saveQuestionsAndResponses } from '../../services/AdminServices';
+// import catchAsync from '@/utils/catchAsync';
+import Factory from '@/factory/';
+import { CareerPathModel } from '@/models/CareerPath';
+import { CareerPathResponseAndWeightModel } from '@/models/CareerPathResponseAndWeight';
+import { IndustryModel } from '@/models/Industry';
+import { InterestModel } from '@/models/Interest';
+import { JobRoleModel } from '@/models/JobRole';
+import { QuestionModel } from '@/models/Question';
+import { SkillModel } from '@/models/Skill';
+import { UserProfileModel } from '@/models/UserProfile';
+import { saveQuestionsAndResponses } from '@/services/AdminServices';
 
 // Questions
 export const createQuestion = Factory.createOne(QuestionModel);

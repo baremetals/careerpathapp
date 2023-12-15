@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { IUserCareerPathDocument } from '../../interfaces/userProfile';
+import { IUserCareerPathDocument } from '@/interfaces/userProfile';
 
 const userCareerPathSchema = new Schema<IUserCareerPathDocument>({
   profileId: { type: Schema.Types.ObjectId, ref: 'UserProfile' },

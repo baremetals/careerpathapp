@@ -1,5 +1,5 @@
 import { Schema } from 'mongoose';
-import { IShared } from 'interfaces';
+import { IShared } from '@/interfaces';
 
 interface IIndustryDocument extends IShared {
   name: string;

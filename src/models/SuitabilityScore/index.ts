@@ -2,7 +2,7 @@ import { Schema, model } from 'mongoose';
 import {
   ISuitabilityScoreDocument,
   TSuitabilityScoreType,
-} from '../../interfaces/userProfile';
+} from '@/interfaces/userProfile';
 
 const scoresSchema = new Schema<TSuitabilityScoreType>({
   industryName: { type: String, required: true },

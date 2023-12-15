@@ -1,4 +1,4 @@
-import { IInterestDocument } from '../../interfaces/userProfile';
+import { IInterestDocument } from '@/interfaces/userProfile';
 import { Schema, model } from 'mongoose';
 
 const interestSchema = new Schema<IInterestDocument>({
