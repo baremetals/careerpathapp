@@ -1,4 +1,5 @@
 {
+  "extends": "./tsconfig.paths.json",
   "compilerOptions": {
     "target": "es2017",
     "module": "commonjs",
@@ -22,11 +23,18 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "resolveJsonModule": true,
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"]
-    }
   },
   "include": ["src/**/*.ts", "src/public"],
-  "exclude": ["data", "tailwind.config.js", "jest.config.js", "jest.setup.redis-mock.js", "node_modules", "Errors.md", "dist"]
+  "exclude": [
+    "data",
+    "tailwind.config.js",
+    "jest.config.js",
+    "jest.setup.redis-mock.js",
+    "node_modules",
+    "Errors.md",
+    "dist"
+  ],
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  }
 }

@@ -20,12 +20,11 @@ export default catchAsync(async function resetPasswordRequestHandler(
   const sessionService = new SessionService();
   const sqsService = new SQSService();
   const { token } = req.params;
-  const { email } = req.decoded;
+  const { email } = req.decoded; // Access the 'email' property instead of 'user'
   const key = RESET_PASSWORD + token;
 
   const user: IUserDocument = (await userRepo.findOne({
     email,
-    select: '+password',
   })) as IUserDocument;
 
   if (!user || user.status === UserStatuses.DELETED) {
@@ -73,11 +72,12 @@ export default catchAsync(async function resetPasswordRequestHandler(
     const homeUrl = `${req.protocol}://${req.get('host')}`;
 
     const htmlTemplate = passwordChangedTemplate(user.firstName, homeUrl);
+    const receiver = [email];
 
     await sqsService.sendMessage(
       process.env.PASSWORD_CHANGED_QUEUE_URL as string,
       {
-        to: email,
+        to: receiver,
         subject: 'Password Changed',
         htmlTemplate,
       },

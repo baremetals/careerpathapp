@@ -1,6 +1,6 @@
 // import { NextFunction, Request, Response } from 'express';
 // import catchAsync from '@/utils/catchAsync';
-import Factory from '@/factory/';
+import Factory from '@/factory';
 import { CareerPathModel } from '@/models/CareerPath';
 import { CareerPathResponseAndWeightModel } from '@/models/CareerPathResponseAndWeight';
 import { IndustryModel } from '@/models/Industry';

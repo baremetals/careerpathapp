@@ -44,7 +44,9 @@ export default catchAsync(async function registerNewAccountHandler(
     { email },
     process.env.ACCOUNT_ACTIVATION_TOKEN_PRIVATE_KEY as string,
     {
-      expiresIn: process.env.ACCOUNT_ACTIVATION_SESSION_EXPIRATION,
+      expiresIn: parseInt(
+        process.env.ACCOUNT_ACTIVATION_SESSION_EXPIRATION as string,
+      ),
     },
   );
 
@@ -60,12 +62,13 @@ export default catchAsync(async function registerNewAccountHandler(
     )}/${ACCOUNT_ACTIVATION_PARTIAL_URL}/${token}`;
 
     const htmlTemplate = accountActivationTemplate(firstName, url);
+    const receiver = [email];
 
     await sqsService.sendMessage(
       process.env.ACCOUNT_ACTIVATION_QUEUE_URL as string,
       {
-        to: email,
-        subject: 'Reset Password',
+        to: receiver,
+        subject: 'Activate Account',
         htmlTemplate,
       },
     );

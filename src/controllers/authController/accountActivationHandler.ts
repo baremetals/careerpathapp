@@ -24,7 +24,6 @@ export default catchAsync(async function accountActivationHandler(
 
   const key = ACCOUNT_CREATION_SESSION_PREFIX + email;
   const accountActivationSession = await sessionService.getSession(key);
-
   if (!accountActivationSession)
     return next(
       new AppError(
@@ -54,11 +53,12 @@ export default catchAsync(async function accountActivationHandler(
     const homeUrl = `${req.protocol}://${req.get('host')}`;
 
     const htmlTemplate = welcomeTemplate(firstName, homeUrl);
+    const receiver = [email];
 
     await sqsService.sendMessage(
       process.env.ACCOUNT_ACTIVATION_QUEUE_URL as string,
       {
-        to: email,
+        to: receiver,
         subject: 'Welcome to the Careers App',
         htmlTemplate,
       },

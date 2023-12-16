@@ -17,10 +17,9 @@ export default catchAsync(async function loginHandler(
   const userRepo = new UserRepo();
   const { email, password } = req.body;
 
-  const user: IUserDocument = await userRepo.findOne({
+  const user: IUserDocument = (await userRepo.findOne({
     email,
-    select: '+password',
-  });
+  })) as IUserDocument;
 
   if (!user || user.status === UserStatuses.DELETED) {
     return next(

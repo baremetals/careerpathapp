@@ -24,8 +24,8 @@ export class UserRepo {
     return newUser;
   }
 
-  async findOne(query: object, select = '') {
-    return UserModel.findOne(query).select(select);
+  async findOne(query: object) {
+    return UserModel.findOne(query);
   }
 
   async findById(id: string) {

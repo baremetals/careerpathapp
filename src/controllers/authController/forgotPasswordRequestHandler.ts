@@ -46,13 +46,18 @@ export default catchAsync(async function forgotPasswordRequestHandler(
     );
 
   const passwordResetToken = tokenService.signToken(
-    { user: user.email },
+    { email: user.email },
     process.env.ACCOUNT_ACTIVATION_TOKEN_PRIVATE_KEY as string,
     {
-      expiresIn: process.env.ACCOUNT_ACTIVATION_SESSION_EXPIRATION,
+      expiresIn: parseInt(
+        process.env.ACCOUNT_ACTIVATION_SESSION_EXPIRATION as string,
+      ),
     },
   );
-
+  console.log(
+    'passwordResetToken------------------------->',
+    passwordResetToken,
+  );
   await sessionService.setSession(
     RESET_PASSWORD + passwordResetToken,
     user.email,
@@ -65,11 +70,12 @@ export default catchAsync(async function forgotPasswordRequestHandler(
     )}/${RESET_PASSWORD_PARTIAL_URL}/${passwordResetToken}`;
 
     const htmlTemplate = resetPasswordTemplate(user.firstName, resetURL);
+    const receiver = [user.email];
 
     await sqsService.sendMessage(
       process.env.RESET_PASSWORD_QUEUE_URL as string,
       {
-        to: user.email,
+        to: receiver,
         subject: 'Reset Password',
         htmlTemplate,
       },

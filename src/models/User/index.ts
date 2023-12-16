@@ -16,7 +16,7 @@ const userSchema = new Schema<IUserDocument>({
     type: String,
     required: [true, 'Please provide a password'],
     minlength: 8,
-    select: false,
+    select: true,
   },
 
   firstName: {
