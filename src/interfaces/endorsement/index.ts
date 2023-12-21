@@ -1,5 +1,4 @@
 import { IShared } from '@/interfaces';
-import mongoose, { Schema } from 'mongoose';
 
 interface IBaseEndorsement extends IShared {
   title: string;
@@ -7,11 +6,11 @@ interface IBaseEndorsement extends IShared {
   type: string;
   price: number;
   description: string;
-  careerPaths: Array<Schema.Types.ObjectId>;
-  industries: Array<Schema.Types.ObjectId>;
-  tags: Array<Schema.Types.ObjectId>;
+  careerPaths: Array<string>;
+  industries: Array<string>;
+  tags: Array<string>;
   actionButton: string;
-  endorsedBy: mongoose.Types.ObjectId;
+  endorsedBy: string;
 }
 
 interface ICourseEndorsementDocument extends IBaseEndorsement {

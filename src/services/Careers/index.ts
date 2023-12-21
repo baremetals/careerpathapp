@@ -1,8 +1,6 @@
-import { Schema } from 'mongoose';
-
 export type TRolesAndIndustries = {
-  role_id: Schema.Types.ObjectId;
-  industries: Array<Schema.Types.ObjectId>;
+  role_id: string;
+  industries: Array<string>;
 };
 
 export interface ICareersAndRolesReturnType {
@@ -13,6 +11,6 @@ export interface ICareersAndRolesReturnType {
 export function extractObjectIds<T extends Record<string, any>>(
   arrayOfObjects: T[],
   key: keyof T,
-): Schema.Types.ObjectId[] {
+): string[] {
   return arrayOfObjects.map((obj) => obj[key]);
 }

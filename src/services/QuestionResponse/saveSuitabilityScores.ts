@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import { ISuitabilityScoreReturnType, mapScoresToIndustries } from '.';
 import { ERROR_MESSAGES } from '@/lib/error-messages';
 import { IndustryModel } from '@/models/Industry';
@@ -51,8 +50,7 @@ export default async function saveSuitabilityScores({
     const userProfile = await UserProfileModel.findById(profileId);
 
     if (userProfile) {
-      const objectId = new mongoose.Types.ObjectId(scoresDoc._id);
-      userProfile.suitabilityScoresId = objectId;
+      userProfile.suitabilityScoresId = scoresDoc._id;
       userProfile.updatedAt = new Date();
       userProfile.lastModifiedBy = userName;
       userProfile.save({ validateBeforeSave: false });

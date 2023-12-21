@@ -3,8 +3,8 @@ import { ICareerPathResponseAndWeight } from '../../interfaces/question';
 
 const careerPathResponseAndWeightSchema =
   new Schema<ICareerPathResponseAndWeight>({
-    questionId: { type: Schema.Types.ObjectId, ref: 'Question' },
-    careerPathId: { type: Schema.Types.ObjectId, ref: 'CareerPath' },
+    questionId: { type: String, ref: 'Question' },
+    careerPathId: { type: String, ref: 'CareerPath' },
     careerPath: {
       type: String,
       required: true,

@@ -1,8 +1,8 @@
 import { IUserCareerPathDocument } from '@/interfaces/userProfile';
-import { ERROR_MESSAGES } from '../../lib/error-messages';
-import { CareerPathModel } from '../../models/CareerPath';
-import { JobRoleModel } from '../../models/JobRole';
-import AppError from '../../utils/appError';
+import { ERROR_MESSAGES } from '@/lib/error-messages';
+import { CareerPathModel } from '@/models/CareerPath';
+import { JobRoleModel } from '@/models/JobRole';
+import AppError from '@/utils/appError';
 
 export default async function findCareerPathsAndRoles(
   careerPathDoc: IUserCareerPathDocument,

@@ -2,13 +2,13 @@ import { Schema, model } from 'mongoose';
 import { IUserCareerPathDocument } from '@/interfaces/userProfile';
 
 const userCareerPathSchema = new Schema<IUserCareerPathDocument>({
-  profileId: { type: Schema.Types.ObjectId, ref: 'UserProfile' },
+  profileId: { type: String, ref: 'UserProfile' },
   // industries: {
-  //   type: [Schema.Types.ObjectId],
+  //   type: [String],
   //   required: true,
   // },
-  paths: { type: [Schema.Types.ObjectId], ref: 'CareerPath' },
-  jobs: { type: [Schema.Types.ObjectId], ref: 'JobRole' },
+  paths: { type: [String], ref: 'CareerPath' },
+  jobs: { type: [String], ref: 'JobRole' },
 
   createdAt: {
     type: Date,

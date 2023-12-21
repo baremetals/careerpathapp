@@ -1,5 +1,4 @@
-import { Types } from 'mongoose';
-import { IShared } from '../../interfaces';
+import { IShared } from '@/interfaces';
 
 type TResponseOption = {
   text: string;
@@ -21,7 +20,7 @@ interface IQuestionDocument extends IShared {
 }
 
 interface IQuestionResponseOptionDocument extends IShared {
-  questionId: Types.ObjectId;
+  questionId: string;
   text: string;
   order: number;
 }
@@ -32,9 +31,9 @@ interface IQuestionResponseOptionDocument extends IShared {
  */
 
 interface ICareerPathResponseAndWeight extends IShared {
-  questionId: Types.ObjectId;
+  questionId: string;
   careerPath: string;
-  careerPathId: Types.ObjectId;
+  careerPathId: string;
   response: string;
   weight: number;
 }

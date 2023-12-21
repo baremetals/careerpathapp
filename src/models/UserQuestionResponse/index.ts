@@ -5,16 +5,16 @@ import {
 } from '@/interfaces/userProfile';
 
 const responseSchema = new Schema<TResponseType>({
-  questionId: { type: Schema.Types.ObjectId, ref: 'Question', required: true },
+  questionId: { type: String, ref: 'Question', required: true },
   questionVersion: { type: Number, required: true },
   questionNumber: { type: Number, required: true },
-  responseId: { type: Schema.Types.ObjectId, ref: 'ResponseOption' },
+  responseId: { type: String, ref: 'ResponseOption' },
   responseToQuestion: { type: String, required: true },
 });
 
 const userQuestionResponseSchema = new Schema<IUserQuestionResponseDocument>({
   profileId: {
-    type: Schema.Types.ObjectId,
+    type: String,
     ref: 'UserProfile',
     required: true,
   },

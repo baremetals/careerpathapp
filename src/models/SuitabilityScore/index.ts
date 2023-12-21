@@ -13,7 +13,7 @@ const scoresSchema = new Schema<TSuitabilityScoreType>({
 
 const suitabilityScoreSchema = new Schema<ISuitabilityScoreDocument>({
   profileId: {
-    type: Schema.Types.ObjectId,
+    type: String,
     ref: 'UserProfile',
     required: true,
   },

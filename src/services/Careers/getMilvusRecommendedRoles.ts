@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose';
 import { ICareersAndRolesReturnType } from '.';
-import { TSuitabilityScoreType } from '../../interfaces/userProfile';
-import fetchHook from '../../utils/fetchHook';
+import { TSuitabilityScoreType } from '@/interfaces/userProfile';
+import fetchHook from '@/utils/fetchHook';
 
 type TInterestsAndIndustries = {
   user_interest: Array<Schema.Types.ObjectId>;

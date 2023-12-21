@@ -1,9 +1,8 @@
-import mongoose from 'mongoose';
-import { IUserQuestionResponseDocument } from '../../interfaces/userProfile';
-import { ERROR_MESSAGES } from '../../lib/error-messages';
-import { UserProfileModel } from '../../models/UserProfile';
-import { UserQuestionResponseModel } from '../../models/UserQuestionResponse';
-import AppError from '../../utils/appError';
+import { IUserQuestionResponseDocument } from '@/interfaces/userProfile';
+import { ERROR_MESSAGES } from '@/lib/error-messages';
+import { UserProfileModel } from '@/models/UserProfile';
+import { UserQuestionResponseModel } from '@/models/UserQuestionResponse';
+import AppError from '@/utils/appError';
 
 export default async function createQuestionnaireResponse(
   responses: IUserQuestionResponseDocument,
@@ -24,8 +23,7 @@ export default async function createQuestionnaireResponse(
     const userProfile = await UserProfileModel.findById(responses.profileId);
 
     if (userProfile) {
-      const objectId = new mongoose.Types.ObjectId(responsesDoc._id);
-      userProfile.questionsResponsesId = objectId;
+      userProfile.questionsResponsesId = responsesDoc._id;
       userProfile.updatedAt = new Date();
       userProfile.lastModifiedBy = userName;
       userProfile.save({ validateBeforeSave: false });

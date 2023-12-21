@@ -5,7 +5,7 @@ const interestSchema = new Schema<IInterestDocument>({
   name: { type: String, unique: true, required: true },
   type: { type: String, required: false },
   // relatedCareerPaths: { type: [String], required: false },
-  relatedCareerPaths: { type: [Schema.Types.ObjectId], ref: 'CareerPath' },
+  relatedCareerPaths: { type: [String], ref: 'CareerPath' },
   createdAt: {
     type: Date,
     default: Date.now(),

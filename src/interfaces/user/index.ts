@@ -1,14 +1,5 @@
-import { Request } from 'express';
+// import { Request } from 'express';
 import { IShared } from '@/interfaces';
-import mongoose from 'mongoose';
-import {
-  ICareerGoalDocument,
-  ICertificationDocument,
-  IEducationDocument,
-  IExperienceDocument,
-  ISkillDocument,
-  // IUserCareerPathDocument,
-} from '../userProfile';
 
 export interface IUserDocument extends IShared {
   email: string;
@@ -29,21 +20,20 @@ export interface IUserDocument extends IShared {
 
 export interface IUserProfileDocument extends IShared {
   userId: string;
-  // userId: mongoose.Types.ObjectId;
-  skills: Array<ISkillDocument>;
-  education: Array<IEducationDocument>;
-  experience: Array<IExperienceDocument>;
-  careerGoals: Array<ICareerGoalDocument>;
-  certifications?: Array<ICertificationDocument>;
+  skills: Array<string>;
+  education: Array<string>;
+  experience: Array<string>;
+  careerGoals: Array<string>;
+  certifications?: Array<string>;
   preferredWorkEnvironment?: string;
   careerPaths: Array<string>;
-  suitabilityScoresId: mongoose.Types.ObjectId;
-  questionsResponsesId: mongoose.Types.ObjectId;
+  suitabilityScoresId: string;
+  questionsResponsesId: string;
 }
 
-export interface AuthenticatedRequest extends Request {
-  user: IUserDocument;
-}
+// export interface AuthenticatedRequest extends Request {
+//   user: IUserDocument;
+// }
 
 export class SanitizedUser {
   id: string;
@@ -56,7 +46,6 @@ export class SanitizedUser {
   fullName: string;
   avatar: string;
   bio: string;
-  // profileId: mongoose.Types.ObjectId;
   profileId: string;
   updatedAt: number;
 

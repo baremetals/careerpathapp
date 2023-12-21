@@ -1,44 +1,34 @@
-import mongoose, { Schema, model } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import { IUserProfileDocument } from '@/interfaces/user';
 
 const userProfileSchema = new Schema<IUserProfileDocument>({
   userId: {
-    // type: mongoose.Types.ObjectId,
     type: String,
     ref: 'User',
     required: true,
     unique: true,
   },
-  skills: [{ type: mongoose.Types.ObjectId, ref: 'Skill', required: false }],
-  education: [
-    { type: mongoose.Types.ObjectId, ref: 'Education', required: false },
-  ],
-  experience: [
-    { type: mongoose.Types.ObjectId, ref: 'Experience', required: false },
-  ],
-  careerGoals: [
-    { type: mongoose.Types.ObjectId, ref: 'CareerGoal', required: false },
-  ],
-  certifications: [
-    { type: mongoose.Types.ObjectId, ref: 'Certification', required: false },
-  ],
+  skills: [{ type: String, ref: 'Skill', required: false }],
+  education: [{ type: String, ref: 'Education', required: false }],
+  experience: [{ type: String, ref: 'Experience', required: false }],
+  careerGoals: [{ type: String, ref: 'CareerGoal', required: false }],
+  certifications: [{ type: String, ref: 'Certification', required: false }],
   preferredWorkEnvironment: {
     type: String,
     required: false,
   },
   careerPaths: {
-    // type: [mongoose.Types.ObjectId],
     type: [String],
     ref: 'UserCareerPath',
     required: false,
   },
   suitabilityScoresId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     ref: 'SuitabilityScores',
     required: false,
   },
   questionsResponsesId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     ref: 'QuestionResponses',
     required: false,
   },

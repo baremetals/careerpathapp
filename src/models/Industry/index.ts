@@ -8,7 +8,7 @@ const industrySchema = new Schema<IIndustryDocument>({
     required: true,
   },
   description: { type: String, required: false },
-  careerPaths: { type: [Schema.Types.ObjectId], ref: 'CareerPath' },
+  careerPaths: { type: [String], ref: 'CareerPath' },
   createdAt: {
     type: Date,
     default: Date.now(),
