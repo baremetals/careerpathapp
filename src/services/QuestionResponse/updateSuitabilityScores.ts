@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+// import mongoose from 'mongoose';
 import { ISuitabilityScoreReturnType, mapScoresToIndustries } from '.';
 import { ERROR_MESSAGES } from '../../lib/error-messages';
 import { IndustryModel } from '../../models/Industry';
@@ -7,7 +7,7 @@ import AppError from '../../utils/appError';
 
 type TSaveSuitabilityScores = {
   scores: ISuitabilityScoreReturnType;
-  profileId: mongoose.Types.ObjectId;
+  profileId: string;
   userName: string;
 };
 export default async function updateSuitabilityScores({
@@ -39,7 +39,7 @@ export default async function updateSuitabilityScores({
         industriesAndScores: suitabilityScores,
         chosenIndustriesAndScores: selectedIndustriesScores,
         lastModifiedBy: userName,
-        lastModifiedAt: new Date(),
+        updatedAt: new Date(),
       },
     );
 

@@ -8,7 +8,7 @@ import AppError from '@/utils/appError';
 
 type TSaveSuitabilityScores = {
   scores: ISuitabilityScoreReturnType;
-  profileId: mongoose.Types.ObjectId;
+  profileId: string;
   userName: string;
 };
 export default async function saveSuitabilityScores({
@@ -51,8 +51,9 @@ export default async function saveSuitabilityScores({
     const userProfile = await UserProfileModel.findById(profileId);
 
     if (userProfile) {
-      userProfile.suitabilityScoresId = scoresDoc._id;
-      userProfile.lastModifiedAt = new Date();
+      const objectId = new mongoose.Types.ObjectId(scoresDoc._id);
+      userProfile.suitabilityScoresId = objectId;
+      userProfile.updatedAt = new Date();
       userProfile.lastModifiedBy = userName;
       userProfile.save({ validateBeforeSave: false });
     }

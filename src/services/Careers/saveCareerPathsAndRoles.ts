@@ -1,14 +1,13 @@
-import mongoose from 'mongoose';
-import { TRolesAndIndustries, extractObjectIds } from '.';
 import { ERROR_MESSAGES } from '@/lib/error-messages';
 import { JobRoleModel } from '@/models/JobRole';
 import { UserCareerPathModel } from '@/models/UserCareerPath';
 import { UserProfileModel } from '@/models/UserProfile';
 import AppError from '@/utils/appError';
+import { TRolesAndIndustries, extractObjectIds } from '.';
 
 type TSaveCareerPathsAndRoles = {
   roles: TRolesAndIndustries[];
-  profileId: mongoose.Types.ObjectId;
+  profileId: string;
   userName: string;
 };
 export default async function saveCareerPathsAndRoles({
@@ -48,8 +47,9 @@ export default async function saveCareerPathsAndRoles({
     const userProfile = await UserProfileModel.findById(profileId);
 
     if (userProfile) {
-      userProfile.careerPaths = careerPathsDoc._id;
-      userProfile.lastModifiedAt = new Date();
+      // const objectId = new mongoose.Types.ObjectId(careerPathsDoc._id);
+      userProfile.careerPaths = [careerPathsDoc._id.toString()];
+      userProfile.updatedAt = new Date();
       userProfile.lastModifiedBy = userName;
       userProfile.save({ validateBeforeSave: false });
     }

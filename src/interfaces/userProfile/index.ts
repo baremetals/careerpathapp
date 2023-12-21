@@ -75,7 +75,7 @@ export type TResponseType = {
 
 export type TSuitabilityScoreType = {
   industryName: string;
-  industryId: Schema.Types.ObjectId;
+  industryId: string;
   score: number;
 };
 

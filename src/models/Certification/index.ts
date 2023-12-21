@@ -11,7 +11,7 @@ const certificationSchema = new Schema<ICertificationDocument>({
     default: Date.now(),
     select: false,
   },
-  lastModifiedAt: {
+  updatedAt: {
     type: Date,
     default: Date.now(),
     select: false,

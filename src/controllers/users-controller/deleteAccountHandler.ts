@@ -13,7 +13,7 @@ export default catchAsync(async function deleteAccountHandler(req, _res, next) {
 
   user.status = UserStatuses.DELETED;
   user.lastModifiedBy = user.fullName;
-  user.lastModifiedAt = new Date();
+  user.updatedAt = new Date();
   await user.save({ validateBeforeSave: false });
 
   next();

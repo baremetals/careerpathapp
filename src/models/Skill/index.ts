@@ -8,7 +8,7 @@ const skillSchema = new Schema<ISkillDocument>({
     default: Date.now(),
     select: false,
   },
-  lastModifiedAt: {
+  updatedAt: {
     type: Date,
     default: Date.now(),
     select: false,

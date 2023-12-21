@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import { IUserQuestionResponseDocument } from '../../interfaces/userProfile';
 import { ERROR_MESSAGES } from '../../lib/error-messages';
 import { UserProfileModel } from '../../models/UserProfile';
@@ -23,8 +24,9 @@ export default async function createQuestionnaireResponse(
     const userProfile = await UserProfileModel.findById(responses.profileId);
 
     if (userProfile) {
-      userProfile.questionsResponsesId = responsesDoc._id;
-      userProfile.lastModifiedAt = new Date();
+      const objectId = new mongoose.Types.ObjectId(responsesDoc._id);
+      userProfile.questionsResponsesId = objectId;
+      userProfile.updatedAt = new Date();
       userProfile.lastModifiedBy = userName;
       userProfile.save({ validateBeforeSave: false });
     }

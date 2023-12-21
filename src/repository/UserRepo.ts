@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import { UserModel } from '../models/User';
 import { IUserDocument } from '@/interfaces/user';
 
@@ -32,19 +31,25 @@ export class UserRepo {
     return UserModel.findById(id);
   }
 
-  async updateUserWithProfileId(
-    userId: string,
-    profileId: mongoose.Types.ObjectId,
-  ) {
+  async save(user: IUserDocument) {
+    return await UserModel.updateOne({ _id: user._id }, user, {
+      validateBeforeSave: false,
+    });
+  }
+
+  async updateUserWithProfileId(userId: string, profileId: string) {
     const user: IUserDocument = (await UserModel.findById(
       userId,
     )) as IUserDocument;
     if (!user) return null;
 
-    user.profileId = profileId;
-    user.lastModifiedAt = new Date();
+    user.profileId = profileId.toString();
+    user.updatedAt = new Date();
     user.lastModifiedBy = user.fullName;
-    user.save({ validateBeforeSave: false });
+    await this.save(user);
+    // await UserModel.updateOne({ _id: user._id }, user, {
+    //   validateBeforeSave: false,
+    // });
 
     return user;
   }

@@ -6,7 +6,8 @@ import {
 
 const scoresSchema = new Schema<TSuitabilityScoreType>({
   industryName: { type: String, required: true },
-  industryId: { type: Schema.Types.ObjectId, required: true },
+  // industryId: { type: Schema.Types.ObjectId, required: true },
+  industryId: { type: String, required: true },
   score: { type: Number, required: true },
 });
 
@@ -31,7 +32,7 @@ const suitabilityScoreSchema = new Schema<ISuitabilityScoreDocument>({
     default: Date.now(),
     select: false,
   },
-  lastModifiedAt: {
+  updatedAt: {
     type: Date,
     default: Date.now(),
     select: false,

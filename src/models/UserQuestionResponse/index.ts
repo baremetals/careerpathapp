@@ -30,7 +30,7 @@ const userQuestionResponseSchema = new Schema<IUserQuestionResponseDocument>({
     default: Date.now(),
     select: false,
   },
-  lastModifiedAt: {
+  updatedAt: {
     type: Date,
     default: Date.now(),
     select: false,

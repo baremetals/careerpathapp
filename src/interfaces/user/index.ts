@@ -1,13 +1,13 @@
 import { Request } from 'express';
 import { IShared } from '@/interfaces';
-import mongoose, { Schema } from 'mongoose';
+import mongoose from 'mongoose';
 import {
   ICareerGoalDocument,
   ICertificationDocument,
   IEducationDocument,
   IExperienceDocument,
   ISkillDocument,
-  IUserCareerPathDocument,
+  // IUserCareerPathDocument,
 } from '../userProfile';
 
 export interface IUserDocument extends IShared {
@@ -21,22 +21,24 @@ export interface IUserDocument extends IShared {
   bio: string;
   status: string;
   role: string;
-  profileId: mongoose.Types.ObjectId;
+  // profileId: mongoose.Types.ObjectId;
+  profileId: string;
   passwordChangedAt: number;
   correctPassword: (enteredPassword: string, hashedPassword: string) => boolean;
 }
 
 export interface IUserProfileDocument extends IShared {
-  userId: Schema.Types.ObjectId;
+  userId: string;
+  // userId: mongoose.Types.ObjectId;
   skills: Array<ISkillDocument>;
   education: Array<IEducationDocument>;
   experience: Array<IExperienceDocument>;
   careerGoals: Array<ICareerGoalDocument>;
   certifications?: Array<ICertificationDocument>;
   preferredWorkEnvironment?: string;
-  careerPaths: Array<IUserCareerPathDocument>;
-  suitabilityScoresId: Schema.Types.ObjectId;
-  questionsResponsesId: Schema.Types.ObjectId;
+  careerPaths: Array<string>;
+  suitabilityScoresId: mongoose.Types.ObjectId;
+  questionsResponsesId: mongoose.Types.ObjectId;
 }
 
 export interface AuthenticatedRequest extends Request {
@@ -54,13 +56,14 @@ export class SanitizedUser {
   fullName: string;
   avatar: string;
   bio: string;
-  profileId: mongoose.Types.ObjectId;
-  lastModifiedAt: number;
+  // profileId: mongoose.Types.ObjectId;
+  profileId: string;
+  updatedAt: number;
 
   constructor(user: IUserDocument) {
     this.id = user._id;
     this.createdAt = +user.createdAt;
-    this.lastModifiedAt = +user.lastModifiedAt;
+    this.updatedAt = +user.updatedAt;
     this.firstName = user.firstName;
     this.lastName = user.lastName;
     this.fullName = user.fullName;

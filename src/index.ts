@@ -21,7 +21,6 @@ import uiRouter from './routes/ui';
 import uploadRouter from './routes/uploads';
 import userRouter from './routes/users-route';
 import AppError from './utils/appError';
-import mongoose from 'mongoose';
 
 // This is required to extend the  express-session type.
 declare module 'express-session' {
@@ -29,7 +28,7 @@ declare module 'express-session' {
     userId: string;
     role: string;
     userName: string;
-    profileId: mongoose.Types.ObjectId;
+    profileId: string;
   }
 }
 

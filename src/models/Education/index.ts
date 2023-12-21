@@ -13,7 +13,7 @@ const educationSchema = new Schema<IEducationDocument>({
     default: Date.now(),
     select: false,
   },
-  lastModifiedAt: {
+  updatedAt: {
     type: Date,
     default: Date.now(),
     select: false,

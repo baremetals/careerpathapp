@@ -14,7 +14,7 @@ const careerPathSchema = new Schema<ICareerPathDocument>({
     default: Date.now(),
     select: false,
   },
-  lastModifiedAt: {
+  updatedAt: {
     type: Date,
     default: Date.now(),
     select: false,

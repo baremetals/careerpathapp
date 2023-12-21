@@ -63,8 +63,8 @@ export default catchAsync(async function resetPasswordRequestHandler(
   user.password = req.body.password;
   user.confirmPassword = req.body.confirmPassword;
   user.lastModifiedBy = user.fullName;
-  user.lastModifiedAt = new Date();
-  await user.save();
+  user.updatedAt = new Date();
+  await userRepo.save(user);
 
   await sessionService.deleteSession(key);
 

@@ -21,7 +21,7 @@ import // fetchCareerPathRoles,
 // straverseDecisionTree,
 '@/utils/questionResponse';
 
-const updateMeHandler = Factory.updateOne(UserModel);
+const updateMeHandler = Factory.updateOne({ Model: UserModel });
 
 const generateCareerPath = catchAsync(
   async (req: Request, _res: Response, next: NextFunction) => {
@@ -112,18 +112,18 @@ const getUserWithProfile = async (
 };
 
 // User Profile
-const createExperience = Factory.createOne(ExperienceModel);
-const createEducation = Factory.createOne(EducationModel);
-const createCertification = Factory.createOne(CertificationModel);
+const createExperience = Factory.createOne({ Model: ExperienceModel });
+const createEducation = Factory.createOne({ Model: EducationModel });
+const createCertification = Factory.createOne({ Model: CertificationModel });
 
-const updateProfile = Factory.updateOne(UserProfileModel);
-const updateExperience = Factory.updateOne(ExperienceModel);
-const updateEducation = Factory.updateOne(EducationModel);
-const updateCertification = Factory.updateOne(CertificationModel);
+const updateProfile = Factory.updateOne({ Model: UserProfileModel });
+const updateExperience = Factory.updateOne({ Model: ExperienceModel });
+const updateEducation = Factory.updateOne({ Model: EducationModel });
+const updateCertification = Factory.updateOne({ Model: CertificationModel });
 
-const deleteExperience = Factory.deleteOne(ExperienceModel);
-const deleteEducation = Factory.deleteOne(EducationModel);
-const deleteCertification = Factory.deleteOne(CertificationModel);
+const deleteExperience = Factory.deleteOne({ Model: ExperienceModel });
+const deleteEducation = Factory.deleteOne({ Model: EducationModel });
+const deleteCertification = Factory.deleteOne({ Model: CertificationModel });
 
 const createSkill = createSkillOrInterest(SkillModel);
 const createInterest = createSkillOrInterest(InterestModel);

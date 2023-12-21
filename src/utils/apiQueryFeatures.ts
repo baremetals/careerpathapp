@@ -1,12 +1,5 @@
+import { QueryParams } from '@/interfaces';
 import { Query } from 'mongoose';
-
-interface QueryParams {
-  page?: string;
-  sort?: string;
-  limit?: string;
-  fields?: string;
-  [key: string]: any;
-}
 
 class APIQueryFeatures {
   query: Query<any, any>;

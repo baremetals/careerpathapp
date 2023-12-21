@@ -29,7 +29,7 @@ const questionSchema = new Schema<IQuestionDocument>({
     default: Date.now(),
     select: false,
   },
-  lastModifiedAt: {
+  updatedAt: {
     type: Date,
     default: Date.now(),
     select: false,

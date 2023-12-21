@@ -22,7 +22,7 @@ export default catchAsync(async function changePasswordHandler(req, res, next) {
   user.password = req.body.newPassword;
   user.confirmPassword = req.body.confirmPassword;
   user.lastModifiedBy = user.fullName;
-  user.lastModifiedAt = new Date();
+  user.updatedAt = new Date();
   await user.save();
 
   await new EmailService(user).sendPasswordChangeEmail();
