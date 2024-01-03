@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
-import getUserSuitabilityScores from '../../services/QuestionResponse/getUserSuitabilityScores';
-import updateSuitabilityScores from '../../services/QuestionResponse/updateSuitabilityScores';
-import updateQuestionnaireResponse from '../../services/QuestionResponse/updateQuestionnaireResponse';
-import catchAsync from '../../utils/catchAsync';
+import getUserSuitabilityScores from '@/services/QuestionResponse/getUserSuitabilityScores';
+import updateSuitabilityScores from '@/services/QuestionResponse/updateSuitabilityScores';
+import updateQuestionnaireResponse from '@/services/QuestionResponse/updateQuestionnaireResponse';
+import catchAsync from '@/utils/catchAsync';
 
 export default catchAsync(async function getAndUpdateSuitabilityScoresHandler(
   req: Request,

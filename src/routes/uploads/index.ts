@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import authMiddleware from '../../middleware/authMiddleware';
+import authMiddleware from '@/middleware/authMiddleware';
 
-import { requestPresignedUrlHandler } from '../../controllers/uploadController';
+import { requestPresignedUrlHandler } from '@/controllers/uploadController';
 
 const uploadRouter = Router();
 

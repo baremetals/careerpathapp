@@ -4,10 +4,10 @@ import {
   PutObjectCommand,
 } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-// import os from 'os';
-// import path from 'path';
-// import fs from 'fs';
-// const filepath = path.join(os.tmpdir(), path.basename('uploadFileName'));
+// import os from 'os'
+// import path from 'path'
+// import fs from 'fs'
+// const filepath = path.join(os.tmpdir(), path.basename('uploadFileName'))
 import multer from 'multer';
 import { bucketName, s3Instance } from './aws-config';
 

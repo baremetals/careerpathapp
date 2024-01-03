@@ -1,7 +1,7 @@
 export enum AuthRoutePaths {
   ROOT = '/auth',
   REGISTER = '/register',
-  ACCOUNT_ACTIVATION = '/account-activation',
+  ACCOUNT_ACTIVATION = '/activate-account',
   LOGOUT = '/logout',
   FORGOT_PASSWORD_RESET_EMAIL = '/request-password-reset-email',
   RESET_PASSWORD = '/reset-password',
@@ -10,6 +10,7 @@ export enum AuthRoutePaths {
 export enum UsersRoutePaths {
   ROOT = '/users',
   ME = '/me',
+  PROFILE = '/profile',
   CHANGE_PASSWORD = '/change-password',
   ACCOUNT_DELETION = '/account-deletion',
   ACCOUNT_BAN = '/account-ban',

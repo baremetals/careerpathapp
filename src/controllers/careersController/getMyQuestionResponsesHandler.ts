@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
-import { UserQuestionResponseModel } from '../../models/UserQuestionResponse';
-import catchAsync from '../../utils/catchAsync';
-import AppError from '../../utils/appError';
-import { ERROR_MESSAGES } from '../../lib/error-messages';
+import { UserQuestionResponseModel } from '@/models/UserQuestionResponse';
+import catchAsync from '@/utils/catchAsync';
+import AppError from '@/utils/appError';
+import { ERROR_MESSAGES } from '@/lib/error-messages';
 
 export default catchAsync(async function getMyQuestionResponsesHandler(
   req: Request,

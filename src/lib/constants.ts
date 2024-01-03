@@ -41,8 +41,8 @@ export const SOCKET_ADDRESS_PRODUCTION = 'https://battleschool.io';
 export const SERVER_HOSTNAME_DOCKER_PRODUCTION = 'https://battleschool.io/api';
 export const REDIS_HOSTNAME_PRODUCTION = 'redis';
 export const ROUTE_TOKEN = 'token';
-export const RESET_PASSWORD_PARTIAL_URL = 'api/auth/reset-password';
-export const ACCOUNT_ACTIVATION_PARTIAL_URL = 'api/auth/account-activation';
+export const RESET_PASSWORD_PARTIAL_URL = '/auth/reset-password';
+export const ACCOUNT_ACTIVATION_PARTIAL_URL = 'auth/activate-account';
 // times
 export const ONE_SECOND = 1000;
 export const ONE_MINUTE = ONE_SECOND * 60;

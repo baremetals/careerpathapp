@@ -1,15 +1,15 @@
-import * as argon2 from 'argon2';
+import { IUserDocument } from '@/interfaces/user';
 import { UserStatuses } from '@/lib/auth-validation-config';
 import { RESET_PASSWORD } from '@/lib/constants';
 import { ERROR_MESSAGES } from '@/lib/error-messages';
+import { HTTP_STATUS_CODES } from '@/lib/status-codes';
+import { UserRepo } from '@/repository/UserRepo';
+import { SQSService } from '@/services/NotificationService/SQSSERVICE';
+import { passwordChangedTemplate } from '@/services/NotificationService/email-templates/passwordChangedTemplate';
+import { SessionService } from '@/services/SessionService';
 import AppError from '@/utils/appError';
 import catchAsync from '@/utils/catchAsync';
-import { UserRepo } from '@/repository/UserRepo';
-import { SessionService } from '@/services/SessionService';
-import { SQSService } from '@/services/NotificationService/SQSSERVICE';
-import { HTTP_STATUS_CODES } from '@/lib/status-codes';
-import { IUserDocument } from '@/interfaces/user';
-import { passwordChangedTemplate } from '@/services/NotificationService/email-templates/passwordChangedTemplate';
+import * as argon2 from 'argon2';
 
 export default catchAsync(async function resetPasswordRequestHandler(
   req,
@@ -20,7 +20,7 @@ export default catchAsync(async function resetPasswordRequestHandler(
   const sessionService = new SessionService();
   const sqsService = new SQSService();
   const { token } = req.params;
-  const { email } = req.decoded; // Access the 'email' property instead of 'user'
+  const { email } = req.decoded;
   const key = RESET_PASSWORD + token;
 
   const user: IUserDocument = (await userRepo.findOne({
@@ -59,17 +59,16 @@ export default catchAsync(async function resetPasswordRequestHandler(
       ),
     );
   }
-
-  user.password = req.body.password;
-  user.confirmPassword = req.body.confirmPassword;
-  user.lastModifiedBy = user.fullName;
-  user.updatedAt = new Date();
-  await userRepo.save(user);
+  await userRepo.resetPassword(
+    user._id,
+    req.body.password,
+    req.body.confirmPassword,
+  );
 
   await sessionService.deleteSession(key);
 
   try {
-    const homeUrl = `${req.protocol}://${req.get('host')}`;
+    const homeUrl = `${process.env.Client_URL}/auth/login`;
 
     const htmlTemplate = passwordChangedTemplate(user.firstName, homeUrl);
     const receiver = [email];
@@ -91,5 +90,5 @@ export default catchAsync(async function resetPasswordRequestHandler(
     );
   }
 
-  res.status(HTTP_STATUS_CODES.NO_CONTENT).json();
+  res.status(HTTP_STATUS_CODES.OK).json({});
 });

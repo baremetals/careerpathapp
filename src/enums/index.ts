@@ -1,10 +1,10 @@
-export enum GameStatus {
-  IN_LOBBY,
-  COUNTING_DOWN,
-  IN_PROGRESS,
-  IN_WAITING_LIST,
-  STARTING_NEXT_ROUND,
-  ENDING,
+export enum EndorsementType {
+  VIDEO = 'video',
+  INDUSTRY = 'industry',
+  BOOK = 'book',
+  COURSE = 'course',
+  CAREER_PATH = 'career_path',
+  PERSON = 'person',
 }
 
 export enum PlayerRole {

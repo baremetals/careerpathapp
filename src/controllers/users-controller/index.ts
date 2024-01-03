@@ -18,7 +18,7 @@ import catchAsync from '@/utils/catchAsync';
 import // fetchCareerPathRoles,
 
 // getUserResponse,
-// straverseDecisionTree,
+// traverseDecisionTree,
 '@/utils/questionResponse';
 
 const updateMeHandler = Factory.updateOne({ Model: UserModel });
@@ -26,7 +26,7 @@ const updateMeHandler = Factory.updateOne({ Model: UserModel });
 const generateCareerPath = catchAsync(
   async (req: Request, _res: Response, next: NextFunction) => {
     try {
-      // console.log('==============>: the user id', req.session.userId);
+      // console.log('==============>: the user id', req.session.userId)
 
       const questions = await QuestionModel.find({})
         .sort({ order: 'asc' })
@@ -43,18 +43,18 @@ const generateCareerPath = catchAsync(
       //   questions,
       //   next,
       //   req.body.responses,
-      // );
+      // )
 
-      // const careerPaths = await fetchCareerPathRoles(data);
+      // const careerPaths = await fetchCareerPathRoles(data)
 
-      // console.log('==============>: career paths my dude', careerPaths);
+      // console.log('==============>: career paths my dude', careerPaths)
 
       return;
 
       // res.status(201).json({
       //   status: 'success',
       //   data: careerPaths,
-      // });
+      // })
     } catch (err) {
       throw next(
         new AppError(

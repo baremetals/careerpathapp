@@ -13,6 +13,7 @@ import { validate } from '@/middleware/validate';
 import { loginSchema } from '@/user-input-validation-schema/login-schema';
 import { registerUserSchema } from '@/user-input-validation-schema/register-user-schema';
 import { resetPasswordSchema } from '@/user-input-validation-schema/reset-password-schema';
+import { forgotPasswordSchema } from '@/user-input-validation-schema/forgot-password-schema';
 
 const authRouter = Router();
 
@@ -31,6 +32,7 @@ authRouter.get(
 authRouter.get(AuthRoutePaths.LOGOUT, authMiddleware, logoutHandler);
 authRouter.post(
   AuthRoutePaths.FORGOT_PASSWORD_RESET_EMAIL,
+  validate(forgotPasswordSchema),
   forgotPasswordRequestHandler,
 );
 authRouter.post(

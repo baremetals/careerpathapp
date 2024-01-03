@@ -18,9 +18,9 @@ export const validate =
           let field;
           if (error.path[0] === 'body' && error.path[1])
             field = error.path[1] as string;
+          console.log(error.message);
           return new AppError(error.message, 400, field);
         });
-        // console.log(errors);
         next(errors);
       } else next(err);
     }

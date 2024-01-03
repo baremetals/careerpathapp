@@ -1,4 +1,4 @@
-// import { Request } from 'express';
+// import { Request } from 'express'
 import { IShared } from '@/interfaces';
 
 export interface IUserDocument extends IShared {
@@ -32,7 +32,7 @@ export interface IUserProfileDocument extends IShared {
 }
 
 // export interface AuthenticatedRequest extends Request {
-//   user: IUserDocument;
+//   user: IUserDocument
 // }
 
 export class SanitizedUser {

@@ -1,15 +1,14 @@
-import { NextFunction, Request, Response } from 'express';
-import { SanitizedUser } from '@/interfaces/user';
 import { ACCOUNT_CREATION_SESSION_PREFIX } from '@/lib/constants';
 import { ERROR_MESSAGES } from '@/lib/error-messages';
+import { HTTP_STATUS_CODES } from '@/lib/status-codes';
+import { ProfileRepo } from '@/repository/ProfileRepo';
+import { UserRepo } from '@/repository/UserRepo';
+import { SQSService } from '@/services/NotificationService/SQSSERVICE';
+import { welcomeTemplate } from '@/services/NotificationService/email-templates/welcomeTemplate';
+import { SessionService } from '@/services/SessionService';
 import AppError from '@/utils/appError';
 import catchAsync from '@/utils/catchAsync';
-import { SessionService } from '@/services/SessionService';
-import { UserRepo } from '@/repository/UserRepo';
-import { ProfileRepo } from '@/repository/ProfileRepo';
-import { HTTP_STATUS_CODES } from '@/lib/status-codes';
-import { welcomeTemplate } from '@/services/NotificationService/email-templates/welcomeTemplate';
-import { SQSService } from '@/services/NotificationService/SQSSERVICE';
+import { NextFunction, Request, Response } from 'express';
 
 export default catchAsync(async function accountActivationHandler(
   req: Request,
@@ -22,8 +21,11 @@ export default catchAsync(async function accountActivationHandler(
   const profileRepo = new ProfileRepo();
   const sqsService = new SQSService();
 
+  // console.log('email', email)
+
   const key = ACCOUNT_CREATION_SESSION_PREFIX + email;
   const accountActivationSession = await sessionService.getSession(key);
+  console.log('accountActivationSession', accountActivationSession);
   if (!accountActivationSession)
     return next(
       new AppError(
@@ -50,7 +52,7 @@ export default catchAsync(async function accountActivationHandler(
   await sessionService.deleteSession(key);
 
   try {
-    const homeUrl = `${req.protocol}://${req.get('host')}`;
+    const homeUrl = `${process.env.Client_URL}/auth/login`;
 
     const htmlTemplate = welcomeTemplate(firstName, homeUrl);
     const receiver = [email];
@@ -72,7 +74,5 @@ export default catchAsync(async function accountActivationHandler(
     );
   }
 
-  res.status(HTTP_STATUS_CODES.CREATED).json({
-    data: { user: new SanitizedUser(newUser) },
-  });
+  res.status(HTTP_STATUS_CODES.CREATED).json({});
 });

@@ -1,3 +1,5 @@
+import { HTTP_STATUS_CODES } from '@/lib/status-codes';
+import { UserRepo } from '@/repository/UserRepo';
 import * as argon2 from 'argon2';
 import { NextFunction, Request, Response } from 'express';
 import { IUserDocument, SanitizedUser } from '../../interfaces/user';
@@ -6,8 +8,6 @@ import { ERROR_MESSAGES } from '../../lib/error-messages';
 import { LoginUserInput } from '../../user-input-validation-schema/login-schema';
 import AppError from '../../utils/appError';
 import catchAsync from '../../utils/catchAsync';
-import { HTTP_STATUS_CODES } from '@/lib/status-codes';
-import { UserRepo } from '@/repository/UserRepo';
 
 export default catchAsync(async function loginHandler(
   req: Request<object, object, LoginUserInput>,
@@ -16,6 +16,7 @@ export default catchAsync(async function loginHandler(
 ) {
   const userRepo = new UserRepo();
   const { email, password } = req.body;
+  // console.log(email)
 
   const user: IUserDocument = (await userRepo.findOne({
     email,
@@ -29,7 +30,6 @@ export default catchAsync(async function loginHandler(
       ),
     );
   }
-
   if (user.status === UserStatuses.LOCKED_OUT)
     return next(
       new AppError(
@@ -39,6 +39,7 @@ export default catchAsync(async function loginHandler(
     );
 
   if (!(await argon2.verify(user.password, password))) {
+    console.log('user', user);
     return next(
       new AppError(
         ERROR_MESSAGES.AUTH.INVALID_CREDENTIALS,

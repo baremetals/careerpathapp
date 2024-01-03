@@ -1,5 +1,6 @@
-import { UserModel } from '../models/User';
 import { IUserDocument } from '@/interfaces/user';
+import * as argon2 from 'argon2';
+import { UserModel } from '../models/User';
 
 export class UserRepo {
   async createUser(
@@ -27,13 +28,13 @@ export class UserRepo {
     return UserModel.findOne(query);
   }
 
-  async findById(id: string) {
-    return UserModel.findById(id);
+  async findById(id: string, query: string | Array<string> = '') {
+    return UserModel.findById(id).populate(query);
   }
 
-  async save(user: IUserDocument) {
+  async save(user: IUserDocument, validate = false) {
     return await UserModel.updateOne({ _id: user._id }, user, {
-      validateBeforeSave: false,
+      validateBeforeSave: validate,
     });
   }
 
@@ -47,10 +48,21 @@ export class UserRepo {
     user.updatedAt = new Date();
     user.lastModifiedBy = user.fullName;
     await this.save(user);
-    // await UserModel.updateOne({ _id: user._id }, user, {
-    //   validateBeforeSave: false,
-    // });
-
+    return user;
+  }
+  async resetPassword(
+    userId: string,
+    password: string,
+    confirmPassword: string,
+  ) {
+    const user: IUserDocument = (await this.findById(userId)) as IUserDocument;
+    if (!user) return null;
+    const hashedPassword = await argon2.hash(password);
+    user.password = hashedPassword;
+    user.confirmPassword = confirmPassword;
+    user.updatedAt = new Date();
+    user.lastModifiedBy = user.fullName;
+    await this.save(user);
     return user;
   }
 }

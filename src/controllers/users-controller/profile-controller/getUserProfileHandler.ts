@@ -1,12 +1,12 @@
-import { IUserDocument, SanitizedUser } from '@/interfaces/user';
+import { IUserProfileDocument } from '@/interfaces/user';
 import { ERROR_MESSAGES } from '@/lib/error-messages';
 import { HTTP_STATUS_CODES } from '@/lib/status-codes';
-import { UserRepo } from '@/repository/UserRepo';
+import { ProfileRepo } from '@/repository/ProfileRepo';
 import AppError from '@/utils/appError';
 import catchAsync from '@/utils/catchAsync';
 import { NextFunction, Request, Response } from 'express';
 
-export default catchAsync(async function getUserHandler(
+export default catchAsync(async function getUserProfileHandler(
   req: Request,
   res: Response,
   next: NextFunction,
@@ -22,17 +22,17 @@ export default catchAsync(async function getUserHandler(
         )
       : String(req.query.populateOptions),
   };
-  const userRepo = new UserRepo();
+  const profileRepo = new ProfileRepo();
 
   const query = Array.isArray(options.populateOptions)
     ? options.populateOptions.join(' ')
     : options.populateOptions;
-  const user: IUserDocument = (await userRepo.findById(
+  const userProfile: IUserProfileDocument = (await profileRepo.findById(
     req.params.id,
     query,
-  )) as IUserDocument;
+  )) as IUserProfileDocument;
 
-  if (!user) {
+  if (!userProfile) {
     return next(
       new AppError(
         options.notFoundMessage as string,
@@ -41,6 +41,6 @@ export default catchAsync(async function getUserHandler(
     );
   }
   res.status(HTTP_STATUS_CODES.OK).json({
-    data: { user: new SanitizedUser(user) },
+    data: { profile: userProfile },
   });
 });

@@ -23,11 +23,11 @@ export default async function updateAvatarHandler(
       return next(new AppError(ERROR_MESSAGES.UPLOAD.LARGE_FILE_SIZE, 400));
     }
     const response = await uploadFile(
-      file.originalname as string,
-      file.buffer as Buffer,
+      file.originalname,
+      file.buffer,
       file.mimetype,
     );
-    // const fileUrl = await getSignedFileUrl(response, 3600);
+    // const fileUrl = await getSignedFileUrl(response, 3600)
     const presignedUrl = await createPresignedUrlWithClient(
       response,
       'image/jpeg',

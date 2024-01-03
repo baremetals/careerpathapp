@@ -11,6 +11,7 @@ const authMiddleWare = catchAsync(
     const userRepo = new UserRepo();
     try {
       if (!req.session.userId) {
+        console.log('no session found');
         return next(
           new AppError(
             ERROR_MESSAGES.AUTH.NOT_LOGGED_IN,

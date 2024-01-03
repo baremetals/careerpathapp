@@ -1,6 +1,7 @@
 import AppError from '@/utils/appError';
 import { UserProfileModel } from '../models/UserProfile';
 import { HTTP_STATUS_CODES } from '@/lib/status-codes';
+import { IUserProfileDocument } from '@/interfaces/user';
 
 export class ProfileRepo {
   async createProfile(userId: string, fullName: string) {
@@ -31,5 +32,17 @@ export class ProfileRepo {
         HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR,
       );
     }
+  }
+  async findOne(query: object) {
+    return UserProfileModel.findOne(query);
+  }
+  async findById(id: string, query: string | Array<string> = '') {
+    return UserProfileModel.findById(id).populate(query);
+  }
+
+  async save(user: IUserProfileDocument, validate = false) {
+    return await UserProfileModel.updateOne({ _id: user._id }, user, {
+      validateBeforeSave: validate,
+    });
   }
 }

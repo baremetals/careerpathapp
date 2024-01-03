@@ -11,6 +11,7 @@ import { multerUpload } from '../../lib/fileUpload';
 import authMiddleware from '../../middleware/authMiddleware';
 import { validate } from '../../middleware/validate';
 import { changePasswordSchema } from '../../user-input-validation-schema/change-password-schema';
+import getUserProfileHandler from '@/controllers/users-controller/profile-controller/getUserProfileHandler';
 
 /**
  * @swagger
@@ -80,8 +81,8 @@ userRouter.put(
 );
 
 userRouter
-  .route('/profile')
-  .get(handler.getUserWithProfile)
+  .route(`${UsersRoutePaths.ROOT}/${UsersRoutePaths.PROFILE}`)
+  .get(getMeHandler, getUserProfileHandler)
   .patch(handler.updateProfile);
 
 userRouter.post('/profile/experience', handler.createExperience);

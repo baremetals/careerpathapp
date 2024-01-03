@@ -29,7 +29,13 @@ interface IArticleEndorsementDocument extends IBaseEndorsement {
   authors: Array<string>;
 }
 
-interface IMentorEndorsementDocument extends IBaseEndorsement {
+interface IPersonEndorsementDocument extends IBaseEndorsement {
+  fullName: string;
+  image: string;
+  profession: string;
+}
+
+interface IEducationProviderEndorsementDocument extends IBaseEndorsement {
   fullName: string;
   image: string;
   profession: string;
@@ -39,5 +45,6 @@ export {
   IArticleEndorsementDocument,
   IBookEndorsementDocument,
   ICourseEndorsementDocument,
-  IMentorEndorsementDocument,
+  IPersonEndorsementDocument,
+  IEducationProviderEndorsementDocument,
 };

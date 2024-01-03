@@ -13,6 +13,8 @@ export const ERROR_MESSAGES = {
     NOT_LOGGED_IN: 'You are not logged in',
     INVALID_OR_EXPIRED_TOKEN: 'Invalid or expired token',
     EXPIRED_SESSION: 'User session has expired, please log in again',
+    EXISTING_SESSION:
+      'you already have attempted to create an account. Please check your email for the account activation link',
     USED_OR_EXPIRED_ACCOUNT_CREATION_SESSION:
       'Either you have already created an account with this token or it has been too long since you initiated account creation, please try registering again to get a new account activation email',
     INVALID_CREDENTIALS: 'Incorrect email or password',
@@ -63,7 +65,7 @@ export const ERROR_MESSAGES = {
     AUTH: {
       REQUIRED_FIELD: {
         NAME: 'A name is required',
-        EMAIL: 'An email address is required',
+        EMAIL: 'A valid email address is required',
         PASSWORD: 'Please enter a password',
         PASSWORD_CONFIRMATION: 'Please confirm your password',
       },

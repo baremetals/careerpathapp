@@ -11,9 +11,9 @@ import { UserRepo } from '@/repository/UserRepo';
 import { SQSService } from '@/services/NotificationService/SQSSERVICE';
 import { resetPasswordTemplate } from '@/services/NotificationService/email-templates/resetPasswordTemplate';
 import { SessionService } from '@/services/SessionService';
-import { TokenService } from '@/services/TokenService';
 import AppError from '@/utils/appError';
 import catchAsync from '@/utils/catchAsync';
+import { createToken } from './utils';
 
 export default catchAsync(async function forgotPasswordRequestHandler(
   req,
@@ -21,7 +21,6 @@ export default catchAsync(async function forgotPasswordRequestHandler(
   next,
 ) {
   const userRepo = new UserRepo();
-  const tokenService = new TokenService();
   const sessionService = new SessionService();
   const sqsService = new SQSService();
 
@@ -45,19 +44,12 @@ export default catchAsync(async function forgotPasswordRequestHandler(
       ),
     );
 
-  const passwordResetToken = tokenService.signToken(
-    { email: user.email },
-    process.env.ACCOUNT_ACTIVATION_TOKEN_PRIVATE_KEY as string,
-    {
-      expiresIn: parseInt(
-        process.env.ACCOUNT_ACTIVATION_SESSION_EXPIRATION as string,
-      ),
-    },
-  );
-  console.log(
-    'passwordResetToken------------------------->',
-    passwordResetToken,
-  );
+  const passwordResetToken = await createToken(user.email);
+
+  // console.log(
+  //   'passwordResetToken------------------------->',
+  //   passwordResetToken,
+  // );
   await sessionService.setSession(
     RESET_PASSWORD + passwordResetToken,
     user.email,
@@ -65,10 +57,7 @@ export default catchAsync(async function forgotPasswordRequestHandler(
   );
 
   try {
-    const resetURL = `${req.protocol}://${req.get(
-      'host',
-    )}/${RESET_PASSWORD_PARTIAL_URL}/${passwordResetToken}`;
-
+    const resetURL = `${process.env.Client_URL}/${RESET_PASSWORD_PARTIAL_URL}/${passwordResetToken}`;
     const htmlTemplate = resetPasswordTemplate(user.firstName, resetURL);
     const receiver = [user.email];
 
@@ -81,7 +70,7 @@ export default catchAsync(async function forgotPasswordRequestHandler(
       },
     );
 
-    res.status(HTTP_STATUS_CODES.NO_CONTENT).json();
+    res.status(HTTP_STATUS_CODES.OK).json({});
   } catch (err) {
     return next(
       new AppError(

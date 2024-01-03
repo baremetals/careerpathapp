@@ -1,8 +1,8 @@
-import { NextFunction, Request, Response } from 'express';
 import { ERROR_MESSAGES } from '@/lib/error-messages';
-import AppError from '@/utils/appError';
-import { TokenService } from '@/services/TokenService';
 import { HTTP_STATUS_CODES } from '@/lib/status-codes';
+import { TokenService } from '@/services/TokenService';
+import AppError from '@/utils/appError';
+import { NextFunction, Request, Response } from 'express';
 
 declare module 'express-serve-static-core' {
   interface Request {
@@ -17,6 +17,7 @@ const tokenValidationMiddleware = (
 ) => {
   const { token } = req.params;
   const tokenService = new TokenService();
+  // console.log('tokenValidationMiddleware', token)
 
   if (!token) {
     return next(
