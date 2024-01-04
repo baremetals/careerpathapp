@@ -1,4 +1,4 @@
-import { ICareerPathDocument } from 'interfaces/careerPath';
+import { ICareerPathDocument } from '@/interfaces/careerPath';
 import { Schema, model } from 'mongoose';
 
 const careerPathSchema = new Schema<ICareerPathDocument>({
@@ -8,13 +8,13 @@ const careerPathSchema = new Schema<ICareerPathDocument>({
   },
   description: { type: String, required: true },
   requiredWeight: { type: Number, required: true },
-  industries: { type: [Schema.Types.ObjectId], ref: 'Industry' },
+  industries: { type: [String], ref: 'Industry' },
   createdAt: {
     type: Date,
     default: Date.now(),
     select: false,
   },
-  lastModifiedAt: {
+  updatedAt: {
     type: Date,
     default: Date.now(),
     select: false,

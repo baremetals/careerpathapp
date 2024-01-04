@@ -1,23 +1,17 @@
-import { Schema } from 'mongoose';
-import { IShared } from 'interfaces';
+import { IShared } from '@/interfaces';
 
 interface IIndustryDocument extends IShared {
   name: string;
   description: string;
-  careerPaths: Array<Schema.Types.ObjectId>;
+  careerPaths: Array<string>;
 }
 
 interface ICareerPathDocument extends IShared {
   title: string;
   description: string;
   requiredWeight: number;
-  industries: Array<Schema.Types.ObjectId>;
+  industries: Array<string>;
 }
-
-// type requiredResponses = {
-//   question: Schema.Types.ObjectId;
-//   response: string | string[];
-// };
 
 interface IJobRoleDocument extends IShared {
   title: string;
@@ -26,7 +20,7 @@ interface IJobRoleDocument extends IShared {
   averageExperiencedSalary: number | string;
   educationRequirements: string[];
   skills: string[];
-  careerPath: Schema.Types.ObjectId;
+  careerPath: string;
   progressPaths: string[];
   relatedCareers: string[];
   aliasTitles: string[];

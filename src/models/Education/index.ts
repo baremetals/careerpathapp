@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { IEducationDocument } from '../../interfaces/userProfile';
+import { IEducationDocument } from '@/interfaces/userProfile';
 
 const educationSchema = new Schema<IEducationDocument>({
   school: { type: String, required: true },
@@ -13,7 +13,7 @@ const educationSchema = new Schema<IEducationDocument>({
     default: Date.now(),
     select: false,
   },
-  lastModifiedAt: {
+  updatedAt: {
     type: Date,
     default: Date.now(),
     select: false,

@@ -1,21 +1,21 @@
 import { Schema, model } from 'mongoose';
-import { IUserCareerPathDocument } from '../../interfaces/userProfile';
+import { IUserCareerPathDocument } from '@/interfaces/userProfile';
 
 const userCareerPathSchema = new Schema<IUserCareerPathDocument>({
-  user: { type: Schema.Types.ObjectId, ref: 'UserProfile' },
-  industry: {
-    type: String,
-    required: true,
-  },
-  paths: { type: [Schema.Types.ObjectId], ref: 'CareerPath' },
-  jobs: { type: [Schema.Types.ObjectId], ref: 'JobRole' },
+  profileId: { type: String, ref: 'UserProfile' },
+  // industries: {
+  //   type: [String],
+  //   required: true,
+  // },
+  paths: { type: [String], ref: 'CareerPath' },
+  jobs: { type: [String], ref: 'JobRole' },
 
   createdAt: {
     type: Date,
     default: Date.now(),
     select: false,
   },
-  lastModifiedAt: {
+  updatedAt: {
     type: Date,
     default: Date.now(),
     select: false,
@@ -29,4 +29,5 @@ const UserCareerPathModel = model<IUserCareerPathDocument>(
   userCareerPathSchema,
 );
 
+userCareerPathSchema.index({ profileId: 1 }, { unique: true });
 export { UserCareerPathModel };

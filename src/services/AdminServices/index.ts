@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import { QuestionModel } from '../../models/Question';
-import { QuestionResponseOptionModel } from '../../models/QuestionResponseOption';
-import catchAsync from '../../utils/catchAsync';
+import { QuestionModel } from '@/models/Question';
+import { QuestionResponseOptionModel } from '@/models/QuestionResponseOption';
+import catchAsync from '@/utils/catchAsync';
 
 interface QuestionInput {
   text: string;

@@ -1,10 +1,20 @@
-import { Document } from 'mongoose';
-
-interface IShared extends Document {
+interface IBase {
+  _id: string;
   createdAt: Date;
-  lastModifiedAt: Date;
+  updatedAt: Date;
+}
+
+interface IShared extends IBase {
   createdBy: string;
   lastModifiedBy: string;
+}
+
+interface QueryParams {
+  page?: string;
+  sort?: string;
+  limit?: string;
+  fields?: string;
+  [key: string]: any;
 }
 
 // interface ICategoryDocument extends IShared {
@@ -12,4 +22,4 @@ interface IShared extends Document {
 //   type: string;
 // }
 
-export { IShared };
+export { IShared, QueryParams };

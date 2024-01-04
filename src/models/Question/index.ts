@@ -10,19 +10,26 @@ const questionSchema = new Schema<IQuestionDocument>({
   level: { type: String, required: true, default: 'advance' },
   responseOptions: [
     {
-      responseId: String,
+      responseId: { type: String, required: false },
       text: String,
+      responseOption: String,
     },
   ],
 
   order: { type: Number, required: true },
   description: { type: String, required: false },
+  category: { type: String, required: false },
+  version: { type: Number, required: true },
+  ageGroup: {
+    min: { type: Number, required: true },
+    max: { type: Number, required: true },
+  },
   createdAt: {
     type: Date,
     default: Date.now(),
     select: false,
   },
-  lastModifiedAt: {
+  updatedAt: {
     type: Date,
     default: Date.now(),
     select: false,

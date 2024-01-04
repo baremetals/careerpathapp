@@ -1,22 +1,26 @@
-import { Types } from 'mongoose';
-import { IShared } from '../../interfaces';
+import { IShared } from '@/interfaces';
 
 type TResponseOption = {
-  responseId: string;
   text: string;
+  optionNumber: string;
 };
 
 interface IQuestionDocument extends IShared {
   text: string;
-  responseOptions: TResponseOption[];
+  responseOptions: Array<TResponseOption>;
   category: string;
   level: string;
   order: number;
+  version: number;
   description?: string;
+  ageGroup: {
+    min: number;
+    max: number;
+  };
 }
 
 interface IQuestionResponseOptionDocument extends IShared {
-  questionId: Types.ObjectId;
+  questionId: string;
   text: string;
   order: number;
 }
@@ -27,9 +31,9 @@ interface IQuestionResponseOptionDocument extends IShared {
  */
 
 interface ICareerPathResponseAndWeight extends IShared {
-  questionId: Types.ObjectId;
+  questionId: string;
   careerPath: string;
-  careerPathId: Types.ObjectId;
+  careerPathId: string;
   response: string;
   weight: number;
 }

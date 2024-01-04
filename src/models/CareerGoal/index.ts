@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { ICareerGoalDocument } from '../../interfaces/userProfile';
+import { ICareerGoalDocument } from '@/interfaces/userProfile';
 
 const careerGoalSchema = new Schema<ICareerGoalDocument>({
   name: { type: String, required: true },
@@ -8,7 +8,7 @@ const careerGoalSchema = new Schema<ICareerGoalDocument>({
     default: Date.now(),
     select: false,
   },
-  lastModifiedAt: {
+  updatedAt: {
     type: Date,
     default: Date.now(),
     select: false,

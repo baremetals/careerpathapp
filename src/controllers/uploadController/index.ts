@@ -1,8 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import {
-  createPresignedUrlWithClient,
-  createUniqueFileName,
-} from '../../lib/fileUpload';
+import { createPresignedUrlWithClient } from '../../lib/fileUpload';
 import AppError from '../../utils/appError';
 // import catchAsync from '../../utils/catchAsync';
 
@@ -12,12 +9,13 @@ const requestPresignedUrlHandler = async (
   next: NextFunction,
 ) => {
   try {
-    const fileName = createUniqueFileName(req.body);
-    const signedUrl = await createPresignedUrlWithClient(fileName);
+    const { fileName, mimeType } = req.body;
+    // const fileName = createUniqueFileName(req.body);
+    const signedUrl = await createPresignedUrlWithClient(fileName, mimeType);
 
     res.status(201).json({
       status: 'success',
-      message: 'Your url has is only valid for 1 hour',
+      message: 'Your url is only valid for 1 hour',
       data: signedUrl,
     });
   } catch (error) {

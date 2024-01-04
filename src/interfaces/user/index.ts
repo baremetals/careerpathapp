@@ -1,16 +1,5 @@
-import { Request } from 'express';
-import { IShared } from 'interfaces';
-import { Schema } from 'mongoose';
-import {
-  ICareerGoalDocument,
-  ICertificationDocument,
-  IEducationDocument,
-  IExperienceDocument,
-  IInterestDocument,
-  IWorkEnvironmentDocument,
-  ISkillDocument,
-  IUserCareerPathDocument,
-} from '../userProfile';
+// import { Request } from 'express'
+import { IShared } from '@/interfaces';
 
 export interface IUserDocument extends IShared {
   email: string;
@@ -21,33 +10,57 @@ export interface IUserDocument extends IShared {
   fullName: string;
   avatar: string;
   bio: string;
-  isDisabled: boolean;
-  isActive: boolean;
+  status: string;
   role: string;
-  profile: IUserProfileDocument;
+  // profileId: mongoose.Types.ObjectId;
+  profileId: string;
   passwordChangedAt: number;
   correctPassword: (enteredPassword: string, hashedPassword: string) => boolean;
 }
 
-export interface IUserQuestionResponseDocument extends IShared {
-  user: Schema.Types.ObjectId;
-  question: Schema.Types.ObjectId;
-  response: string;
-}
-
 export interface IUserProfileDocument extends IShared {
-  user: Schema.Types.ObjectId;
-  skills: ISkillDocument[];
-  education: IEducationDocument[];
-  experience: IExperienceDocument[];
-  careerGoals: ICareerGoalDocument[];
-  selectedIndustries: Array<Schema.Types.ObjectId>;
-  certifications?: ICertificationDocument[];
-  interests?: IInterestDocument[];
-  preferredWorkEnvironments?: IWorkEnvironmentDocument;
-  careerPaths: IUserCareerPathDocument[];
+  userId: string;
+  skills: Array<string>;
+  education: Array<string>;
+  experience: Array<string>;
+  careerGoals: Array<string>;
+  certifications?: Array<string>;
+  preferredWorkEnvironment?: string;
+  careerPaths: Array<string>;
+  suitabilityScoresId: string;
+  questionsResponsesId: string;
 }
 
-export interface AuthenticatedRequest extends Request {
-  user: IUserDocument;
+// export interface AuthenticatedRequest extends Request {
+//   user: IUserDocument
+// }
+
+export class SanitizedUser {
+  id: string;
+  createdAt: number;
+  role: string;
+  status: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  fullName: string;
+  avatar: string;
+  bio: string;
+  profileId: string;
+  updatedAt: number;
+
+  constructor(user: IUserDocument) {
+    this.id = user._id;
+    this.createdAt = +user.createdAt;
+    this.updatedAt = +user.updatedAt;
+    this.firstName = user.firstName;
+    this.lastName = user.lastName;
+    this.fullName = user.fullName;
+    this.email = user.email;
+    this.role = user.role;
+    this.avatar = user.avatar;
+    this.status = user.status;
+    this.profileId = user.profileId;
+    this.bio = user.bio;
+  }
 }

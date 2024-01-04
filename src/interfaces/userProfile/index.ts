@@ -1,8 +1,7 @@
-import { IShared } from 'interfaces';
-import { Schema } from 'mongoose';
+import { IShared } from '@/interfaces';
 
 interface IEducationDocument extends IShared {
-  user: Schema.Types.ObjectId;
+  user: string;
   school: string;
   degree: string;
   fieldOfStudy: string;
@@ -11,7 +10,7 @@ interface IEducationDocument extends IShared {
 }
 
 interface IExperienceDocument extends IShared {
-  user: Schema.Types.ObjectId;
+  user: string;
   company: string;
   position: string;
   employmentPeriod: {
@@ -22,7 +21,7 @@ interface IExperienceDocument extends IShared {
 }
 
 interface ICertificationDocument extends IShared {
-  user: Schema.Types.ObjectId;
+  user: string;
   certificationBody: string;
   certificationName: string;
   certificationDate: Date;
@@ -32,7 +31,7 @@ interface ICertificationDocument extends IShared {
 interface IInterestDocument extends IShared {
   name: string;
   type: string;
-  relatedCareerPaths: Array<Schema.Types.ObjectId>;
+  relatedCareerPaths: Array<string>;
 }
 
 interface ISkillDocument extends IShared {
@@ -46,21 +45,47 @@ interface IWorkEnvironmentDocument extends IShared {
 interface ICareerGoalDocument extends IShared {
   name: string;
 }
-
-interface IUserCareerPathDocument extends IShared {
-  user: Schema.Types.ObjectId;
-  industry: string;
-  paths: Array<Schema.Types.ObjectId>;
-  jobs: Array<Schema.Types.ObjectId>;
+interface ISuitabilityScoreDocument extends IShared {
+  profileId: string;
+  chosenIndustriesAndScores: Array<TSuitabilityScoreType>;
+  industriesAndScores: Array<TSuitabilityScoreType>;
 }
 
+interface IUserCareerPathDocument extends IShared {
+  profileId: string;
+  paths: Array<string>;
+  jobs: Array<string>;
+}
+
+interface IUserQuestionResponseDocument extends IShared {
+  profileId: string;
+  selectedIndustries: Array<string>;
+  selectedInterests: Array<string>;
+  responses: Array<TResponseType>;
+}
+export type TResponseType = {
+  questionId: string;
+  questionNumber: number;
+  questionVersion: number;
+  responseId: string;
+  responseToQuestion: string;
+};
+
+export type TSuitabilityScoreType = {
+  industryName: string;
+  industryId: string;
+  score: number;
+};
+
 export {
-  IInterestDocument,
+  ICareerGoalDocument,
   ICertificationDocument,
   IEducationDocument,
   IExperienceDocument,
-  IWorkEnvironmentDocument,
+  IInterestDocument,
   ISkillDocument,
-  ICareerGoalDocument,
+  ISuitabilityScoreDocument,
   IUserCareerPathDocument,
+  IUserQuestionResponseDocument,
+  IWorkEnvironmentDocument,
 };

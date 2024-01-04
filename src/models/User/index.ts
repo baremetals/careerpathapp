@@ -1,8 +1,8 @@
+import * as argon2 from 'argon2';
+import { IUserDocument } from '@/interfaces/user';
 import { Schema, model } from 'mongoose';
 import validator from 'validator';
-import * as argon2 from 'argon2';
-import { IUserDocument } from 'interfaces/user';
-import { defaultAvatar } from '../../lib/constants';
+import { defaultAvatar } from '@/lib/constants';
 
 const userSchema = new Schema<IUserDocument>({
   email: {
@@ -16,18 +16,7 @@ const userSchema = new Schema<IUserDocument>({
     type: String,
     required: [true, 'Please provide a password'],
     minlength: 8,
-    select: false,
-  },
-  confirmPassword: {
-    type: String,
-    required: [true, 'Please confirm your password'],
-    validate: {
-      // This only works on CREATE and SAVE!!!
-      validator: function (el: string): boolean {
-        return el === (this as any).password;
-      },
-      message: 'Passwords are not the same!',
-    },
+    select: true,
   },
 
   firstName: {
@@ -44,19 +33,17 @@ const userSchema = new Schema<IUserDocument>({
   },
   bio: { type: String, required: false },
   avatar: { type: String, default: defaultAvatar },
-  isDisabled: { type: Boolean, default: false, select: false },
-  isActive: { type: Boolean, default: false },
-  profile: { type: Schema.Types.ObjectId, ref: 'UserProfile' },
+  status: { type: String, default: 'active', select: true },
+  // profileId: { type: Schema.Types.ObjectId, ref: 'UserProfile', unique: true },
+  profileId: { type: String, ref: 'UserProfile', unique: true },
 
   createdAt: {
     type: Date,
     default: Date.now(),
-    select: false,
   },
-  lastModifiedAt: {
+  updatedAt: {
     type: Date,
     default: Date.now(),
-    select: false,
   },
   createdBy: { type: String, default: 'admin', select: false },
   lastModifiedBy: { type: String, default: 'admin', select: false },
@@ -66,7 +53,7 @@ const userSchema = new Schema<IUserDocument>({
 
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
-  this.password = await argon2.hash(this.password as string);
+  this.password = await argon2.hash(this.password);
 
   // Delete passwordConfirm field
   this.confirmPassword = undefined;
@@ -97,7 +84,6 @@ userSchema.methods.correctPassword = async function (
         reject(error);
       });
   });
-  // return argon2.verify(userPassword, candidatePassword);
 };
 
 const UserModel = model<IUserDocument>('User', userSchema);

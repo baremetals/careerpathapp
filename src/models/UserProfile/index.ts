@@ -1,27 +1,43 @@
 import { Schema, model } from 'mongoose';
-import { IUserProfileDocument } from '../../interfaces/user';
+import { IUserProfileDocument } from '@/interfaces/user';
 
 const userProfileSchema = new Schema<IUserProfileDocument>({
-  user: { type: Schema.Types.ObjectId, ref: 'User' },
-  skills: [{ type: Schema.Types.ObjectId, ref: 'Skill' }],
-  education: [{ type: Schema.Types.ObjectId, ref: 'Education' }],
-  experience: [{ type: Schema.Types.ObjectId, ref: 'Experience' }],
-  careerGoals: [{ type: Schema.Types.ObjectId, ref: 'CareerGoal' }],
-  certifications: [{ type: Schema.Types.ObjectId, ref: 'Certification' }],
-  preferredWorkEnvironments:
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'PreferredWorkEnvironment',
-    } || undefined,
-  selectedIndustries: { type: [Schema.Types.ObjectId], ref: 'Industry' },
-  interests: { type: [Schema.Types.ObjectId], ref: 'Interest' },
-  careerPaths: { type: [Schema.Types.ObjectId], ref: 'UserCareerPath' },
+  userId: {
+    type: String,
+    ref: 'User',
+    required: true,
+    unique: true,
+  },
+  skills: [{ type: String, ref: 'Skill', required: false }],
+  education: [{ type: String, ref: 'Education', required: false }],
+  experience: [{ type: String, ref: 'Experience', required: false }],
+  careerGoals: [{ type: String, ref: 'CareerGoal', required: false }],
+  certifications: [{ type: String, ref: 'Certification', required: false }],
+  preferredWorkEnvironment: {
+    type: String,
+    required: false,
+  },
+  careerPaths: {
+    type: [String],
+    ref: 'UserCareerPath',
+    required: false,
+  },
+  suitabilityScoresId: {
+    type: String,
+    ref: 'SuitabilityScores',
+    required: false,
+  },
+  questionsResponsesId: {
+    type: String,
+    ref: 'QuestionResponses',
+    required: false,
+  },
   createdAt: {
     type: Date,
     default: Date.now(),
     select: false,
   },
-  lastModifiedAt: {
+  updatedAt: {
     type: Date,
     default: Date.now(),
     select: false,

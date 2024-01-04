@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { ICertificationDocument } from '../../interfaces/userProfile';
+import { ICertificationDocument } from '@/interfaces/userProfile';
 
 const certificationSchema = new Schema<ICertificationDocument>({
   certificationBody: { type: String, required: true },
@@ -11,7 +11,7 @@ const certificationSchema = new Schema<ICertificationDocument>({
     default: Date.now(),
     select: false,
   },
-  lastModifiedAt: {
+  updatedAt: {
     type: Date,
     default: Date.now(),
     select: false,

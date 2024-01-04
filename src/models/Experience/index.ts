@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { IExperienceDocument } from '../../interfaces/userProfile';
+import { IExperienceDocument } from '@/interfaces/userProfile';
 
 const experienceSchema = new Schema<IExperienceDocument>({
   company: { type: String, required: true },
@@ -14,7 +14,7 @@ const experienceSchema = new Schema<IExperienceDocument>({
     default: Date.now(),
     select: false,
   },
-  lastModifiedAt: {
+  updatedAt: {
     type: Date,
     default: Date.now(),
     select: false,
