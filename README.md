@@ -43,3 +43,6 @@ $ yarn test
 
 ## License
 
+# Deploy to aws azure app service
+az login
+az webapp create
