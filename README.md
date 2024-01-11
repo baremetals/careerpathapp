@@ -46,3 +46,6 @@ $ yarn test
 # Deploy to aws azure app service
 az login
 az webapp create
+az webapp up --name careerpathapp --resource-group <resource-group> --plan <app-service-plan> --runtime "DOTNETCORE|3.1" --location <region> --html
+
+az webapp up --name discareerapi --resource-group discareer --plan CareerpathApp --runtime "NODE|18-lts" --location uksouth
