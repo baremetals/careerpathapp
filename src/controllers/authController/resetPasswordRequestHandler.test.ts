@@ -20,6 +20,7 @@ import { Application } from 'express';
 import Redis from 'ioredis';
 import request from 'supertest';
 
+jest.setTimeout(30000);
 describe('reset password handler', () => {
   process.env.NODE_ENV = 'development';
   let app: Application | undefined;

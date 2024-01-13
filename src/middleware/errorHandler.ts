@@ -1,47 +1,49 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import AppError from '../utils/appError';
 import { AppErrorDetails } from '../utils/types';
 
-// const handleCastErrorDB = (err: any) => {
-//   const message = `Invalid ${err.path}: ${err.value}.`;
-//   return new AppError(message, 400);
-// };
+const handleCastErrorDB = (err: any) => {
+  const message = `Invalid ${err.path}: ${err.value}.`;
+  return new AppError(message, 400);
+};
 
-// const handleDuplicateFieldsDB = (err: any) => {
-//   const value = err.errmsg.match(/(["'])(\\?.)*?\1/)[0];
+const handleDuplicateFieldsDB = (err: any) => {
+  const value = err.errmsg.match(/(["'])(\\?.)*?\1/)[0];
 
-//   const message = `Duplicate field value: ${value}. Please use another value!`;
-//   return new AppError(message, 400);
-// };
+  const message = `Duplicate field value: ${value}. Please use another value!`;
+  return new AppError(message, 400);
+};
 
-// const handleValidationErrorDB = (err: any) => {
-//   const errors = Object.values(err.errors).map((el: any) => el.message);
+const handleIncomingErrorStatus = (error: any) => {
+  let errorStatusCode: number;
+  if (error.statusCode) {
+    errorStatusCode = error.statusCode;
+  } else if (error[0].statusCode) {
+    errorStatusCode = error[0].statusCode;
+  } else if (error[0].status || 401) {
+    errorStatusCode = error[0].statusCode;
+  } else {
+    errorStatusCode = 401;
+  }
+  return errorStatusCode;
+};
 
-//   const message = `Invalid input data. ${errors.join('. ')}`;
-//   return new AppError(message, 400);
-// };
-
-const sendErrorDev = (error: any, res: Response) => {
-  // console.error('ERROR 💥', error);
-  const errorStatusCode = error.statusCode
-    ? error.statusCode
-    : error[0].statusCode
-    ? error[0].statusCode
-    : error[0].status || 401
-    ? error[0].statusCode
-    : 401;
+const handleIncomingErrors = (error: any) => {
   let errors: AppErrorDetails[] | undefined;
   if (error[0] instanceof AppError) {
-    // console.error('I AM, RUNNING💥');
     errors = error.map((appError: AppError) => {
       const errorToReturn: AppErrorDetails = { message: appError.message };
-      // console.error('ERROR 💥', errorToReturn);
       if (appError.field) errorToReturn.field = appError.field;
-      // errorToReturn;
       return errorToReturn;
     });
   }
-  let jsonToSend;
+  return errors;
+};
+
+const sendErrorDev = (error: any, res: Response) => {
+  const errorStatusCode: number = handleIncomingErrorStatus(error);
+  const errors = handleIncomingErrors(error);
+  let jsonToSend: object;
 
   if (errors) jsonToSend = errors;
   else {
@@ -52,18 +54,27 @@ const sendErrorDev = (error: any, res: Response) => {
       stack: error.stack,
     };
   }
-  res.status(errorStatusCode).json(jsonToSend);
+  res.status(errorStatusCode || 500).json(jsonToSend);
 };
 
 const sendErrorProd = (err: any, _req: Request, res: Response) => {
+  let errorStatusCode = 500;
   if (err.isOperational) {
-    return res.status(err.statusCode).json({
-      status: err.status,
-      message: err.message,
-    });
+    errorStatusCode = handleIncomingErrorStatus(err);
+    const errors = handleIncomingErrors(err);
+    let jsonToSend: object;
+
+    if (errors) jsonToSend = errors;
+    else {
+      jsonToSend = {
+        status: err.status,
+        message: err.message,
+      };
+    }
+    return res.status(errorStatusCode).json(jsonToSend);
   }
   console.error('ERROR============> 💥', err);
-  return res.status(500).json({
+  return res.status(errorStatusCode).json({
     status: 'error',
     message: 'Something is wrong!',
   });
@@ -73,23 +84,15 @@ export default function globalErrorHandler(
   err: any,
   req: Request,
   res: Response,
-  _next: NextFunction,
 ) {
   if (process.env.NODE_ENV === 'development') {
-    // const error = { ...err };
-    // error.message = err.message;
     sendErrorDev(err, res);
   } else if (process.env.NODE_ENV === 'production') {
-    const error = { ...err };
+    let error = { ...err };
     error.message = err.message;
 
-    //   if (error.name === 'CastError') error = handleCastErrorDB(error);
-    //   if (error.code === 11000) error = handleDuplicateFieldsDB(error);
-    //   if (error.name === 'ValidationError')
-    // error = handleValidationErrorDB(error);
-    //   if (error.name === 'JsonWebTokenError') error = handleJWTError();
-    //   if (error.name === 'TokenExpiredError') error = handleJWTExpiredError();
-
+    if (error.name === 'CastError') error = handleCastErrorDB(error);
+    if (error.code === 11000) error = handleDuplicateFieldsDB(error);
     sendErrorProd(error, req, res);
   }
 }

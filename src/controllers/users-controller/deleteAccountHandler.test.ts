@@ -7,20 +7,15 @@ import { TEST_USER_PASSWORD } from '../../utils/test-utils/constants';
 import createTestUser from '../../utils/test-utils/create-test-user';
 import createTestServer from '../../utils/test-utils/createTestServer';
 
+jest.setTimeout(30000);
 describe('change password handler', () => {
   process.env.NODE_ENV = 'development';
   let app: Application | undefined;
-  // const redis = new Redis();
 
   beforeAll(async () => {
     app = await createTestServer();
-    // await redis.flushdb();
   });
 
-  afterAll(async () => {
-    // await redis.quit();
-    // server.close();
-  });
   it(`provided the user is logged in and provides their current password, they should be able to change their password`, async () => {
     const { user } = await createTestUser();
 

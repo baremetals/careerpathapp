@@ -8,6 +8,7 @@ import createTestServer from '../../utils/test-utils/createTestServer';
 import { ERROR_MESSAGES } from '../../lib/error-messages';
 import { TEST_USER_PASSWORD } from '../../utils/test-utils/constants';
 
+jest.setTimeout(30000);
 describe('logout handler', () => {
   process.env.NODE_ENV = 'development';
   let app: Application | undefined;

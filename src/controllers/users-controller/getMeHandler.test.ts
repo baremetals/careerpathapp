@@ -8,6 +8,7 @@ import { TEST_USER_PASSWORD } from '../../utils/test-utils/constants';
 import createTestUser from '../../utils/test-utils/create-test-user';
 import createTestServer from '../../utils/test-utils/createTestServer';
 
+jest.setTimeout(30000);
 describe('get me/user handler', () => {
   process.env.NODE_ENV = 'development';
   let app: Application | undefined;

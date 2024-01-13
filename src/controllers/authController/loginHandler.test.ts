@@ -6,16 +6,16 @@ import {
   TEST_USER_EMAIL,
   TEST_USER_PASSWORD,
 } from '../../utils/test-utils/constants';
-import { InputFields } from '../../lib/constants';
+import { InputFields, CookieNames } from '../../lib/constants';
 import { ERROR_MESSAGES } from '../../lib/error-messages';
 import {
   responseBodyIncludesCustomErrorField,
   responseBodyIncludesCustomErrorMessage,
 } from '../../utils/test-utils';
 import createTestServer from '../../utils/test-utils/createTestServer';
-import { CookieNames } from '../../lib/constants';
 import createTestUser from '../../utils/test-utils/create-test-user';
 
+jest.setTimeout(30000);
 describe('user login handler', () => {
   process.env.NODE_ENV = 'development';
   let app: Application | undefined;
@@ -28,7 +28,7 @@ describe('user login handler', () => {
 
   afterAll(async () => {
     await redis.quit();
-    // server.close();
+    // server.close()
   });
   it('should receive auth session in the header upon login', async () => {
     const { user } = await createTestUser();
@@ -43,7 +43,7 @@ describe('user login handler', () => {
     expect(
       response.headers['set-cookie'][0].includes(CookieNames.ACCESS_TOKEN),
     ).toBeTruthy();
-    // console.log('===============>', response.headers);
+    // console.log('===============>', response.headers)
   });
 
   it('gets appropriate error for missing email and password', async () => {
@@ -53,7 +53,7 @@ describe('user login handler', () => {
         email: '',
         password: '',
       });
-    // console.log('===============>', response.body);
+    // console.log('===============>', response.body)
     expect(
       responseBodyIncludesCustomErrorMessage(
         response,

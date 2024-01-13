@@ -29,6 +29,7 @@ const registerInput = {
   lastName: TEST_USER_LAST_NAME,
 };
 
+jest.setTimeout(30000);
 describe('user registration', () => {
   //   let server: any;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

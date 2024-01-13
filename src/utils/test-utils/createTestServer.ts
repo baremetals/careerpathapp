@@ -1,22 +1,21 @@
 import express, { NextFunction, Request, Response } from 'express';
 import session from 'express-session';
 import mongoose from 'mongoose';
-// import Redis from 'ioredis';
 import RedisStore from 'connect-redis';
 import cors from 'cors';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import redis from 'redis-mock';
 
 import path from 'path';
-import globalErrorHandler from '../../middleware/errorHandler';
-import adminRouter from '../../routes/admin';
-import authRouter from '../../routes/auth-route';
-import careerPathRouter from '../../routes/careers-route';
-import uiRouter from '../../routes/ui';
-import userRouter from '../../routes/users-route';
-import AppError from '../../utils/appError';
-// import dotenv from 'dotenv';
-// dotenv.config();
+import globalErrorHandler from '@/middleware/errorHandler';
+import adminRouter from '@/routes/admin';
+import authRouter from '@/routes/auth-route';
+import careerPathRouter from '@/routes/careers-route';
+import uiRouter from '@/routes/ui';
+import userRouter from '@/routes/users-route';
+import AppError from '@/utils/appError';
+// import dotenv from 'dotenv'
+// dotenv.config()
 
 // This is required to extend the  express-session type.
 declare module 'express-session' {
@@ -27,7 +26,6 @@ declare module 'express-session' {
   }
 }
 
-// const app = express();
 async function createTestServer() {
   const app = express();
 
@@ -44,7 +42,6 @@ async function createTestServer() {
     password: process.env.REDIS_PASSWORD,
   });
 
-  // const RedisStore = connectRedis(session);
   const redisStore = new RedisStore({
     client: client,
   });
@@ -64,7 +61,7 @@ async function createTestServer() {
       store: redisStore,
       name: process.env.COOKIE_NAME,
       sameSite: 'Strict',
-      secret: process.env.SESSION_SECRET,
+      secret: 'my-aca-secretIsAFuckingSecret17895',
       resave: false,
       saveUninitialized: false,
       cookie: {
@@ -79,10 +76,8 @@ async function createTestServer() {
     if (req.headers['x-test-user-id']) {
       req.session.userId = req.headers['x-test-user-id'] as string;
     }
-    // req.session.userId = 'Test Nigger'; // Mocked session object
     next();
   });
-  // console.log(req.seesion.userId);
   app.use('/', uiRouter);
   app.use('/api/auth', authRouter);
   app.use('/api/users', userRouter);
