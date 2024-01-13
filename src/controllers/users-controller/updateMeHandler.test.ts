@@ -1,10 +1,10 @@
 import { Application } from 'express';
-// import Redis from 'ioredis';
+// import Redis from 'ioredis'
 import request from 'supertest';
 import { AuthRoutePaths, UsersRoutePaths } from '../../enums/APIRoutPaths';
 import { CookieNames } from '../../lib/constants';
 import { ERROR_MESSAGES } from '../../lib/error-messages';
-// import { EmailService } from '../../services/EmailService';
+// import { EmailService } from '../../services/EmailService'
 import { TEST_USER_PASSWORD } from '../../utils/test-utils/constants';
 import createTestUser from '../../utils/test-utils/create-test-user';
 import createTestServer from '../../utils/test-utils/createTestServer';
@@ -12,16 +12,16 @@ import createTestServer from '../../utils/test-utils/createTestServer';
 describe('get update handler', () => {
   process.env.NODE_ENV = 'development';
   let app: Application | undefined;
-  // const redis = new Redis();
+  // const redis = new Redis()
 
   beforeAll(async () => {
     app = await createTestServer();
-    // await redis.flushdb();
+    // await redis.flushdb()
   });
 
   afterAll(async () => {
-    // await redis.quit();
-    // server.close();
+    // await redis.quit()
+    // server.close()
   });
   it(`a logged in user should be able to fetch their details`, async () => {
     const { user } = await createTestUser();

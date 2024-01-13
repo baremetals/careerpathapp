@@ -2,12 +2,12 @@ import { HTTP_STATUS_CODES } from '@/lib/status-codes';
 import { UserRepo } from '@/repository/UserRepo';
 import * as argon2 from 'argon2';
 import { NextFunction, Request, Response } from 'express';
-import { IUserDocument, SanitizedUser } from '../../interfaces/user';
-import { UserStatuses } from '../../lib/auth-validation-config';
-import { ERROR_MESSAGES } from '../../lib/error-messages';
-import { LoginUserInput } from '../../user-input-validation-schema/login-schema';
-import AppError from '../../utils/appError';
-import catchAsync from '../../utils/catchAsync';
+import { IUserDocument, SanitizedUser } from '@/interfaces/user';
+import { UserStatuses } from '@/lib/auth-validation-config';
+import { ERROR_MESSAGES } from '@/lib/error-messages';
+import { LoginUserInput } from '@/user-input-validation-schema/login-schema';
+import AppError from '@/utils/appError';
+import catchAsync from '@/utils/catchAsync';
 
 export default catchAsync(async function loginHandler(
   req: Request<object, object, LoginUserInput>,
@@ -39,7 +39,7 @@ export default catchAsync(async function loginHandler(
     );
 
   if (!(await argon2.verify(user.password, password))) {
-    // console.log('user', user);
+    // console.log('user', user)
     return next(
       new AppError(
         ERROR_MESSAGES.AUTH.INVALID_CREDENTIALS,

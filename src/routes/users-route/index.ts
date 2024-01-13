@@ -1,17 +1,15 @@
-import { Router } from 'express';
-import logoutHandler from '../../controllers/authController/logoutHandler';
-import * as handler from '../../controllers/users-controller/';
-import changePasswordHandler from '../../controllers/users-controller/changePasswordHandler';
-import deleteAccountHandler from '../../controllers/users-controller/deleteAccountHandler';
-import getMeHandler from '../../controllers/users-controller/getMeHandler';
-import getUserHandler from '../../controllers/users-controller/getUserHandler';
-import updateAvatarHandler from '../../controllers/users-controller/updateAvatarHandler';
-import { UsersRoutePaths } from '../../enums/APIRoutPaths';
-import { multerUpload } from '../../lib/fileUpload';
-import authMiddleware from '../../middleware/authMiddleware';
-import { validate } from '../../middleware/validate';
-import { changePasswordSchema } from '../../user-input-validation-schema/change-password-schema';
+import logoutHandler from '@/controllers/authController/logoutHandler';
+import * as handler from '@/controllers/users-controller/';
+import changePasswordHandler from '@/controllers/users-controller/changePasswordHandler';
+import deleteAccountHandler from '@/controllers/users-controller/deleteAccountHandler';
+import getMeHandler from '@/controllers/users-controller/getMeHandler';
+import getUserHandler from '@/controllers/users-controller/getUserHandler';
 import getUserProfileHandler from '@/controllers/users-controller/profile-controller/getUserProfileHandler';
+import { UsersRoutePaths } from '@/enums/APIRoutPaths';
+import authMiddleware from '@/middleware/authMiddleware';
+import { validate } from '@/middleware/validate';
+import { changePasswordSchema } from '@/user-input-validation-schema/change-password-schema';
+import { Router } from 'express';
 
 /**
  * @swagger
@@ -69,11 +67,6 @@ userRouter
   .put(deleteAccountHandler, logoutHandler)
   .patch(getMeHandler, handler.updateMeHandler);
 
-userRouter.post(
-  UsersRoutePaths.UPLOAD_AVATAR,
-  multerUpload.single('avatar'),
-  updateAvatarHandler,
-);
 userRouter.put(
   UsersRoutePaths.CHANGE_PASSWORD,
   validate(changePasswordSchema),
