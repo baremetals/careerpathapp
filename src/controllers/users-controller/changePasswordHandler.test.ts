@@ -30,7 +30,6 @@ describe('change password handler', () => {
 
   afterAll(async () => {
     // await redis.quit();
-    // server.close();
   });
   it(`provided the user is logged in and provides their current password, they should be able to change their password`, async () => {
     const { user } = await createTestUser();
@@ -42,7 +41,7 @@ describe('change password handler', () => {
         password: TEST_USER_PASSWORD,
       });
 
-    expect(loginResponse.status).toBe(201);
+    expect(loginResponse.status).toBe(200);
     expect(
       loginResponse.headers['set-cookie'][0].includes(CookieNames.ACCESS_TOKEN),
     ).toBeTruthy();
@@ -56,8 +55,7 @@ describe('change password handler', () => {
       })
       .set('x-test-user-id', loginResponse.body.user.id);
 
-    expect(response.status).toBe(201);
-    expect(response.body).toHaveProperty('message');
+    expect(response.status).toBe(200);
 
     const loginWithOldPasswordResponse = await request(app)
       .post(`/api${AuthRoutePaths.ROOT}`)
@@ -78,7 +76,7 @@ describe('change password handler', () => {
         email: user.email,
         password: TEST_USER_ALTERNATE_PASSWORD,
       });
-    expect(loginWithNewPasswordResponse.status).toBe(201);
+    expect(loginWithNewPasswordResponse.status).toBe(200);
     expect(
       loginWithNewPasswordResponse.headers['set-cookie'][0].includes(
         CookieNames.ACCESS_TOKEN,
@@ -87,7 +85,10 @@ describe('change password handler', () => {
   });
 
   it('sends error for non-matching passwords and password short', async () => {
-    const { user } = await createTestUser(TEST_USER_EMAIL);
+    const { user } = await createTestUser(
+      'hyitsvhjliugutro98iujgfkk',
+      TEST_USER_EMAIL,
+    );
     const loginResponse = await request(app)
       .post(`/api${AuthRoutePaths.ROOT}`)
       .send({

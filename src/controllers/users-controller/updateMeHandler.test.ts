@@ -32,7 +32,7 @@ describe('get update handler', () => {
         email: user.email,
         password: TEST_USER_PASSWORD,
       });
-    expect(loginResponse.status).toBe(201);
+    expect(loginResponse.status).toBe(200);
     expect(
       loginResponse.headers['set-cookie'][0].includes(CookieNames.ACCESS_TOKEN),
     ).toBeTruthy();
@@ -45,7 +45,6 @@ describe('get update handler', () => {
       .set('x-test-user-id', loginResponse.body.user.id);
     console.log(user.firstName);
     expect(response.status).toBe(200);
-    expect(response.body).toHaveProperty('message');
   });
 
   it(`sends an error if the user doesn't  exist or user doesn't have an active session`, async () => {

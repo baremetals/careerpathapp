@@ -39,7 +39,7 @@ const authMiddleWare = catchAsync(
       }
       next();
     } catch (err) {
-      console.log(err);
+      console.log('I AM PRINTING FROM HERE==========>', err);
       return next(
         new AppError(
           ERROR_MESSAGES.AUTH.NO_USER_EXISTS,
