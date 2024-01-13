@@ -22,6 +22,16 @@ export default catchAsync(async function resetPasswordRequestHandler(
   const { token } = req.params;
   const { email } = req.decoded;
   const key = RESET_PASSWORD + token;
+  const resetPasswordSession = await sessionService.getSession(key);
+  console.log('resetPasswordSession', resetPasswordSession);
+
+  if (email !== resetPasswordSession)
+    return next(
+      new AppError(
+        ERROR_MESSAGES.AUTH.PASSWORD_RESET_EMAIL_DOES_NOT_MATCH_TOKEN,
+        HTTP_STATUS_CODES.UNAUTHORIZED,
+      ),
+    );
 
   const user: IUserDocument = (await userRepo.findOne({
     email,
@@ -42,14 +52,6 @@ export default catchAsync(async function resetPasswordRequestHandler(
         HTTP_STATUS_CODES.UNAUTHORIZED,
       ),
     ]);
-
-  if (email !== user.email)
-    return next(
-      new AppError(
-        ERROR_MESSAGES.AUTH.PASSWORD_RESET_EMAIL_DOES_NOT_MATCH_TOKEN,
-        HTTP_STATUS_CODES.UNAUTHORIZED,
-      ),
-    );
 
   if (await argon2.verify(user.password, req.body.password)) {
     return next(

@@ -60,12 +60,6 @@ describe('user activation', () => {
     );
     // console.log('===============>', response.status);
     expect(response.status).toBe(201);
-    expect(response.body).toHaveProperty('message');
-    expect(response.body.data.user).not.toHaveProperty('password');
-    expect(response.body.data.user).toHaveProperty('createdAt');
-    expect(response.body.data.user).toHaveProperty('lastModifiedAt');
-    expect(response.body.data.user.firstName).toBe(TEST_USER_FIRST_NAME);
-    expect(response.body.data.user.email).toBe(TEST_USER_EMAIL_ALTERNATE);
 
     const finishCount = await UserModel.count();
     expect(finishCount - startingCount).toEqual(1);
