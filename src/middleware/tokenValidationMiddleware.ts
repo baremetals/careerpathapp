@@ -42,7 +42,7 @@ const tokenValidationMiddleware = (
     );
   }
   req.decoded = decoded;
-
+  console.log('decoded', decoded);
   next();
 };
 export default tokenValidationMiddleware;
