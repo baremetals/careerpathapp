@@ -39,7 +39,7 @@ export default catchAsync(async function loginHandler(
     );
 
   if (!(await argon2.verify(user.password, password))) {
-    console.log('user', user);
+    // console.log('user', user);
     return next(
       new AppError(
         ERROR_MESSAGES.AUTH.INVALID_CREDENTIALS,

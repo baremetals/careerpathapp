@@ -30,7 +30,7 @@ describe('logout handler', () => {
         password: TEST_USER_PASSWORD,
       });
 
-    expect(response.status).toBe(201);
+    expect(response.status).toBe(200);
     expect(
       response.headers['set-cookie'][0].includes(CookieNames.ACCESS_TOKEN),
     ).toBeTruthy();

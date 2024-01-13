@@ -20,7 +20,7 @@ export default catchAsync(async function registerNewAccountHandler(
 ) {
   const userRepo = new UserRepo();
   const sessionService = new SessionService();
-  const { firstName, lastName, email, password } = req.body;
+  const { firstName, lastName, password, email } = req.body;
 
   // console.log('email=====>', email)
 

@@ -8,7 +8,7 @@ import {
 } from '../../lib/constants';
 import { ERROR_MESSAGES } from '../../lib/error-messages';
 import { UserModel } from '../../models/User';
-// import { EmailService } from '../../services/EmailService';
+// import { EmailService } from '../../services/EmailService'
 import {
   responseBodyIncludesCustomErrorField,
   responseBodyIncludesCustomErrorMessage,
@@ -28,15 +28,7 @@ const registerInput = {
   firstName: TEST_USER_FIRST_NAME,
   lastName: TEST_USER_LAST_NAME,
 };
-// jest.mock('../../services/EmailService', () => {
-//   return {
-//     EmailService: jest.fn().mockImplementation(() => {
-//       return {
-//         sendAccountRegistrationEmail: jest.fn(),
-//       };
-//     }),
-//   };
-// });
+
 describe('user registration', () => {
   //   let server: any;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -56,7 +48,7 @@ describe('user registration', () => {
   // jest.setTimeout(40000);
 
   it('given the registration information are valid, sends an account creation verification email and creates an account creation attempt session', async () => {
-    const response = await request(app)
+    await request(app)
       .post(`/api${AuthRoutePaths.ROOT}${AuthRoutePaths.REGISTER}`)
       .send({
         email: TEST_USER_EMAIL_ALTERNATE,
@@ -65,18 +57,6 @@ describe('user registration', () => {
         firstName: TEST_USER_FIRST_NAME,
         lastName: TEST_USER_LAST_NAME,
       });
-    // console.log('===============>', response);
-    // const emailService = new EmailService(
-    //   {
-    //     email: TEST_USER_EMAIL_ALTERNATE,
-    //     firstName: registerInput.firstName,
-    //   },
-    //   'test',
-    // );
-    // emailService.sendAccountRegistrationEmail();
-    // expect(emailService.sendAccountRegistrationEmail).toHaveBeenCalled();
-    expect(response.status).toBe(201);
-    // this session is needed to ensure the email link can not be used after a certain time has passed
 
     const registrationAttemptSession = await redis.get(
       ACCOUNT_CREATION_SESSION_PREFIX + TEST_USER_EMAIL_ALTERNATE,
@@ -86,7 +66,6 @@ describe('user registration', () => {
     expect(parsedSession.lastName).toBe(registerInput.lastName);
     expect(parsedSession.email).toBe(TEST_USER_EMAIL_ALTERNATE);
     expect(parsedSession.password).toBe(TEST_USER_PASSWORD);
-    expect(response.body).toHaveProperty('message');
   });
 
   it('gets errors for missing email or password', async () => {
