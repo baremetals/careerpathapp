@@ -9,7 +9,7 @@ trigger:
 variables:
 
   # Azure Resource Manager connection created during pipeline creation
-  azureSubscription: 'd9d9b261-7277-4d16-8ac7-e220a53254e6'
+  azureSubscription: $(AZURE_SUBSCRIPTION)
 
   # Web app name
   webAppName: 'discareerapi'
@@ -40,6 +40,28 @@ stages:
         npm run build --if-present
         npm run test --if-present
       displayName: 'npm install, build and test'
+      env:
+        AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+        AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+        AWS_BUCKET_NAME: $(AWS_BUCKET_NAME)
+        AWS_REGION: $(AWS_REGION)
+        ACCOUNT_ACTIVATION_SESSION_EXPIRATION: $(ACCOUNT_ACTIVATION_SESSION_EXPIRATION)
+        PASSWORD_RESET_TOKEN_EXPIRES_IN: $(PASSWORD_RESET_TOKEN_EXPIRES_IN)
+        ACCOUNT_ACTIVATION_QUEUE_URL: $(ACCOUNT_ACTIVATION_QUEUE_URL)
+        WELCOME_REGISTRATION_QUEUE_URL: $(WELCOME_REGISTRATION_QUEUE_URL)
+        RESET_PASSWORD_QUEUE_URL: $(RESET_PASSWORD_QUEUE_URL)
+        PASSWORD_CHANGED_QUEUE_URL: $(PASSWORD_CHANGED_QUEUE_URL)
+        ACCOUNT_ACTIVATION_TOKEN_PUBLIC_KEY: $(ACCOUNT_ACTIVATION_TOKEN_PUBLIC_KEY)
+        ACCOUNT_ACTIVATION_TOKEN_PRIVATE_KEY: $(ACCOUNT_ACTIVATION_TOKEN_PRIVATE_KEY)
+        CAREER_APP_MODEL_SERVER_URL: $(CAREER_APP_MODEL_SERVER_URL)
+        REDIS_URL: $(REDIS_URL)
+        REDIS_HOST: $(REDIS_HOST)
+        REDIS_PORT: $(REDIS_PORT)
+        REDIS_USERNAME: $(REDIS_USERNAME)
+        REDIS_PASSWORD: $(REDIS_PASSWORD)
+        SESSION_SECRET: $(SESSION_SECRET)
+        CLIENT_URL: $(CLIENT_URL)
+        EMAIL_FROM: $(EMAIL_FROM)
 
     - task: ArchiveFiles@2
       displayName: 'Archive files'
