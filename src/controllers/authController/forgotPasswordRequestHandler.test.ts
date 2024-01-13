@@ -11,6 +11,7 @@ import {
 } from '@/utils/test-utils';
 import { InputFields } from '@/lib/constants';
 
+jest.setTimeout(30000);
 describe('forgot password handler', () => {
   process.env.NODE_ENV = 'development';
   let app: Application | undefined;

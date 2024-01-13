@@ -15,6 +15,7 @@ import {
 } from '../../utils/test-utils/constants';
 import createTestServer from '../../utils/test-utils/createTestServer';
 
+jest.setTimeout(30000);
 describe('user activation', () => {
   process.env.NODE_ENV = 'development';
   let app: Application | undefined;

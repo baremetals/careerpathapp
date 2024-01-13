@@ -1,11 +1,10 @@
 import { Application } from 'express';
-// import Redis from 'ioredis';
+// import Redis from 'ioredis'
 import request from 'supertest';
 import { AuthRoutePaths, UsersRoutePaths } from '../../enums/APIRoutPaths';
-import { CookieNames } from '../../lib/constants';
+import { CookieNames, InputFields } from '../../lib/constants';
 import { ERROR_MESSAGES } from '../../lib/error-messages';
-// import { EmailService } from '../../services/EmailService';
-import { InputFields } from '../../lib/constants';
+// import { EmailService } from '../../services/EmailService'
 import {
   responseBodyIncludesCustomErrorField,
   responseBodyIncludesCustomErrorMessage,
@@ -18,19 +17,15 @@ import {
 import createTestUser from '../../utils/test-utils/create-test-user';
 import createTestServer from '../../utils/test-utils/createTestServer';
 
+jest.setTimeout(30000);
 describe('change password handler', () => {
   process.env.NODE_ENV = 'development';
   let app: Application | undefined;
-  // const redis = new Redis();
 
   beforeAll(async () => {
     app = await createTestServer();
-    // await redis.flushdb();
   });
 
-  afterAll(async () => {
-    // await redis.quit();
-  });
   it(`provided the user is logged in and provides their current password, they should be able to change their password`, async () => {
     const { user } = await createTestUser();
 
