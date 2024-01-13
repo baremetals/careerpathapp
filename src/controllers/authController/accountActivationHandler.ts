@@ -25,7 +25,6 @@ export default catchAsync(async function accountActivationHandler(
 
   const key = ACCOUNT_CREATION_SESSION_PREFIX + email;
   const accountActivationSession = await sessionService.getSession(key);
-  console.log('accountActivationSession', accountActivationSession);
   if (!accountActivationSession)
     return next(
       new AppError(
@@ -42,13 +41,11 @@ export default catchAsync(async function accountActivationHandler(
     email,
     password,
   );
-
   const profile = await profileRepo.createProfile(
     newUser._id,
     newUser.fullName,
   );
   await userRepo.updateUserWithProfileId(newUser._id, profile._id);
-
   await sessionService.deleteSession(key);
 
   try {

@@ -31,7 +31,7 @@ describe('user activation', () => {
   it(`upon visiting /account-activation with proper token while a valid session is active creates user account
     and doesn't allow reuse of the same token/session`, async () => {
     const startingCount = await UserModel.count();
-    // console.log('STARTING COUNT:===============>', startingCount);
+
     const token = signJwtAsymmetric(
       { email: TEST_USER_EMAIL_ALTERNATE },
       process.env.ACCOUNT_ACTIVATION_TOKEN_PRIVATE_KEY as string,
@@ -41,7 +41,6 @@ describe('user activation', () => {
     );
 
     const hashedPassword = await argon2.hash(TEST_USER_PASSWORD);
-    // console.log('HASHED PASSWORD:===============>', hashedPassword);
 
     await redis.set(
       ACCOUNT_CREATION_SESSION_PREFIX + TEST_USER_EMAIL_ALTERNATE,
@@ -58,7 +57,7 @@ describe('user activation', () => {
     const response = await request(app).get(
       `/api${AuthRoutePaths.ROOT}${AuthRoutePaths.ACCOUNT_ACTIVATION}/${token}`,
     );
-    // console.log('===============>', response.status);
+    // console.log('===============>', response.status)
     expect(response.status).toBe(201);
 
     const finishCount = await UserModel.count();
@@ -67,7 +66,7 @@ describe('user activation', () => {
     const responseForSecondCreation = await request(app).get(
       `/api${AuthRoutePaths.ROOT}${AuthRoutePaths.ACCOUNT_ACTIVATION}/${token}`,
     );
-    // console.log('REDIS SECOND CALL:===============>');
+    // console.log('REDIS SECOND CALL:===============>')
     expect(responseForSecondCreation.status).toBe(401);
     expect(responseForSecondCreation.body.message).toBe(
       ERROR_MESSAGES.AUTH.USED_OR_EXPIRED_ACCOUNT_CREATION_SESSION,

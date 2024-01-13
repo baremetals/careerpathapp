@@ -19,6 +19,7 @@ export class SessionService {
   }
 
   async deleteSession(key: string) {
+    this.redis.connect();
     await this.redis.del(key);
     return this.closeRedis();
   }
