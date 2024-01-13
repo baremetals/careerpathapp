@@ -43,9 +43,9 @@ describe('user registration', () => {
 
   afterAll(async () => {
     await redis.quit();
-    // server.close();
+    // server.close()
   });
-  // jest.setTimeout(40000);
+  // jest.setTimeout(40000)
 
   it('given the registration information are valid, sends an account creation verification email and creates an account creation attempt session', async () => {
     await request(app)
@@ -61,6 +61,7 @@ describe('user registration', () => {
     const registrationAttemptSession = await redis.get(
       ACCOUNT_CREATION_SESSION_PREFIX + TEST_USER_EMAIL_ALTERNATE,
     );
+
     const parsedSession = JSON.parse(registrationAttemptSession as string);
     expect(parsedSession.firstName).toBe(registerInput.firstName);
     expect(parsedSession.lastName).toBe(registerInput.lastName);

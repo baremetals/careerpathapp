@@ -31,10 +31,6 @@ export interface IUserProfileDocument extends IShared {
   questionsResponsesId: string;
 }
 
-// export interface AuthenticatedRequest extends Request {
-//   user: IUserDocument
-// }
-
 export class SanitizedUser {
   id: string;
   createdAt: number;

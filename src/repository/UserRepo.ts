@@ -1,6 +1,7 @@
 import { IUserDocument } from '@/interfaces/user';
 import * as argon2 from 'argon2';
 import { UserModel } from '../models/User';
+import { UserStatuses } from '@/lib/auth-validation-config';
 
 export class UserRepo {
   async createUser(
@@ -28,8 +29,8 @@ export class UserRepo {
     return UserModel.findOne(query);
   }
 
-  async findById(id: string, query: string | Array<string> = '') {
-    return UserModel.findById(id).populate(query);
+  async findById(id: string) {
+    return UserModel.findById(id);
   }
 
   async save(user: IUserDocument, validate = false) {
@@ -39,9 +40,7 @@ export class UserRepo {
   }
 
   async updateUserWithProfileId(userId: string, profileId: string) {
-    const user: IUserDocument = (await UserModel.findById(
-      userId,
-    )) as IUserDocument;
+    const user: IUserDocument = (await this.findById(userId)) as IUserDocument;
     if (!user) return null;
 
     user.profileId = profileId.toString();
@@ -62,6 +61,16 @@ export class UserRepo {
     user.confirmPassword = confirmPassword;
     user.updatedAt = new Date();
     user.lastModifiedBy = user.fullName;
+    await this.save(user);
+    return user;
+  }
+
+  async softDeleteUser(id: string) {
+    const user = await this.findById(id);
+    if (!user) return null;
+    user.status = UserStatuses.DELETED;
+    user.lastModifiedBy = user.fullName;
+    user.updatedAt = new Date();
     await this.save(user);
     return user;
   }

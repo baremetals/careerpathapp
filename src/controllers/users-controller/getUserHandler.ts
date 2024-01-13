@@ -11,31 +11,16 @@ export default catchAsync(async function getUserHandler(
   res: Response,
   next: NextFunction,
 ) {
-  const options: {
-    notFoundMessage?: string;
-    populateOptions?: string | Array<string>;
-  } = {
-    notFoundMessage: ERROR_MESSAGES.FACTORY.DOC_NOT_FOUND,
-    populateOptions: Array.isArray(req.query.populateOptions)
-      ? (req.query.populateOptions as string[]).map((option: string) =>
-          String(option),
-        )
-      : String(req.query.populateOptions),
-  };
   const userRepo = new UserRepo();
 
-  const query = Array.isArray(options.populateOptions)
-    ? options.populateOptions.join(' ')
-    : options.populateOptions;
   const user: IUserDocument = (await userRepo.findById(
     req.params.id,
-    query,
   )) as IUserDocument;
-
+  console.log('user', user);
   if (!user) {
     return next(
       new AppError(
-        options.notFoundMessage as string,
+        ERROR_MESSAGES.AUTH.NO_USER_EXISTS,
         HTTP_STATUS_CODES.NOT_FOUND,
       ),
     );
