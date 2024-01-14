@@ -92,7 +92,7 @@ stages:
           - task: AzureWebApp@1
             displayName: 'Azure Web App Deploy: discareerapi'
             inputs:
-              azureSubscription: $(azureSubscription)
+              azureSubscription: $(AZURE_SUBSCRIPTION)
               appType: webAppLinux
               appName: $(webAppName)
               runtimeStack: 'NODE|18.x'
