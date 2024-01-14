@@ -1,26 +1,33 @@
+import { AuthRoutePaths } from '@/enums/APIRoutPaths';
+import { InputFields } from '@/lib/constants';
+import { ERROR_MESSAGES } from '@/lib/error-messages';
+import { UserModel } from '@/models/User';
+import dotenv from 'dotenv';
 import { Application } from 'express';
-import Redis from 'ioredis';
 import request from 'supertest';
-import { AuthRoutePaths } from '../../enums/APIRoutPaths';
-import {
-  ACCOUNT_CREATION_SESSION_PREFIX,
-  InputFields,
-} from '../../lib/constants';
-import { ERROR_MESSAGES } from '../../lib/error-messages';
-import { UserModel } from '../../models/User';
-// import { EmailService } from '../../services/EmailService'
+
 import {
   responseBodyIncludesCustomErrorField,
   responseBodyIncludesCustomErrorMessage,
-} from '../../utils/test-utils';
+} from '@/utils/test-utils';
 import {
   TEST_USER_EMAIL_ALTERNATE,
   TEST_USER_FIRST_NAME,
   TEST_USER_LAST_NAME,
   TEST_USER_PASSWORD,
-} from '../../utils/test-utils/constants';
-import createTestServer from '../../utils/test-utils/createTestServer';
+} from '@/utils/test-utils/constants';
+import createTestServer from '@/utils/test-utils/createTestServer';
+import { createClient } from 'redis';
+import { ACCOUNT_CREATION_SESSION_PREFIX } from '@/lib/constants';
+dotenv.config();
 
+const redisClient = createClient({
+  password: process.env.REDIS_PASSWORD,
+  socket: {
+    host: process.env.REDIS_HOST,
+    port: parseInt(process.env.REDIS_PORT as string),
+  },
+});
 const registerInput = {
   email: TEST_USER_EMAIL_ALTERNATE,
   password: TEST_USER_PASSWORD,
@@ -34,22 +41,25 @@ describe('user registration', () => {
   //   let server: any;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let app: Application | undefined;
-  const redis = new Redis();
+  redisClient.on('error', (err: any) => console.log(err));
+  redisClient.connect();
+  redisClient.on('connect', () => console.log('Redis connection successful!'));
 
   beforeAll(async () => {
     process.env.NODE_ENV = 'development';
     app = await createTestServer();
-    await redis.flushdb();
+    // await redisClient.connect();
+    await redisClient.flushDb();
+    // await redis.connect();
   });
 
   afterAll(async () => {
-    await redis.quit();
-    // server.close()
+    await redisClient.quit();
   });
   // jest.setTimeout(40000)
 
   it('given the registration information are valid, sends an account creation verification email and creates an account creation attempt session', async () => {
-    await request(app)
+    const response = await request(app)
       .post(`/api${AuthRoutePaths.ROOT}${AuthRoutePaths.REGISTER}`)
       .send({
         email: TEST_USER_EMAIL_ALTERNATE,
@@ -58,16 +68,18 @@ describe('user registration', () => {
         firstName: TEST_USER_FIRST_NAME,
         lastName: TEST_USER_LAST_NAME,
       });
-
-    const registrationAttemptSession = await redis.get(
+    expect(response.status).toBe(202);
+    const registrationAttemptSession = await redisClient.get(
       ACCOUNT_CREATION_SESSION_PREFIX + TEST_USER_EMAIL_ALTERNATE,
     );
-
     const parsedSession = JSON.parse(registrationAttemptSession as string);
     expect(parsedSession.firstName).toBe(registerInput.firstName);
     expect(parsedSession.lastName).toBe(registerInput.lastName);
     expect(parsedSession.email).toBe(TEST_USER_EMAIL_ALTERNATE);
     expect(parsedSession.password).toBe(TEST_USER_PASSWORD);
+    await redisClient.del(
+      ACCOUNT_CREATION_SESSION_PREFIX + TEST_USER_EMAIL_ALTERNATE,
+    );
   });
 
   it('gets errors for missing email or password', async () => {
@@ -139,7 +151,7 @@ describe('user registration', () => {
     expect(
       responseBodyIncludesCustomErrorMessage(
         response,
-        ERROR_MESSAGES.VALIDATION.AUTH.PASSWORDS_DONT_MATCH,
+        ERROR_MESSAGES.VALIDATION.AUTH.PASSWORDS_DO_NOT_MATCH,
       ),
     ).toBeTruthy();
     expect(

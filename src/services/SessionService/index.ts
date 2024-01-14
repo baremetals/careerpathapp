@@ -1,14 +1,21 @@
-import Redis from 'ioredis';
+import { redisClient } from '../redis/client';
 
 export class SessionService {
-  private redis = new Redis();
+  private redis = redisClient;
+
+  constructor() {
+    this.redis.connect();
+  }
 
   private async closeRedis() {
     await this.redis.quit();
   }
 
   async setSession(key: string, value: string, expiration: number) {
-    await this.redis.set(key, value, 'EX', expiration);
+    await this.redis.set(key, value, {
+      EX: expiration,
+      NX: true,
+    });
     return this.closeRedis();
   }
 
@@ -19,7 +26,7 @@ export class SessionService {
   }
 
   async deleteSession(key: string) {
-    this.redis.connect();
+    // this.redis.connect();
     await this.redis.del(key);
     return this.closeRedis();
   }

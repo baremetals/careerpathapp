@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import AppError from '../utils/appError';
 import { AppErrorDetails } from '../utils/types';
 
@@ -29,6 +29,7 @@ const handleIncomingErrorStatus = (error: any) => {
 };
 
 const handleIncomingErrors = (error: any) => {
+  // console.error('ERROR============> 💥', error);
   let errors: AppErrorDetails[] | undefined;
   if (error[0] instanceof AppError) {
     errors = error.map((appError: AppError) => {
@@ -84,15 +85,17 @@ export default function globalErrorHandler(
   err: any,
   req: Request,
   res: Response,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  _Next: NextFunction,
 ) {
-  if (process.env.NODE_ENV === 'development') {
-    sendErrorDev(err, res);
-  } else if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === 'production') {
     let error = { ...err };
     error.message = err.message;
 
     if (error.name === 'CastError') error = handleCastErrorDB(error);
     if (error.code === 11000) error = handleDuplicateFieldsDB(error);
     sendErrorProd(error, req, res);
+  } else {
+    sendErrorDev(err, res);
   }
 }

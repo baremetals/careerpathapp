@@ -24,7 +24,7 @@ export const resetPasswordSchema = object({
     }),
   }).refine((data) => data.password === data.confirmPassword, {
     path: ['confirmPassword'],
-    message: ERROR_MESSAGES.VALIDATION.AUTH.PASSWORDS_DONT_MATCH,
+    message: ERROR_MESSAGES.VALIDATION.AUTH.PASSWORDS_DO_NOT_MATCH,
   }),
 });
 

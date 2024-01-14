@@ -125,7 +125,7 @@ describe('change password handler', () => {
     expect(
       responseBodyIncludesCustomErrorMessage(
         loginWithBadPasswordsResponse,
-        ERROR_MESSAGES.VALIDATION.AUTH.PASSWORDS_DONT_MATCH,
+        ERROR_MESSAGES.VALIDATION.AUTH.PASSWORDS_DO_NOT_MATCH,
       ),
     ).toBeTruthy();
     expect(
