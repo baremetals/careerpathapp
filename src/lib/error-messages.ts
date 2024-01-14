@@ -75,7 +75,8 @@ export const ERROR_MESSAGES = {
       INVALID_PASSWORD: 'The current password provided is invalid',
       PASSWORD_MIN_LENGTH: `Password must be at least ${passwordMinLength} characters`,
       PASSWORD_MAX_LENGTH: `Password must be no longer than ${passwordMaxLength} characters`,
-      PASSWORDS_DONT_MATCH: 'Password confirmation does not match the password',
+      PASSWORDS_DO_NOT_MATCH:
+        'Password confirmation does not match the password',
       NAME_MIN_LENGTH: `Name must be at least ${nameMinLength} characters`,
       NAME_MAX_LENGTH: `Name must be no longer than ${nameMaxLength} characters`,
     },

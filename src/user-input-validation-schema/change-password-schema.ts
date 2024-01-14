@@ -36,7 +36,7 @@ export const changePasswordSchema = object({
   })
     .refine((data) => data.newPassword === data.confirmPassword, {
       path: ['confirmPassword'],
-      message: ERROR_MESSAGES.VALIDATION.AUTH.PASSWORDS_DONT_MATCH,
+      message: ERROR_MESSAGES.VALIDATION.AUTH.PASSWORDS_DO_NOT_MATCH,
     })
     .refine((data) => data.currentPassword !== data.newPassword, {
       path: ['newPassword'],

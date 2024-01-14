@@ -9,7 +9,7 @@ trigger:
 variables:
 
   # Azure Resource Manager connection created during pipeline creation
-  azureSubscription: $(AZURE_SUBSCRIPTION)
+  azureSubscription: 'd9d9b261-7277-4d16-8ac7-e220a53254e6'
 
   # Web app name
   webAppName: 'discareerapi'
@@ -28,7 +28,7 @@ stages:
     displayName: Build
     pool:
       vmImage: $(vmImageName)
-
+  
     steps:
     - task: NodeTool@0
       inputs:
@@ -54,7 +54,6 @@ stages:
         ACCOUNT_ACTIVATION_TOKEN_PUBLIC_KEY: $(ACCOUNT_ACTIVATION_TOKEN_PUBLIC_KEY)
         ACCOUNT_ACTIVATION_TOKEN_PRIVATE_KEY: $(ACCOUNT_ACTIVATION_TOKEN_PRIVATE_KEY)
         CAREER_APP_MODEL_SERVER_URL: $(CAREER_APP_MODEL_SERVER_URL)
-        REDIS_URL: $(REDIS_URL)
         REDIS_HOST: $(REDIS_HOST)
         REDIS_PORT: $(REDIS_PORT)
         REDIS_USERNAME: $(REDIS_USERNAME)
@@ -92,7 +91,7 @@ stages:
           - task: AzureWebApp@1
             displayName: 'Azure Web App Deploy: discareerapi'
             inputs:
-              azureSubscription: $(AZURE_SUBSCRIPTION)
+              azureSubscription: $(azureSubscription)
               appType: webAppLinux
               appName: $(webAppName)
               runtimeStack: 'NODE|18.x'

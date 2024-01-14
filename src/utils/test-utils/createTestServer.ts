@@ -1,19 +1,18 @@
-import express, { NextFunction, Request, Response } from 'express';
-import session from 'express-session';
-import mongoose from 'mongoose';
-import RedisStore from 'connect-redis';
-import cors from 'cors';
-import { MongoMemoryServer } from 'mongodb-memory-server';
-import redis from 'redis-mock';
-
-import path from 'path';
 import globalErrorHandler from '@/middleware/errorHandler';
 import adminRouter from '@/routes/admin';
 import authRouter from '@/routes/auth-route';
 import careerPathRouter from '@/routes/careers-route';
 import uiRouter from '@/routes/ui';
 import userRouter from '@/routes/users-route';
+import { redisClient } from '@/services/redis/client';
 import AppError from '@/utils/appError';
+import RedisStore from 'connect-redis';
+import cors from 'cors';
+import express, { NextFunction, Request, Response } from 'express';
+import session from 'express-session';
+import { MongoMemoryServer } from 'mongodb-memory-server';
+import mongoose from 'mongoose';
+import path from 'path';
 // import dotenv from 'dotenv'
 // dotenv.config()
 
@@ -36,14 +35,8 @@ async function createTestServer() {
   const mongoServer = await MongoMemoryServer.create();
   await mongoose.connect(mongoServer.getUri());
 
-  const client = redis.createClient({
-    port: Number(process.env.REDIS_PORT),
-    host: process.env.REDIS_HOST,
-    password: process.env.REDIS_PASSWORD,
-  });
-
   const redisStore = new RedisStore({
-    client: client,
+    client: redisClient,
   });
 
   app.use(
@@ -61,7 +54,7 @@ async function createTestServer() {
       store: redisStore,
       name: process.env.COOKIE_NAME,
       sameSite: 'Strict',
-      secret: 'my-aca-secretIsAFuckingSecret17895',
+      secret: process.env.SESSION_SECRET as string,
       resave: false,
       saveUninitialized: false,
       cookie: {

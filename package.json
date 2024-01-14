@@ -20,7 +20,7 @@
     "start": "node dist/server.js",
     "start2": "ts-node src/server.ts",
     "dev2": "nodemon --exec ts-node src/server.ts",
-    "test": "jest --no-cache",
+    "test": "jest  ./src/controllers/authController/registerNewAccountHandler.test.ts --no-cache",
     "cm": "npx cz"
   },
   "dependencies": {
@@ -47,6 +47,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.3.0",
     "multer": "^1.4.5-lts.1",
+    "redis": "^4.6.12",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^4.6.3",
     "tsconfig-paths": "^4.2.0",

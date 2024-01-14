@@ -1,6 +1,7 @@
-import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import mongoose from 'mongoose';
 import createServer from './index';
+import { redisClient } from './services/redis/client';
 dotenv.config();
 process.on('uncaughtException', (err) => {
   console.log('UNCAUGHT EXCEPTION! Shutting down...');
@@ -22,6 +23,10 @@ mongoose
     sslValidate: false,
   })
   .then(() => console.log('DB connection successful!'));
+
+redisClient.on('error', (err: any) => console.log(err));
+// redisClient.connect();
+redisClient.on('connect', () => console.log('Redis connection successful!'));
 
 const server = app.listen(port, () => {
   console.log(`listening on port: ${port}`);
