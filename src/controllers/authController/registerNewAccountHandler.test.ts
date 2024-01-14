@@ -72,6 +72,7 @@ describe('user registration', () => {
     const registrationAttemptSession = await redisClient.get(
       ACCOUNT_CREATION_SESSION_PREFIX + TEST_USER_EMAIL_ALTERNATE,
     );
+    console.log('registrationAttemptSession=====>', registrationAttemptSession);
     const parsedSession = JSON.parse(registrationAttemptSession as string);
     expect(parsedSession.firstName).toBe(registerInput.firstName);
     expect(parsedSession.lastName).toBe(registerInput.lastName);
