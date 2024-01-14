@@ -46,8 +46,7 @@ export default catchAsync(async function registerNewAccountHandler(
   );
 
   try {
-    const sendMail = await addToSQSQueue(email, firstName, String(token));
-    console.log('sendMail=====>', sendMail);
+    await addToSQSQueue(email, firstName, String(token));
 
     res.status(HTTP_STATUS_CODES.ACCEPTED).json({});
   } catch (err) {

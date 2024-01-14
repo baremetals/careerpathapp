@@ -28,10 +28,13 @@ const sqsClient = new SQSClient({
 }); // replace REGION with your AWS region
 
 async function sendMessageToQueue(queueUrl: string, messageBody: string) {
-  console.log('AWS_ACCESS_KEY_ID exists:', !!process.env.AWS_ACCESS_KEY_ID);
   console.log(
-    'AWS_ACCESS_KEY_ID length:',
-    process.env.AWS_ACCESS_KEY_ID?.length,
+    'AWS_SECRET_ACCESS_KEY exists:',
+    !!process.env.AWS_SECRET_ACCESS_KEY,
+  );
+  console.log(
+    'AWS_SECRET_ACCESS_KEY length:',
+    process.env.AWS_SECRET_ACCESS_KEY?.length,
   );
   const params = {
     QueueUrl: queueUrl,
