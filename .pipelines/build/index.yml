@@ -40,8 +40,8 @@ stages:
               npm run test --if-present
             displayName: 'npm install, build and test'
             env:
-              AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
-              AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+              AWS_ACCESS_KEY_ID: $(AWS.AccessKeyID)
+              AWS_SECRET_ACCESS_KEY: $(AWS.SecretAccessKey)
               AWS_BUCKET_NAME: $(AWS_BUCKET_NAME)
               AWS_REGION: $(AWS_REGION)
               ACCOUNT_ACTIVATION_SESSION_EXPIRATION: $(ACCOUNT_ACTIVATION_SESSION_EXPIRATION)
