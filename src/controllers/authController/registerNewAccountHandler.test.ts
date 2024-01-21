@@ -1,5 +1,5 @@
 import { AuthRoutePaths } from '@/enums/APIRoutPaths';
-import { InputFields } from '@/lib/constants';
+import { InputFields, ACCOUNT_CREATION_SESSION_PREFIX } from '@/lib/constants';
 import { ERROR_MESSAGES } from '@/lib/error-messages';
 import { UserModel } from '@/models/User';
 import dotenv from 'dotenv';
@@ -18,7 +18,6 @@ import {
 } from '@/utils/test-utils/constants';
 import createTestServer from '@/utils/test-utils/createTestServer';
 import { createClient } from 'redis';
-import { ACCOUNT_CREATION_SESSION_PREFIX } from '@/lib/constants';
 dotenv.config();
 
 const redisClient = createClient({
@@ -48,15 +47,12 @@ describe('user registration', () => {
   beforeAll(async () => {
     process.env.NODE_ENV = 'development';
     app = await createTestServer();
-    // await redisClient.connect();
     await redisClient.flushDb();
-    // await redis.connect();
   });
 
   afterAll(async () => {
     await redisClient.quit();
   });
-  // jest.setTimeout(40000)
 
   it('given the registration information are valid, sends an account creation verification email and creates an account creation attempt session', async () => {
     const response = await request(app)

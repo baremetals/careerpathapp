@@ -25,6 +25,14 @@ export async function addToSQSQueue(
 
 export async function createToken(email: string) {
   const tokenService = new TokenService();
+  console.log(
+    'ACCOUNT_ACTIVATION_TOKEN_PRIVATE_KEY',
+    process.env.ACCOUNT_ACTIVATION_TOKEN_PRIVATE_KEY,
+  );
+  console.log(
+    'ACCOUNT_ACTIVATION_SESSION_EXPIRATION',
+    process.env.ACCOUNT_ACTIVATION_SESSION_EXPIRATION,
+  );
   const token = tokenService.signToken(
     { email },
     process.env.ACCOUNT_ACTIVATION_TOKEN_PRIVATE_KEY as string,

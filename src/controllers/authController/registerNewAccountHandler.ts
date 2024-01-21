@@ -22,7 +22,7 @@ export default catchAsync(async function registerNewAccountHandler(
   const sessionService = new SessionService();
   const { firstName, lastName, password, email } = req.body;
 
-  // console.log('email=====>', email);
+  // console.log('email=====>', email)
 
   const emailAlreadyExists: IUserDocument = (await userRepo.findOne({
     email,
