@@ -19,10 +19,15 @@ const DB = process?.env?.DATABASE?.replace(
 
 mongoose
   .connect(DB, {
-    // ssl: true,
+    // ssl: true, // Enable this if your MongoDB server supports SSL
     sslValidate: false,
   })
-  .then(() => console.log('DB connection successful!'));
+  .then(() => console.log('DB connection successful!'))
+  .catch((err) => console.error('DB connection error:', err));
+
+mongoose.connection.on('error', (err) => {
+  console.error('Mongoose default connection error: ' + err);
+});
 
 redisClient.on('error', (err: any) => console.log(err));
 // redisClient.connect();
@@ -30,6 +35,15 @@ redisClient.on('connect', () => console.log('Redis connection successful!'));
 
 const server = app.listen(port, () => {
   console.log(`listening on port: ${port}`);
+});
+
+mongoose.connection.on('disconnected', () => {
+  console.log('Mongoose default connection disconnected');
+  // Attempt to reconnect
+  mongoose.connect(DB, {
+    // ssl: true,
+    sslValidate: true,
+  });
 });
 
 process.on('unhandledRejection', (err: any) => {
